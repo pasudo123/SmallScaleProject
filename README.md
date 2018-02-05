@@ -1,0 +1,2 @@
+# SmallScaleProject
+SSP(SmallScaleProject)
