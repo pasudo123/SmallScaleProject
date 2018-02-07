@@ -1,0 +1,87 @@
+@CHARSET "UTF-8";
+
+@font-face{
+    font-family: 'NanumSquareEB';
+    src:url(../font/NanumSquareEB.ttf) format('truetype');
+}
+
+body{
+	color:#3b3838;
+    font-family:'NanumSquareEB';
+    width:1480px;
+    margin:0 auto;
+}
+
+
+/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
+
+div.bodyWrapper{
+	width:800px;
+	height:250px;
+	margin:0 auto;
+	/* border:1px solid red; */
+}
+
+div.titleBar{
+	width:800px;
+	font-size:40px;
+	text-align: center;
+}
+
+div.titleBar div{
+	font-size:15px;
+}
+
+div.menuBar{
+	float:left;
+	height:250px;
+	display:table;
+/* 	border:1px solid blue; */
+}
+
+ul{
+	list-style: none;
+    margin: 0 auto;
+    padding: 0px 20px 0px 20px;
+    height:250px;
+	display:table-cell;
+	vertical-align:middle;
+	text-align:center;
+}
+
+div.explainChart{
+	width:550px;
+	margin-left:250px;
+	height:250px;
+	/* border:1px solid yellowgreen; */
+	display: table;
+}
+
+div.explainChart > div{
+	display:table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+
+ul li{
+	padding:0;
+	margin:0;
+	padding-top:3px;
+	padding-bottom:3px;
+}
+
+li:hover{
+	color:royalblue;
+	cursor: pointer;
+}
+
+li:active{
+	color:blue;;
+}
+
+div.correlationWrapper{
+	width:800px;
+	height:600px;
+	margin-bottom: 50px;
+	border:1px solid black;
+}

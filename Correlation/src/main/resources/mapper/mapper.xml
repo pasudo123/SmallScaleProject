@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.doubler.main.db.ColdDAO">
+	
+	<select id="getColdList" resultType="com.doubler.main.db.ColdDTO">
+	<![CDATA[ 
+		SELECT 
+			sequence AS sequenceNumber,
+			cold_date AS coldDate,
+			weekday AS weekDay,
+			treatment AS treatment,
+			lowest_temperature AS lowestTemperature,
+			diurnal_range AS diurnalRange,
+			moisture AS moisture,
+			twitter AS twitter,
+			news AS news,
+			sum_source AS sumTwitterAndNews
+		FROM COLD_TB
+	]]>
+	</select>
+	
+	
+	<select id="getMaxSumTwitterAndNews" resultType="java.lang.Integer">
+	<![CDATA[ 
+		SELECT 
+			MAX(sum_source)
+		FROM COLD_TB
+	]]>
+	</select>
+	
+	
+	<select id="getMinSumTwitterAndNews" resultType="java.lang.Integer">
+	<![CDATA[ 
+		SELECT 
+			MIN(sum_source)
+		FROM COLD_TB
+	]]>
+	</select>
+	
+	
+	<select id="getMaxLowestTemperature" resultType="java.lang.Double">
+	<![CDATA[ 
+		SELECT 
+			MAX(lowest_temperature)
+		FROM COLD_TB
+	]]>
+	</select>
+	
+	<select id="getMinLowestTemperature" resultType="java.lang.Double">
+	<![CDATA[ 
+		SELECT 
+			MIN(lowest_temperature)
+		FROM COLD_TB
+	]]>
+	</select>
+	
+	
+	<select id="getMaxDiurnalRange" resultType="java.lang.Double">
+	<![CDATA[ 
+		SELECT 
+			MAX(diurnal_range)
+		FROM COLD_TB
+	]]>
+	</select>
+	
+	
+	<select id="getMinDiurnalRange" resultType="java.lang.Double">
+	<![CDATA[ 
+		SELECT 
+			MIN(diurnal_range)
+		FROM COLD_TB
+	]]>
+	</select>
+	
+	
+	<select id="getMaxTreatment" resultType="java.lang.Integer">
+	<![CDATA[ 
+		SELECT 
+			MAX(treatment)
+		FROM COLD_TB
+	]]>
+	</select>
+	
+	
+	<select id="getMinTreatment" resultType="java.lang.Integer">
+	<![CDATA[ 
+		SELECT 
+			MIN(treatment)
+		FROM COLD_TB
+	]]>
+	</select>
+</mapper>
