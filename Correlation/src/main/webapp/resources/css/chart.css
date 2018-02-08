@@ -46,21 +46,25 @@ ul{
     height:250px;
 	display:table-cell;
 	vertical-align:middle;
-	text-align:center;
+	text-align:left;
 }
 
 div.explainChart{
 	width:550px;
 	margin-left:250px;
 	height:250px;
-	/* border:1px solid yellowgreen; */
-	display: table;
 }
 
 div.explainChart > div{
+	display:table;
+	text-align: center;
+	width:98%;
+	height:250px;
+}
+
+div.explainChart > div > div{
 	display:table-cell;
 	vertical-align: middle;
-	text-align: center;
 }
 
 ul li{
@@ -83,5 +87,14 @@ div.correlationWrapper{
 	width:800px;
 	height:600px;
 	margin-bottom: 50px;
-	border:1px solid black;
+/* 	border:1px solid black; */
+}
+
+svg{
+	width:800px;
+	height:600px;
+}
+
+circle {
+    fill: royalblue;
 }
