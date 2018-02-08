@@ -20,9 +20,14 @@ public interface ColdService {
 	// (1-3) 일교차
 	public Map<String, List<Object>> correlationSumSourceAndDiurnalRange();
 	
-	// 산포도 노멀라이징 (정수형)
-	public Double nomalization(Integer value, Integer minValue, Integer maxValue);
 	
-	// 산포도 노멀라이징 (실수형)
-	public Double nomalization(Double value, Double minValue, Double maxValue);
+	// ㅡㅡㅡ (2) 최저기온과 [????] 에 따른 상관분석 ㅡㅡㅡ
+	// (2-1) 진료건수
+	public Map<String, List<Object>> correlationLowestTemperatureAndTreatment();
+	
+	// (2-2) 습도
+	public Map<String, List<Object>> correlationLowestTemperatureAndMoisture();
+	
+	// (2-3) 날짜
+	public Map<String, List<Object>> correlationLowestTemperatureAndColdDate();
 }

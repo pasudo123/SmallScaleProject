@@ -25,6 +25,8 @@ public class ColdServiceImpl implements ColdService{
 	private List<Object> daysTreatment = null;
 	private List<Object> daysLowestTemperature = null;
 	private List<Object> daysDiurnalRange = null;
+	private List<Object> daysMoisture = null;
+	private List<Object> daysColdDate = null;
 	
 	@Override
 	public List<ColdDTO> getColdList() {
@@ -38,16 +40,8 @@ public class ColdServiceImpl implements ColdService{
 		daysSumSource = clear(daysSumSource);
 		daysTreatment = clear(daysTreatment);
 		
-//		Integer minOfSumTwitterAndNews = coldDao.getMinSumTwitterAndNews();
-//		Integer maxOfSumTwitterAndNews = coldDao.getMaxSumTwitterAndNews();
-//		Integer minOfTreatment = coldDao.getMinTreatment();
-//		Integer maxOfTreatment = coldDao.getMaxTreatment();
-		
 		// 트위터와 뉴스 언급량 X 진료건수
 		for(ColdDTO coldDto : coldList){
-//			Double xData = nomalization(coldDto.getSumTwitterAndNews(), minOfSumTwitterAndNews, maxOfSumTwitterAndNews);
-//			Double yData = nomalization(coldDto.getTreatment(), minOfTreatment, maxOfTreatment);
-			
 			Integer xData = coldDto.getSumTwitterAndNews();
 			Integer yData = coldDto.getTreatment();
 			
@@ -68,16 +62,8 @@ public class ColdServiceImpl implements ColdService{
 		daysSumSource = clear(daysSumSource);
 		daysLowestTemperature = clear(daysLowestTemperature);
 		
-//		Integer minOfSumTwitterAndNews = coldDao.getMinSumTwitterAndNews();
-//		Integer maxOfSumTwitterAndNews = coldDao.getMaxSumTwitterAndNews();
-//		Double minOfLowestTemperature = coldDao.getMinLowestTemperature();
-//		Double maxOfLowestTemperature = coldDao.getMaxLowestTemperature();
-		
 		// 트위터와 뉴스 언급량 X 최저기온
 		for(ColdDTO coldDto : coldList){
-//			Double xData = nomalization(coldDto.getSumTwitterAndNews(), minOfSumTwitterAndNews, maxOfSumTwitterAndNews);
-//			Double yData = nomalization(coldDto.getLowestTemperature(), minOfLowestTemperature, maxOfLowestTemperature);
-			
 			Integer xData = coldDto.getSumTwitterAndNews();
 			Double yData = coldDto.getLowestTemperature();
 			
@@ -98,16 +84,8 @@ public class ColdServiceImpl implements ColdService{
 		daysSumSource = clear(daysSumSource);
 		daysDiurnalRange = clear(daysDiurnalRange);
 		
-//		Integer minOfSumTwitterAndNews = coldDao.getMinSumTwitterAndNews();
-//		Integer maxOfSumTwitterAndNews = coldDao.getMaxSumTwitterAndNews();
-//		Double minOfDiurnalRange = coldDao.getMinDiurnalRange();
-//		Double maxOfDiurnalRange = coldDao.getMaxDiurnalRange();
-		
 		// 트위터와 뉴스 언급량 X 일교차
 		for(ColdDTO coldDto : coldList){
-//			Double xData = nomalization(coldDto.getSumTwitterAndNews(), minOfSumTwitterAndNews, maxOfSumTwitterAndNews);
-//			Double yData = nomalization(coldDto.getDiuranalRange(), minOfDiurnalRange, maxOfDiurnalRange);
-			
 			Integer xData = coldDto.getSumTwitterAndNews();
 			Double yData = coldDto.getDiuranalRange();
 			
@@ -121,29 +99,70 @@ public class ColdServiceImpl implements ColdService{
 		return parameterMap;
 	}
 	
-	
-	/**
-	 * ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-	 * 
-	 * 		노멀라이징하고, 이후의 해당하는 값의 범주는 0 ~ 1 사이의 값을 가진다.
-	 * 
-	 * ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-	 * **/
 	@Override
-	public Double nomalization(Integer value, Integer minValue, Integer maxValue){
-		Double resultValue = ((double)(value - minValue) / (double)(maxValue - minValue));
-//		System.out.println("Integer > " + resultValue);
-		return (resultValue * 500);
+	public Map<String, List<Object>> correlationLowestTemperatureAndTreatment() {
+		List<ColdDTO> coldList = getColdList();
+		
+		daysLowestTemperature = clear(daysLowestTemperature);
+		daysTreatment = clear(daysTreatment);
+		
+		// 최저기온 X 진료건수
+		for(ColdDTO coldDto : coldList){
+			Double xData = coldDto.getLowestTemperature();
+			Integer yData = coldDto.getTreatment();
+			
+			daysLowestTemperature.add(xData);
+			daysTreatment.add(yData);
+		}
+		
+		parameterMap.put("x", daysLowestTemperature);
+		parameterMap.put("y", daysTreatment);
+		
+		return parameterMap;
 	}
-	
+
 	@Override
-	public Double nomalization(Double value, Double minValue, Double maxValue){
-		Integer _minValue = (int) Math.round(minValue);
-		Integer _maxValue = (int) Math.round(maxValue);
-		Integer _value = (int) Math.round(value);
-		Double resultValue = ((double)(_value - _minValue) / (double)(_maxValue - _minValue));
-//		System.out.println("Double > " + resultValue);
-		return (resultValue * 500);
+	public Map<String, List<Object>> correlationLowestTemperatureAndMoisture() {
+		List<ColdDTO> coldList = getColdList();
+		
+		daysLowestTemperature = clear(daysLowestTemperature);
+		daysMoisture = clear(daysMoisture);
+		
+		// 최저기온 X 습도
+		for(ColdDTO coldDto : coldList){
+			Double xData = coldDto.getLowestTemperature();
+			Double yData = coldDto.getMoisture();
+			
+			daysLowestTemperature.add(xData);
+			daysMoisture.add(yData);
+		}
+		
+		parameterMap.put("x", daysLowestTemperature);
+		parameterMap.put("y", daysMoisture);
+		
+		return parameterMap;
+	}
+
+	@Override
+	public Map<String, List<Object>> correlationLowestTemperatureAndColdDate() {
+		List<ColdDTO> coldList = getColdList();
+		
+		daysLowestTemperature = clear(daysLowestTemperature);
+		daysColdDate = clear(daysColdDate);
+		
+		// 최저기온 X 날짜
+		for(ColdDTO coldDto : coldList){
+			Double xData = coldDto.getLowestTemperature();
+			Integer yData = coldDto.getColdDate();
+			
+			daysLowestTemperature.add(xData);
+			daysColdDate.add(yData);
+		}
+		
+		parameterMap.put("x", daysLowestTemperature);
+		parameterMap.put("y", daysColdDate);
+		
+		return parameterMap;
 	}
 	
 	// List 초기화
@@ -161,4 +180,5 @@ public class ColdServiceImpl implements ColdService{
 		parameterList.clear();
 		return parameterList;
 	}
+
 }
