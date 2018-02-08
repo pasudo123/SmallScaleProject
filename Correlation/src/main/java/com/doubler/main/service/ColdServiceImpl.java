@@ -38,15 +38,18 @@ public class ColdServiceImpl implements ColdService{
 		daysSumSource = clear(daysSumSource);
 		daysTreatment = clear(daysTreatment);
 		
-		Integer minOfSumTwitterAndNews = coldDao.getMinSumTwitterAndNews();
-		Integer maxOfSumTwitterAndNews = coldDao.getMaxSumTwitterAndNews();
-		Integer minOfTreatment = coldDao.getMinTreatment();
-		Integer maxOfTreatment = coldDao.getMaxTreatment();
+//		Integer minOfSumTwitterAndNews = coldDao.getMinSumTwitterAndNews();
+//		Integer maxOfSumTwitterAndNews = coldDao.getMaxSumTwitterAndNews();
+//		Integer minOfTreatment = coldDao.getMinTreatment();
+//		Integer maxOfTreatment = coldDao.getMaxTreatment();
 		
 		// 트위터와 뉴스 언급량 X 진료건수
 		for(ColdDTO coldDto : coldList){
-			Double xData = nomalization(coldDto.getSumTwitterAndNews(), minOfSumTwitterAndNews, maxOfSumTwitterAndNews);
-			Double yData = nomalization(coldDto.getTreatment(), minOfTreatment, maxOfTreatment);
+//			Double xData = nomalization(coldDto.getSumTwitterAndNews(), minOfSumTwitterAndNews, maxOfSumTwitterAndNews);
+//			Double yData = nomalization(coldDto.getTreatment(), minOfTreatment, maxOfTreatment);
+			
+			Integer xData = coldDto.getSumTwitterAndNews();
+			Integer yData = coldDto.getTreatment();
 			
 			daysSumSource.add(xData);
 			daysTreatment.add(yData);
@@ -65,15 +68,18 @@ public class ColdServiceImpl implements ColdService{
 		daysSumSource = clear(daysSumSource);
 		daysLowestTemperature = clear(daysLowestTemperature);
 		
-		Integer minOfSumTwitterAndNews = coldDao.getMinSumTwitterAndNews();
-		Integer maxOfSumTwitterAndNews = coldDao.getMaxSumTwitterAndNews();
-		Double minOfLowestTemperature = coldDao.getMinLowestTemperature();
-		Double maxOfLowestTemperature = coldDao.getMaxLowestTemperature();
+//		Integer minOfSumTwitterAndNews = coldDao.getMinSumTwitterAndNews();
+//		Integer maxOfSumTwitterAndNews = coldDao.getMaxSumTwitterAndNews();
+//		Double minOfLowestTemperature = coldDao.getMinLowestTemperature();
+//		Double maxOfLowestTemperature = coldDao.getMaxLowestTemperature();
 		
 		// 트위터와 뉴스 언급량 X 최저기온
 		for(ColdDTO coldDto : coldList){
-			Double xData = nomalization(coldDto.getSumTwitterAndNews(), minOfSumTwitterAndNews, maxOfSumTwitterAndNews);
-			Double yData = nomalization(coldDto.getLowestTemperature(), minOfLowestTemperature, maxOfLowestTemperature);
+//			Double xData = nomalization(coldDto.getSumTwitterAndNews(), minOfSumTwitterAndNews, maxOfSumTwitterAndNews);
+//			Double yData = nomalization(coldDto.getLowestTemperature(), minOfLowestTemperature, maxOfLowestTemperature);
+			
+			Integer xData = coldDto.getSumTwitterAndNews();
+			Double yData = coldDto.getLowestTemperature();
 			
 			daysSumSource.add(xData);
 			daysLowestTemperature.add(yData);
@@ -92,15 +98,18 @@ public class ColdServiceImpl implements ColdService{
 		daysSumSource = clear(daysSumSource);
 		daysDiurnalRange = clear(daysDiurnalRange);
 		
-		Integer minOfSumTwitterAndNews = coldDao.getMinSumTwitterAndNews();
-		Integer maxOfSumTwitterAndNews = coldDao.getMaxSumTwitterAndNews();
-		Double minOfDiurnalRange = coldDao.getMinDiurnalRange();
-		Double maxOfDiurnalRange = coldDao.getMaxDiurnalRange();
+//		Integer minOfSumTwitterAndNews = coldDao.getMinSumTwitterAndNews();
+//		Integer maxOfSumTwitterAndNews = coldDao.getMaxSumTwitterAndNews();
+//		Double minOfDiurnalRange = coldDao.getMinDiurnalRange();
+//		Double maxOfDiurnalRange = coldDao.getMaxDiurnalRange();
 		
 		// 트위터와 뉴스 언급량 X 일교차
 		for(ColdDTO coldDto : coldList){
-			Double xData = nomalization(coldDto.getSumTwitterAndNews(), minOfSumTwitterAndNews, maxOfSumTwitterAndNews);
-			Double yData = nomalization(coldDto.getDiuranalRange(), minOfDiurnalRange, maxOfDiurnalRange);
+//			Double xData = nomalization(coldDto.getSumTwitterAndNews(), minOfSumTwitterAndNews, maxOfSumTwitterAndNews);
+//			Double yData = nomalization(coldDto.getDiuranalRange(), minOfDiurnalRange, maxOfDiurnalRange);
+			
+			Integer xData = coldDto.getSumTwitterAndNews();
+			Double yData = coldDto.getDiuranalRange();
 			
 			daysSumSource.add(xData);
 			daysDiurnalRange.add(yData);
@@ -122,8 +131,9 @@ public class ColdServiceImpl implements ColdService{
 	 * **/
 	@Override
 	public Double nomalization(Integer value, Integer minValue, Integer maxValue){
-		Double resultValue = (double) ((value - minValue) / (maxValue - minValue));
-		return resultValue;
+		Double resultValue = ((double)(value - minValue) / (double)(maxValue - minValue));
+//		System.out.println("Integer > " + resultValue);
+		return (resultValue * 500);
 	}
 	
 	@Override
@@ -131,8 +141,9 @@ public class ColdServiceImpl implements ColdService{
 		Integer _minValue = (int) Math.round(minValue);
 		Integer _maxValue = (int) Math.round(maxValue);
 		Integer _value = (int) Math.round(value);
-		Double resultValue = (double) ((_value - _minValue) / (_maxValue - _minValue));
-		return resultValue;
+		Double resultValue = ((double)(_value - _minValue) / (double)(_maxValue - _minValue));
+//		System.out.println("Double > " + resultValue);
+		return (resultValue * 500);
 	}
 	
 	// List 초기화
