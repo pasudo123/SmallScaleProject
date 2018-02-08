@@ -63,4 +63,37 @@ public class HomeController {
 		
 		return returnJSON;
 	}
+	
+	@RequestMapping(value = "viewCorrelationLowestTemperature-Treatment", produces="application/json")
+	@ResponseBody
+	public String viewCorrelationLowestTemperatureAndTreatment(Model model) throws JsonGenerationException, JsonMappingException, IOException{
+		map = coldService.correlationLowestTemperatureAndTreatment();
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		String returnJSON = objectMapper.writeValueAsString(map);
+		
+		return returnJSON;
+	}
+	
+	@RequestMapping(value = "viewCorrelationLowestTemperature-Moisture", produces="application/json")
+	@ResponseBody
+	public String viewCorrelationLowestTemperatureAndMoisture(Model model) throws JsonGenerationException, JsonMappingException, IOException{
+		map = coldService.correlationLowestTemperatureAndMoisture();
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		String returnJSON = objectMapper.writeValueAsString(map);
+		
+		return returnJSON;
+	}
+	
+	@RequestMapping(value = "viewCorrelationLowestTemperature-ColdDate", produces="application/json")
+	@ResponseBody
+	public String viewCorrelationLowestTemperatureAndColdDate(Model model) throws JsonGenerationException, JsonMappingException, IOException{
+		map = coldService.correlationLowestTemperatureAndColdDate();
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		String returnJSON = objectMapper.writeValueAsString(map);
+		
+		return returnJSON;
+	}
 }

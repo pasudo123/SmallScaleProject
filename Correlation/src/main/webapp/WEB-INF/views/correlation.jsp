@@ -21,6 +21,14 @@
 					if(idValue == "3rd")
 						url = "./viewCorrelationSource-DiurnalRange";
 					
+					if(idValue == "4th")
+						url = "./viewCorrelationLowestTemperature-Treatment";
+					if(idValue == "5th")
+						url = "./viewCorrelationLowestTemperature-Moisture";
+					if(idValue == "6th")
+						url = "./viewCorrelationLowestTemperature-ColdDate";
+					
+					
 					$.ajax({
 						url : url,
 						dataType:"json",
@@ -44,71 +52,56 @@
 								dataSet.push(dataSmallSet);
 							}
 							
-							// -- value accessor : 주어진 데이터 객체에 대한 인코딩 값 반환
-							// -- scale : 값을 픽셀 위치와 같은 시각적 표시 인코딩으로 맵핑
-							// -- map function : 데이터 값에서 표시 값으로 맵핑
-							// -- axis : 중심선 설정
+							var divWidth = $("div.correlationWrapper").width();
+							var divHeight = $("div.correlationWrapper").height();
 							
-							var width = $("svg").width();
-							var height = $("svg").height();
+							var margin = {top:20, right:20, bottom:30, left:40},
+								width = divWidth - margin.left - margin.right,
+								height = divHeight - margin.top - margin.bottom;
 							
-// 							var xValue = function(d){
-// 						    	return d[0];
-// 						    }
-						    
-// 						    var yValue = function(d){
-// 						    	return d[1];
-// 						    }
-
-							// -- domain : 0 ~ max [ 실제 값의 범위 ]
+							var canvas = d3.select('div#d3Chart').append('svg')
+									.attr("width", width + margin.left + margin.right)
+									.attr("height", height + margin.top + margin.bottom)
+								.append("g")
+									.attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
+							
+						 	// -- domain : 0 ~ max [ 실제 값의 범위 ]
 							// -- range : [ 실제 값에서 변환할 값의 범위 ] (픽셀 위치와 같은 시각적 표시 인코딩 맵핑)
 							// 배열을 인자로 받고 해당 배열내에 첫번째 원소와 두번쨰 원소를 통해 시작과 끝의 범위 정의
 							var xScale = d3.scaleLinear()
-			              		.domain([0, d3.max(dataSet, function(d) { return d[0]; })])
-				              	.range([ 0, width - 80]);
+			              		.domain([d3.min(dataSet, function(d) { return d[0]; }) - 1, 
+			              				 d3.max(dataSet, function(d) { return d[0]; }) + 1 ])
+				              	.range([0, width]);
 							
 						    var yScale = d3.scaleLinear()
-			    	      		.domain([0, d3.max(dataSet, function(d) { return d[1]; })])
-				    	      	.range([ height - 30, 0 + 30]);
-				    		
-						    var refreshGraph = function(){
-						    	xScale.domain(d3.extent(dataSet));
-						    	yScale.domain(d3.extent(dataSet));
-						    }
+			    	      		.domain([d3.min(dataSet, function(d) { return d[1]; }) - 1, 
+			    	      				 d3.max(dataSet, function(d) { return d[1]; }) + 1 ])
+				    	      	.range([ height, 0]);
 						    
-						    var svg = d3.select("svg");
-						    var main = svg.append("g")
-						    	.attr("width", width)
-						    	.attr("height", height)
-						    	.attr("class", "main")
-
 						    // -- axis : 축 생성 (x, y 축)
 					    	// 매개변수 값으로 scale을 넘기면 range 범위를 적절히 판단하여 축을 생성
-						    // draw the x axis
-						    var xAxis = d3.axisBottom(xScale);
-							
+						    // draw the x & y [ axis ]
+						    var xAxis = d3.axisBottom().scale(xScale);
+						    var yAxis = d3.axisLeft().scale(yScale);
+						    
 						    // X축 추가
-						    main.append('g')
-						    // margin 30px + y축 50px = 80px
-						    .attr("transform", "translate(50," + (height - 30) + ")")
+						    canvas.append('g')
+						    .attr("transform", "translate(0," + height + ")")	// margin 30px + y축 50px = 80px
 						    .attr("class", "X Axis")
 						    .call(xAxis);
 						    
-						    // draw the y axis
-						    var yAxis = d3.axisLeft(yScale);
-						    
 						    // Y축 추가
-						    main.append('g')
-						    .attr("transform", "translate(50, 0)")
+						    canvas.append('g')
+// 						    .attr("transform", "translate(50, 0)")
 						    .attr("class", "Y Axis")
 						    .call(yAxis);
 						    
-						    var g = main.append("svg:g")
+						    var g = canvas.append("svg:g")
 						    
 							g.selectAll("scatter-dots")
 								.data(dataSet)
 								.enter()
-								.append("svg:circle")
+								.append("circle")
 								.attr("cx", function(d, i){
 									return xScale(d[0]);
 								})
@@ -140,16 +133,12 @@
 			
 			<div class="menuBar">
 				<ul>
-	               <li id="1st">트위터와 뉴스 언급량 X 진료건수</li>
-	               <li id="2nd">트위터와 뉴스 언급량 X 최저기온</li>
-	               <li id="3rd">트위터와 뉴스 언급량 X 일교차</li>
-	               <li id="4th">가나다라마바사아자차카타파하</li>
-	               <li>가나다라마바사아자차카타파하</li>
-	               <li>가나다라마바사아자차카타파하</li>
-	               <li>가나다라마바사아자차카타파하</li>
-	               <li>가나다라마바사아자차카타파하</li>
-	               <li>가나다라마바사아자차카타파하</li>
-	               <li>가나다라마바사아자차카타파하</li>
+	               <li id="1st">Twitter & News X 진료건수</li>
+	               <li id="2nd">Twitter & News X 최저기온</li>
+	               <li id="3rd">Twitter & News X 일교차</li>
+	               <li id="4th">최저기온 X 진료건수</li>
+	               <li id="5th">최저기온 X 습도</li>
+	               <li id="6th">최저기온 X 날짜</li>
 	           </ul>
 			</div>
 			
@@ -162,7 +151,6 @@
 			</div>
 			
 			<div id="d3Chart" class="correlationWrapper">
-				<svg></svg>
 			</div>
 		</div>
 	</BODY>

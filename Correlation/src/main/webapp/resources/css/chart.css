@@ -90,11 +90,6 @@ div.correlationWrapper{
 /* 	border:1px solid black; */
 }
 
-svg{
-	width:800px;
-	height:600px;
-}
-
 circle {
     fill: royalblue;
 }
