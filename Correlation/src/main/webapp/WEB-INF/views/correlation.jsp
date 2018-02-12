@@ -14,20 +14,45 @@
 					var idValue = $(this).attr("id");
 					var url = null;
 					
-					if(idValue == "1st")
+					// 각각의 레이블
+					var xLabel;
+					var yLabel;
+					
+					if(idValue == "1st"){
 						url = "./viewCorrelationSource-Treatment";
-					if(idValue == "2nd")
+						xLabel = "트위터 X 뉴스 언급량";	
+						yLabel = "진료건수";
+					}
+					
+					if(idValue == "2nd"){
 						url = "./viewCorrelationSource-LowestTemperature";
-					if(idValue == "3rd")
+						xLabel = "트위터 X 뉴스 언급량";
+						yLabel = "최저기온";
+					}
+					
+					if(idValue == "3rd"){
 						url = "./viewCorrelationSource-DiurnalRange";
+						xLabel = "트위터 X 뉴스 언급량";
+						yLabel = "일교차";
+					}
 					
-					if(idValue == "4th")
+					if(idValue == "4th"){
 						url = "./viewCorrelationLowestTemperature-Treatment";
-					if(idValue == "5th")
-						url = "./viewCorrelationLowestTemperature-Moisture";
-					if(idValue == "6th")
-						url = "./viewCorrelationLowestTemperature-ColdDate";
+						xLabel = "최저기온";
+						yLabel = "진료건수";
+					}
 					
+					if(idValue == "5th"){
+						url = "./viewCorrelationLowestTemperature-Moisture";
+						xLabel = "최저기온";
+						yLabel = "습도";
+					}
+					
+					if(idValue == "6th"){
+						url = "./viewCorrelationLowestTemperature-ColdDate";
+						xLabel = "최저기온";
+						yLabel = "날짜";
+					}
 					
 					$.ajax({
 						url : url,
@@ -43,7 +68,7 @@
 							// 2차원 배열 형성
 							var dataSet = new Array();
 							
-							// 반복
+							// 반복 & 데이터 셋 형성
 							for(var i = 0; i < size; i++){
 								var dataSmallSet = new Array();
 								
@@ -52,6 +77,11 @@
 								dataSet.push(dataSmallSet);
 							}
 							
+							// 상관계수 값 획득 및 html 태그 내 삽입
+							var correlationCoefficient = obj.correlationCoefficient;
+							$("div.explainChart").find("div.explain").text(correlationCoefficient);
+							console.log(correlationCoefficient);
+							
 							var divWidth = $("div.correlationWrapper").width();
 							var divHeight = $("div.correlationWrapper").height();
 							
@@ -59,11 +89,16 @@
 								width = divWidth - margin.left - margin.right,
 								height = divHeight - margin.top - margin.bottom;
 							
+							var padding = {top:20, right:20, bottom:30, left:40};
+							
+							d3.select('div#d3Chart').select('svg').remove();
+
 							var canvas = d3.select('div#d3Chart').append('svg')
-									.attr("width", width + margin.left + margin.right)
-									.attr("height", height + margin.top + margin.bottom)
-								.append("g")
-									.attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
+							.attr("width", width + margin.left + margin.right + 80)
+							.attr("height", height + margin.top + margin.bottom + 30)
+							.attr("padding-left", 30)
+							.append("g")
+							.attr("transform", "translate(" + (margin.left + 80) + ", " + margin.top + ")");
 							
 						 	// -- domain : 0 ~ max [ 실제 값의 범위 ]
 							// -- range : [ 실제 값에서 변환할 값의 범위 ] (픽셀 위치와 같은 시각적 표시 인코딩 맵핑)
@@ -86,15 +121,28 @@
 						    
 						    // X축 추가
 						    canvas.append('g')
-						    .attr("transform", "translate(0," + height + ")")	// margin 30px + y축 50px = 80px
+						    .attr("transform", "translate(0," + height + ")")
 						    .attr("class", "X Axis")
 						    .call(xAxis);
 						    
 						    // Y축 추가
 						    canvas.append('g')
-// 						    .attr("transform", "translate(50, 0)")
 						    .attr("class", "Y Axis")
 						    .call(yAxis);
+						    
+						    // X축 레이블
+						    canvas.append("text")
+							.attr("transform", "translate(" + (width/2) + ", " + (height + margin.top + 20) + ")")
+						    .attr("text-anchor", "middle")
+						    .text(xLabel);
+						    
+						    // Y축 레이블
+						    canvas.append("text")
+						    .attr("transform", "rotate(-90)")
+						    .attr("y", 0 - (margin.left+50))
+						    .attr("x", 0 - (height/2))
+						    .attr("text-anchor", "middle")
+						    .text(yLabel);
 						    
 						    var g = canvas.append("svg:g")
 						    
@@ -108,7 +156,7 @@
 								.attr("cy", function(d, i){
 									return yScale(d[1]);
 								})
-								.attr("r", 3)		
+								.attr("r", 3);
 						} // success
 					});
 				});
@@ -144,8 +192,9 @@
 			
 			<div class="explainChart">
 				<div>
-					<div>
-						설명글
+				상관계수
+					<div class="explain">
+						
 					</div>
 				</div>
 			</div>
