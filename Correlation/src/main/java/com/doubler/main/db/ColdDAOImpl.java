@@ -19,42 +19,32 @@ public class ColdDAOImpl implements ColdDAO{
 	}
 
 	@Override
-	public Integer getMaxSumTwitterAndNews() {
-		return sqlSession.selectOne(nameSpace + ".getMaxSumTwitterAndNews");
+	public int getCount() {
+		return sqlSession.selectOne(nameSpace + ".getCount");
+	}
+	
+	@Override
+	public int getAvgTwitterAndNews() {
+		return sqlSession.selectOne(nameSpace + ".getAvgTwitterAndNews");
 	}
 
 	@Override
-	public Integer getMinSumTwitterAndNews() {
-		return sqlSession.selectOne(nameSpace + ".getMinSumTwitterAndNews");
+	public int getAvgTreament() {
+		return sqlSession.selectOne(nameSpace + ".getAvgTreament");
 	}
 
 	@Override
-	public Double getMaxLowestTemperature() {
-		return sqlSession.selectOne(nameSpace + ".getMaxLowestTemperature");
+	public int getAvgLowestTemperature() {
+		return sqlSession.selectOne(nameSpace + ".getAvgLowestTemperature");
 	}
 
 	@Override
-	public Double getMinLowestTemperature() {
-		return sqlSession.selectOne(nameSpace + ".getMinLowestTemperature");
+	public int getAvgDiurnalRange() {
+		return sqlSession.selectOne(nameSpace + ".getAvgDiurnalRange");
 	}
 
 	@Override
-	public Double getMaxDiurnalRange() {
-		return sqlSession.selectOne(nameSpace + ".getMaxDiurnalRange");
-	}
-
-	@Override
-	public Double getMinDiurnalRange() {
-		return sqlSession.selectOne(nameSpace + ".getMinDiurnalRange");
-	}
-
-	@Override
-	public Integer getMaxTreatment() {
-		return sqlSession.selectOne(nameSpace + ".getMaxTreatment");
-	}
-
-	@Override
-	public Integer getMinTreatment() {
-		return sqlSession.selectOne(nameSpace + ".getMinTreatment");
+	public int getAvgMoisture() {
+		return sqlSession.selectOne(nameSpace + ".getAvgMoisture");
 	}
 }

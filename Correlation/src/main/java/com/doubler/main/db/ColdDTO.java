@@ -2,16 +2,16 @@ package com.doubler.main.db;
 
 public class ColdDTO {
 
-	private Integer sequenceNumber = null;			// 순서
-	private Integer coldDate = null;				// 날짜	
-	private String weekDay = null;					// 요일			
-	private Integer treatment = null;				// 진료건수
-	private Double lowestTemperature = null;		// 최저기온
-	private Double diurnalRange = null;				// 일교차
-	private Double moisture = null;					// 습도
-	private Integer twitter = null;					// 트위터 건수
-	private Integer news = null;					// 뉴스 건수
-	private Integer sumTwitterAndNews = null;		// 트위터 + 뉴스 건수
+	private int sequenceNumber = 0;			// 순서
+	private int coldDate = 0;				// 날짜	
+	private String weekDay = null;			// 요일			
+	private int treatment = 0;				// 진료건수
+	private double lowestTemperature = 0;	// 최저기온
+	private double diurnalRange = 0;		// 일교차
+	private double moisture = 0;			// 습도
+	private int twitter = 0;				// 트위터 건수
+	private int news = 0;					// 뉴스 건수
+	private int sumTwitterAndNews = 0;		// 트위터 + 뉴스 건수
 	
 	// 디폴트 생성자
 	public ColdDTO(){}
@@ -32,68 +32,87 @@ public class ColdDTO {
 		this.sumTwitterAndNews = sumTwitterAndNews;
 	}
 	
-	// getter() & setter()
-	public Integer getsequenceNumber() {
+	
+	public int getSequenceNumber() {
 		return sequenceNumber;
 	}
-	public void setsequenceNumber(Integer sequenceNumber) {
+
+	public void setSequenceNumber(int sequenceNumber) {
 		this.sequenceNumber = sequenceNumber;
 	}
-	public Integer getColdDate() {
+
+	public int getColdDate() {
 		return coldDate;
 	}
-	public void setColdDate(Integer coldDate) {
+
+	public void setColdDate(int coldDate) {
 		this.coldDate = coldDate;
 	}
+
 	public String getWeekDay() {
 		return weekDay;
 	}
+
 	public void setWeekDay(String weekDay) {
 		this.weekDay = weekDay;
 	}
-	public Integer getTreatment() {
+
+	public int getTreatment() {
 		return treatment;
 	}
-	public void setTreatment(Integer treatment) {
+
+	public void setTreatment(int treatment) {
 		this.treatment = treatment;
 	}
-	public Double getLowestTemperature() {
+
+	public double getLowestTemperature() {
 		return lowestTemperature;
 	}
-	public void setLowestTemporature(Double lowestTemperature) {
+
+	public void setLowestTemperature(double lowestTemperature) {
 		this.lowestTemperature = lowestTemperature;
 	}
-	public Double getDiuranalRange() {
+
+	public double getDiurnalRange() {
 		return diurnalRange;
 	}
-	public void setDiuranalRange(Double diurnalRange) {
+
+	public void setDiurnalRange(double diurnalRange) {
 		this.diurnalRange = diurnalRange;
 	}
-	public Double getMoisture() {
+
+	public double getMoisture() {
 		return moisture;
 	}
-	public void setMoisture(Double moisture) {
+
+	public void setMoisture(double moisture) {
 		this.moisture = moisture;
 	}
-	public Integer getTwitter() {
+
+	public int getTwitter() {
 		return twitter;
 	}
-	public void setTwitter(Integer twitter) {
+
+	public void setTwitter(int twitter) {
 		this.twitter = twitter;
 	}
-	public Integer getNews() {
+
+	public int getNews() {
 		return news;
 	}
-	public void setNews(Integer news) {
+
+	public void setNews(int news) {
 		this.news = news;
 	}
-	public Integer getSumTwitterAndNews() {
+
+	public int getSumTwitterAndNews() {
 		return sumTwitterAndNews;
 	}
-	public void setSumTwitterAndNews(Integer sumTwitterAndNews) {
+
+	public void setSumTwitterAndNews(int sumTwitterAndNews) {
 		this.sumTwitterAndNews = sumTwitterAndNews;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "ColdDTO [sequenceNumber=" + sequenceNumber + ", coldDate=" + coldDate + ", weekDay=" + weekDay
