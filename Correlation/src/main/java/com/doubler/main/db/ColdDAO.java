@@ -7,23 +7,13 @@ public interface ColdDAO {
 	// 감기 데이터 조회
 	public List<ColdDTO> getColdList();
 	
+	// 전체 데이터 카운트
+	public int getCount();
 	
-	// 언급 수, 최대값 최소값 조회
-	public Integer getMaxSumTwitterAndNews();
-	public Integer getMinSumTwitterAndNews();
-	
-	
-	// 진료건수, 최대값 최소값 조회
-	public Integer getMaxTreatment();
-	public Integer getMinTreatment();
-	
-	
-	// 최저기온, 최대값 최소값 조회
-	public Double getMaxLowestTemperature();
-	public Double getMinLowestTemperature();
-	
-	
-	// 일교차, 최대값 최소값 조회
-	public Double getMaxDiurnalRange();
-	public Double getMinDiurnalRange();
+	// ㅡㅡㅡ 상관계수를 구하기위한 데이터 평균 값들
+	public int getAvgTwitterAndNews();		// 뉴스 트위터 언급량 평균
+	public int getAvgTreament();			// 진료건수 평균
+	public int getAvgLowestTemperature();	// 최저기온 평균
+	public int getAvgDiurnalRange();		// 일교차 평균
+	public int getAvgMoisture();			// 습도 평균
 }

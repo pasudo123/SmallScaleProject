@@ -30,4 +30,18 @@ public interface ColdService {
 	
 	// (2-3) 날짜
 	public Map<String, List<Object>> correlationLowestTemperatureAndColdDate();
+	
+	// 전체 데이터 카운트
+	public int getCount();
+	
+	// ㅡㅡㅡ 상관계수를 구하기위한 데이터 평균 값들
+	public int getAvgTwitterAndNews();		// 뉴스 트위터 언급량 평균
+	public int getAvgTreament();			// 진료건수 평균
+	public int getAvgLowestTemperature();	// 최저기온 평균
+	public int getAvgDiurnalRange();		// 일교차 평균
+	public int getAvgMoisture();			// 습도 평균
+	
+	// ㅡㅡㅡ 상관계수 구하는 메소드
+	public Double setCorrelationCoefficient(Map<String, List<Object>> parameterMap);
+	public Double getCorrelationCoefficient(Map<String, List<Object>> parameterMap, int xAvg, int yAvg);
 }

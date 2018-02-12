@@ -5,6 +5,7 @@
     
 <mapper namespace="com.doubler.main.db.ColdDAO">
 	
+	
 	<select id="getColdList" resultType="com.doubler.main.db.ColdDTO">
 	<![CDATA[ 
 		SELECT 
@@ -23,72 +24,52 @@
 	</select>
 	
 	
-	<select id="getMaxSumTwitterAndNews" resultType="java.lang.Integer">
+	<select id="getCount" resultType="java.lang.Integer">
 	<![CDATA[ 
 		SELECT 
-			MAX(sum_source)
+			count(*)
 		FROM COLD_TB
 	]]>
 	</select>
 	
 	
-	<select id="getMinSumTwitterAndNews" resultType="java.lang.Integer">
+	<!-- 상관계수를 구하기 위한 쿼리들 -->
+	<select id="getAvgTwitterAndNews" resultType="java.lang.Integer">
 	<![CDATA[ 
 		SELECT 
-			MIN(sum_source)
+			AVG(SUM_SOURCE) AS sumTwitterAndNews
 		FROM COLD_TB
 	]]>
 	</select>
 	
-	
-	<select id="getMaxLowestTemperature" resultType="java.lang.Double">
+	<select id="getAvgTreament" resultType="java.lang.Integer">
 	<![CDATA[ 
 		SELECT 
-			MAX(lowest_temperature)
+			AVG(TREATMENT) AS treatment
 		FROM COLD_TB
 	]]>
 	</select>
 	
-	<select id="getMinLowestTemperature" resultType="java.lang.Double">
+	<select id="getAvgLowestTemperature" resultType="java.lang.Integer">
 	<![CDATA[ 
 		SELECT 
-			MIN(lowest_temperature)
+			AVG(LOWEST_TEMPERATURE) AS lowestTemperature
 		FROM COLD_TB
 	]]>
 	</select>
 	
-	
-	<select id="getMaxDiurnalRange" resultType="java.lang.Double">
+	<select id="getAvgDiurnalRange" resultType="java.lang.Integer">
 	<![CDATA[ 
 		SELECT 
-			MAX(diurnal_range)
+			AVG(DIURNAL_RANGE) AS diurnalRange
 		FROM COLD_TB
 	]]>
 	</select>
 	
-	
-	<select id="getMinDiurnalRange" resultType="java.lang.Double">
+	<select id="getAvgMoisture" resultType="java.lang.Integer">
 	<![CDATA[ 
 		SELECT 
-			MIN(diurnal_range)
-		FROM COLD_TB
-	]]>
-	</select>
-	
-	
-	<select id="getMaxTreatment" resultType="java.lang.Integer">
-	<![CDATA[ 
-		SELECT 
-			MAX(treatment)
-		FROM COLD_TB
-	]]>
-	</select>
-	
-	
-	<select id="getMinTreatment" resultType="java.lang.Integer">
-	<![CDATA[ 
-		SELECT 
-			MIN(treatment)
+			AVG(MOISTURE)
 		FROM COLD_TB
 	]]>
 	</select>
