@@ -67,6 +67,16 @@ div.explainChart > div > div{
 	vertical-align: middle;
 }
 
+span.spanTitle {
+    color: royalblue;
+    font-size: 18px;
+}
+
+hr{
+	width:350px;	
+	border:0.5px solid black;
+}
+
 ul li{
 	padding:0;
 	margin:0;

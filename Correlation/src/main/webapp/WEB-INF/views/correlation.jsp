@@ -53,6 +53,12 @@
 						xLabel = "최저기온";
 						yLabel = "날짜";
 					}
+
+					if(idValue == "7th"){
+						url = "./viewCorrelationTreatment-Moisture";
+						xLabel = "진료건수";
+						yLabel = "습도";
+					}
 					
 					$.ajax({
 						url : url,
@@ -79,8 +85,8 @@
 							
 							// 상관계수 값 획득 및 html 태그 내 삽입
 							var correlationCoefficient = obj.correlationCoefficient;
-							$("div.explainChart").find("div.explain").text(correlationCoefficient);
-							console.log(correlationCoefficient);
+							$("div.explainChart").find("div.text").text(correlationCoefficient);
+							$("div.explainChart").find("span.explain").text("[ " + xLabel + " ] - [ " + yLabel + " ]");
 							
 							var divWidth = $("div.correlationWrapper").width();
 							var divHeight = $("div.correlationWrapper").height();
@@ -186,15 +192,19 @@
 	               <li id="3rd">Twitter & News X 일교차</li>
 	               <li id="4th">최저기온 X 진료건수</li>
 	               <li id="5th">최저기온 X 습도</li>
-	               <li id="6th">최저기온 X 날짜</li>
+<!-- 	               <li id="6th">최저기온 X 날짜</li> -->
+	               <li id="7th">진료건수 X 습도</li>
 	           </ul>
 			</div>
 			
 			<div class="explainChart">
 				<div>
-				상관계수
 					<div class="explain">
-						
+						<span class="explain"></span>
+						&nbsp;	
+						<span class="spanTitle">상관계수</span>
+						<hr>
+						<div class="text"></div>
 					</div>
 				</div>
 			</div>
