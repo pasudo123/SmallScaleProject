@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,9 +30,13 @@ public class ColdServiceImpl implements ColdService{
 	private List<Object> daysColdDate = null;
 	
 	// 상관변수에 대한 상관계수 & 상관변수 리스트[0], [1] (value 가 List<Object> 타입이기 때문에)
+	// 어느 레이블의 값을 평균으로 구할지 알아야하기 때문에 String 타입으로 값을 삽입한다.
 	private Double correlationCoefficient = null;
 	private List<Object> twoObjectList = new ArrayList<Object>();
 	private List<Object> correlationCoefficientArray = new ArrayList<Object>();
+	
+	// 로그 (java.util.logging) - JAVA 의 내장된 로깅 API만을 이용
+	// private static final Logger logger = Logger.getLogger(ColdServiceImpl.class.getName());
 	
 	@Override
 	public List<ColdDTO> getColdList() {
@@ -61,12 +66,8 @@ public class ColdServiceImpl implements ColdService{
 		
 		parameterMap.put("x", daysSumSource);
 		parameterMap.put("y", daysTreatment);
-		
-		correlationCoefficient = setCorrelationCoefficient(parameterMap);
-		correlationCoefficientArray.clear();
-		correlationCoefficientArray.add(correlationCoefficient);
-		parameterMap.put("correlationCoefficient", correlationCoefficientArray);
-		
+//		parameterMap.put("correlationCoefficient", getcorrelationCoefficient(parameterMap));
+		parameterMap.put("correlationCoefficient", getCorrelationSumSourceAndTreatment());
 		
 		return parameterMap;
 	}
@@ -94,11 +95,8 @@ public class ColdServiceImpl implements ColdService{
 		
 		parameterMap.put("x", daysSumSource);
 		parameterMap.put("y", daysLowestTemperature);
-		
-		correlationCoefficient = setCorrelationCoefficient(parameterMap);
-		correlationCoefficientArray.clear();
-		correlationCoefficientArray.add(correlationCoefficient);
-		parameterMap.put("correlationCoefficient", correlationCoefficientArray);
+//		parameterMap.put("correlationCoefficient", getcorrelationCoefficient(parameterMap));
+		parameterMap.put("correlationCoefficient", getCorrelationSumSourceAndLowestTemperature());
 		
 		return parameterMap;
 	}
@@ -126,12 +124,9 @@ public class ColdServiceImpl implements ColdService{
 		
 		parameterMap.put("x", daysSumSource);
 		parameterMap.put("y", daysDiurnalRange);
+//		parameterMap.put("correlationCoefficient", getcorrelationCoefficient(parameterMap));
+		parameterMap.put("correlationCoefficient", getCorrelationSumSourceAndDiurnalRange());
 		
-		correlationCoefficient = setCorrelationCoefficient(parameterMap);
-		correlationCoefficientArray.clear();
-		correlationCoefficientArray.add(correlationCoefficient);
-		parameterMap.put("correlationCoefficient", correlationCoefficientArray);
-
 		return parameterMap;
 	}
 	
@@ -158,11 +153,8 @@ public class ColdServiceImpl implements ColdService{
 		
 		parameterMap.put("x", daysLowestTemperature);
 		parameterMap.put("y", daysTreatment);
-		
-		correlationCoefficient = setCorrelationCoefficient(parameterMap);
-		correlationCoefficientArray.clear();
-		correlationCoefficientArray.add(correlationCoefficient);
-		parameterMap.put("correlationCoefficient", correlationCoefficientArray);
+//		parameterMap.put("correlationCoefficient", getcorrelationCoefficient(parameterMap));
+		parameterMap.put("correlationCoefficient", getCorrelationLowestTemperatureAndTreatment());
 		
 		return parameterMap;
 	}
@@ -190,11 +182,8 @@ public class ColdServiceImpl implements ColdService{
 		
 		parameterMap.put("x", daysLowestTemperature);
 		parameterMap.put("y", daysMoisture);
-		
-		correlationCoefficient = setCorrelationCoefficient(parameterMap);
-		correlationCoefficientArray.clear();
-		correlationCoefficientArray.add(correlationCoefficient);
-		parameterMap.put("correlationCoefficient", correlationCoefficientArray);
+//		parameterMap.put("correlationCoefficient", getcorrelationCoefficient(parameterMap));
+		parameterMap.put("correlationCoefficient", getCorrelationLowestTemperatureAndMoisture());
 		
 		return parameterMap;
 	}
@@ -223,17 +212,61 @@ public class ColdServiceImpl implements ColdService{
 		parameterMap.put("x", daysLowestTemperature);
 		parameterMap.put("y", daysColdDate);
 		
+		List<Object> oneParam = new ArrayList<Object>();
+		oneParam.add(0.0);
+		// 날짜는 따로 상관계수를 구한 것이 없다. 따라서 0.0의 값을 삽입한다.
+		parameterMap.put("correlationCoefficient", oneParam);
+		
 		return parameterMap;
 	}
 	
+	@Override
+	public Map<String, List<Object>> correlationTreatmentAndMoisture() {
+		List<ColdDTO> coldList = getColdList();
+		
+		daysTreatment = clear(daysTreatment);
+		daysMoisture = clear(daysMoisture);
+		
+		// 진료건수 X 습도
+		for(ColdDTO coldDto : coldList){
+			Integer xData = coldDto.getTreatment();
+			Double yData = coldDto.getMoisture();
+			
+			daysTreatment.add(xData);
+			daysMoisture.add(yData);
+		}
+		
+		twoObjectList.clear();
+		twoObjectList.add("daysTreatment");
+		twoObjectList.add("daysMoisture");
+		parameterMap.put("labelXAndY", twoObjectList);
+		
+		parameterMap.put("x", daysTreatment);
+		parameterMap.put("y", daysMoisture);
+//		parameterMap.put("correlationCoefficient", getcorrelationCoefficient(parameterMap));
+		parameterMap.put("correlationCoefficient", getCorrelationTreatmentAndMoisture());
+		
+		return parameterMap;
+	}
+	
+	// 상관계수 구하기 위한 메소드
+	private List<Object> getcorrelationCoefficient(Map<String, List<Object>> parameterMap){
+
+		correlationCoefficient = setCorrelationCoefficient(parameterMap);
+		correlationCoefficientArray.clear();
+		correlationCoefficientArray.add(correlationCoefficient);
+		
+		return correlationCoefficientArray;
+	}
+	
 	// List 초기화
-	public List<Object> setList(List<Object> parameterList){
+	private List<Object> setList(List<Object> parameterList){
 		parameterList = new ArrayList<Object>();
 		return parameterList;
 	}
 	
 	// List 클리어
-	public List<Object> clear(List<Object> parameterList){
+	private List<Object> clear(List<Object> parameterList){
 		if(parameterList == null){
 			return setList(parameterList);
 		}
@@ -242,6 +275,9 @@ public class ColdServiceImpl implements ColdService{
 		return parameterList;
 	}
 
+	
+	
+	// -- 해당 요소에 대한 평균값 조회 -- 
 	@Override
 	public int getAvgTwitterAndNews() {
 		return coldDao.getAvgTwitterAndNews();
@@ -329,6 +365,7 @@ public class ColdServiceImpl implements ColdService{
 			covariance += (front * back);
 		}
 		
+		System.out.println("\n---------------------------------------------");
 		System.out.println("공분산 >> " + covariance);
 		
 		double variableX = 0, variableY = 0;
@@ -360,8 +397,63 @@ public class ColdServiceImpl implements ColdService{
 		variableXY = variableX * variableY;
 		variableXY = Math.sqrt(variableXY);
 		
+		System.out.println("상관계수 >> " + Double.parseDouble(String.format("%.3f", (covariance / variableXY))));
+		
 		// 소수점 자르기
 		return Double.parseDouble(String.format("%.3f", (covariance / variableXY)));
 	}
 
+	// 언급량 X 진료건수
+	@Override
+	public List<Object> getCorrelationSumSourceAndTreatment() {
+		List<Object> oneParam = new ArrayList<Object>();
+		oneParam.add(coldDao.getCorrelationSumSourceAndTreatment());
+		
+		return oneParam;
+	}
+
+	// 언급량 X 최저온도
+	@Override
+	public List<Object> getCorrelationSumSourceAndLowestTemperature() {
+		List<Object> oneParam = new ArrayList<Object>();
+		oneParam.add(coldDao.getCorrelationSumSourceAndLowestTemperature());
+		
+		return oneParam;
+	}
+
+	// 언급량 X 일교차
+	@Override
+	public List<Object> getCorrelationSumSourceAndDiurnalRange() {
+		List<Object> oneParam = new ArrayList<Object>();
+		oneParam.add(coldDao.getCorrelationSumSourceAndDiurnalRange());
+		
+		return oneParam;
+	}
+	
+	// 최저온도 X 진료건수
+	@Override
+	public List<Object> getCorrelationLowestTemperatureAndTreatment() {
+		List<Object> oneParam = new ArrayList<Object>();
+		oneParam.add(coldDao.getCorrelationLowestTemperatureAndTreatment());
+		
+		return oneParam;
+	}
+
+	// 최저온도 X 습도
+	@Override
+	public List<Object> getCorrelationLowestTemperatureAndMoisture() {
+		List<Object> oneParam = new ArrayList<Object>();
+		oneParam.add(coldDao.getCorrelationLowestTemperatureAndMoisture());
+		
+		return oneParam;
+	}
+
+	// 진료건수 X 습도
+	@Override
+	public List<Object> getCorrelationTreatmentAndMoisture() {
+		List<Object> oneParam = new ArrayList<Object>();
+		oneParam.add(coldDao.getCorrelationTreatmentAndMoisture());
+		
+		return oneParam;
+	}
 }

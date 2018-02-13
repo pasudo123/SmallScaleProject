@@ -16,4 +16,12 @@ public interface ColdDAO {
 	public int getAvgLowestTemperature();	// 최저기온 평균
 	public int getAvgDiurnalRange();		// 일교차 평균
 	public int getAvgMoisture();			// 습도 평균
+	
+	// ㅡㅡㅡ 오라클 내부에서 상관계수 함수 이용 후 실수형 리턴
+	public double getCorrelationSumSourceAndTreatment();
+	public double getCorrelationSumSourceAndLowestTemperature();
+	public double getCorrelationSumSourceAndDiurnalRange();
+	public double getCorrelationLowestTemperatureAndTreatment();
+	public double getCorrelationLowestTemperatureAndMoisture();
+	public double getCorrelationTreatmentAndMoisture();
 }

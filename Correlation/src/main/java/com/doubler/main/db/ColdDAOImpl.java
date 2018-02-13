@@ -47,4 +47,34 @@ public class ColdDAOImpl implements ColdDAO{
 	public int getAvgMoisture() {
 		return sqlSession.selectOne(nameSpace + ".getAvgMoisture");
 	}
+
+	@Override
+	public double getCorrelationSumSourceAndTreatment() {
+		return sqlSession.selectOne(nameSpace + ".getCorrelationSumSourceAndTreatment");
+	}
+
+	@Override
+	public double getCorrelationSumSourceAndLowestTemperature() {
+		return sqlSession.selectOne(nameSpace + ".getCorrelationSumSourceAndLowestTemperature");
+	}
+
+	@Override
+	public double getCorrelationSumSourceAndDiurnalRange() {
+		return sqlSession.selectOne(nameSpace + ".getCorrelationSumSourceAndDiurnalRange");
+	}
+
+	@Override
+	public double getCorrelationLowestTemperatureAndTreatment() {
+		return sqlSession.selectOne(nameSpace + ".getCorrelationLowestTemperatureAndTreatment");
+	}
+
+	@Override
+	public double getCorrelationLowestTemperatureAndMoisture() {
+		return sqlSession.selectOne(nameSpace + ".getCorrelationLowestTemperatureAndMoisture");
+	}
+
+	@Override
+	public double getCorrelationTreatmentAndMoisture() {
+		return sqlSession.selectOne(nameSpace + ".getCorrelationTreatmentAndMoisture");
+	}
 }
