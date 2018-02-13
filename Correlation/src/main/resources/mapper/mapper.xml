@@ -42,6 +42,7 @@
 	]]>
 	</select>
 	
+	
 	<select id="getAvgTreament" resultType="java.lang.Integer">
 	<![CDATA[ 
 		SELECT 
@@ -49,6 +50,7 @@
 		FROM COLD_TB
 	]]>
 	</select>
+	
 	
 	<select id="getAvgLowestTemperature" resultType="java.lang.Integer">
 	<![CDATA[ 
@@ -58,6 +60,7 @@
 	]]>
 	</select>
 	
+	
 	<select id="getAvgDiurnalRange" resultType="java.lang.Integer">
 	<![CDATA[ 
 		SELECT 
@@ -65,6 +68,7 @@
 		FROM COLD_TB
 	]]>
 	</select>
+	
 	
 	<select id="getAvgMoisture" resultType="java.lang.Integer">
 	<![CDATA[ 
