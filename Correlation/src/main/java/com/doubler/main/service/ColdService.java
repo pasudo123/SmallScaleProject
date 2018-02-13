@@ -31,6 +31,12 @@ public interface ColdService {
 	// (2-3) 날짜
 	public Map<String, List<Object>> correlationLowestTemperatureAndColdDate();
 	
+	
+	// ㅡㅡㅡ (3) 진료건수와 [????] 에 따른 상관분석 ㅡㅡㅡ
+	// (3-1) 습도
+	public Map<String, List<Object>> correlationTreatmentAndMoisture();
+
+	
 	// 전체 데이터 카운트
 	public int getCount();
 	
@@ -44,4 +50,14 @@ public interface ColdService {
 	// ㅡㅡㅡ 상관계수 구하는 메소드
 	public Double setCorrelationCoefficient(Map<String, List<Object>> parameterMap);
 	public Double getCorrelationCoefficient(Map<String, List<Object>> parameterMap, int xAvg, int yAvg);
+
+	
+	// ㅡㅡㅡ 오라클 내부에서 상관계수를 구해서 값을 획득하는 메소드
+	public List<Object> getCorrelationSumSourceAndTreatment();
+	public List<Object> getCorrelationSumSourceAndLowestTemperature();
+	public List<Object> getCorrelationSumSourceAndDiurnalRange();
+	
+	public List<Object> getCorrelationLowestTemperatureAndTreatment();
+	public List<Object> getCorrelationLowestTemperatureAndMoisture();
+	public List<Object> getCorrelationTreatmentAndMoisture();
 }
