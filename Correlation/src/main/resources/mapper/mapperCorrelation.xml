@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.doubler.main.db.ColdDAO">
+	<select id="getCorrelationSumSourceAndTreatment" resultType="java.lang.Double">
+	<![CDATA[ 
+		SELECT
+			CORR(SUM_SOURCE, TREATMENT)
+		FROM
+			COLD_TB
+	]]>
+	</select>
+	
+	
+	<select id="getCorrelationSumSourceAndLowestTemperature" resultType="java.lang.Double">
+	<![CDATA[ 
+		SELECT
+			CORR(SUM_SOURCE, LOWEST_TEMPERATURE)
+		FROM
+			COLD_TB
+	]]>
+	</select>
+	
+	
+	<select id="getCorrelationSumSourceAndDiurnalRange" resultType="java.lang.Double">
+	<![CDATA[ 
+		SELECT
+			CORR(SUM_SOURCE, DIURNAL_RANGE)
+		FROM
+			COLD_TB
+	]]>
+	</select>
+	
+	
+	<select id="getCorrelationLowestTemperatureAndTreatment" resultType="java.lang.Double">
+	<![CDATA[ 
+		SELECT
+			CORR(LOWEST_TEMPERATURE, TREATMENT)
+		FROM
+			COLD_TB
+	]]>
+	</select>
+	
+	
+	<select id="getCorrelationLowestTemperatureAndMoisture" resultType="java.lang.Double">
+	<![CDATA[ 
+		SELECT
+			CORR(LOWEST_TEMPERATURE, MOISTURE)
+		FROM
+			COLD_TB
+	]]>
+	</select>
+	
+	
+	<select id="getCorrelationTreatmentAndMoisture" resultType="java.lang.Double">
+	<![CDATA[ 
+		SELECT
+			CORR(TREATMENT, MOISTURE)
+		FROM
+			COLD_TB
+	]]>
+	</select>
+</mapper>
