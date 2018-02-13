@@ -1,7 +1,6 @@
 package com.doubler.main;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -90,6 +89,17 @@ public class HomeController {
 	@ResponseBody
 	public String viewCorrelationLowestTemperatureAndColdDate(Model model) throws JsonGenerationException, JsonMappingException, IOException{
 		map = coldService.correlationLowestTemperatureAndColdDate();
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		String returnJSON = objectMapper.writeValueAsString(map);
+		
+		return returnJSON;
+	}
+	
+	@RequestMapping(value = "viewCorrelationTreatment-Moisture", produces="application/json")
+	@ResponseBody
+	public String viewCorrelationTemperatureAndMoisture(Model model) throws JsonGenerationException, JsonMappingException, IOException{
+		map = coldService.correlationTreatmentAndMoisture();
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		String returnJSON = objectMapper.writeValueAsString(map);
