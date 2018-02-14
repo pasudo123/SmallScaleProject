@@ -6,9 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Scanner;
 
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -27,9 +25,9 @@ public class Main {
 		Connection conn = null;
 		
 		try {
-			String user = "pasudo";
-			String pw = "pasudopass";
-			String url = "jdbc:oracle:thin:@localhost:1521:xe";
+			String user = "user";
+			String pw = "userPass";
+			String url = "url";
 
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection(url, user, pw);
@@ -90,7 +88,7 @@ public class Main {
 		XSSFWorkbook workbook = null;
 		
 		try {
-			fis= new FileInputStream("C:\\Users\\Daumsoft\\Desktop\\다음소프트 과제\\3주차 과제\\감기_전국.xlsx");
+			fis= new FileInputStream("XXXXXX.xlsx");
 			workbook = new XSSFWorkbook(fis);
 			
 			int rowIndex = 0;
