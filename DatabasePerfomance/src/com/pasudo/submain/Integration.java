@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.pasudo.database.ConnectionMaker;
 import com.pasudo.database.OracleLocalConnector;
+import com.pasudo.parser.JsonParserImpl;
 import com.pasudo.parser.ParserMaker;
+import com.pasudo.parser.TaggedFormatParserImpl;
 import com.pasudo.parser.TsvParserImpl;
 
 public class Integration {
@@ -12,16 +14,45 @@ public class Integration {
 	
 	private ConnectionMaker connectionMaker = null;
 	private ParserMaker parseMaker = null;
-
+	
+	
+	/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+	 * 
+	 *				   [ Connector ]
+	 *
+	 * (1) Oracle (Local)
+	 * (2) Oracle (Remote)
+	 * (3) MySQL (Local)
+	 * 
+	 **ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 	// 오라클 로컬 커넥터 세팅 
 	public void setOracleLocalConnector(){
 		connectionMaker = new OracleLocalConnector();
 	}
 	
+	/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+	 * 
+	 *				    [ Parsing ] 
+	 *
+	 * (1) TSV
+	 * (2) TaggedForamt
+	 * (3) JSON
+	 * 
+	 **ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 	// TSV 파싱 메이커 세팅
 	public void setTsvParseMaker(){
 		parseMaker = new TsvParserImpl();
 	}
+	
+	// TaggedFormat 파싱 메이커 세팅
+	public void setTaggedFormatParseMaker(){
+		parseMaker = new TaggedFormatParserImpl();
+	}
+	
+	public void setJsonParseMaker(){
+		parseMaker = new JsonParserImpl();
+	}
+	
 	
 	// 데이터를 **로컬** 데이터베이스에 [ 삽입  ]
 	public void inputDatabase(){
