@@ -10,7 +10,9 @@ public class Main {
 	
 	public static void main(String[]args){
 		integration = getIntegration();
+		setting(integration);
 		
+//		convertDatabase2File(integration);
 	}
 	
 	// 데이터베이스와 파싱 객체를 담고있는 통합 객체 획득
