@@ -4,8 +4,11 @@ import java.util.List;
 
 public interface ParserMaker {
 	
-	// 파서 세팅
-	public void settingParser();
+	// 읽는 파서 세팅
+	public void settingReadParser();
+	
+	// 쓰는 파서 세팅
+	public void settingWriteParser();
 	
 	// 파일 데이터 읽기
 	public List<String[]> read();

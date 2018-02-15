@@ -25,22 +25,23 @@ public class Integration {
 	
 	// 데이터를 **로컬** 데이터베이스에 [ 삽입  ]
 	public void inputDatabase(){
-		// Oracle 로컬 연결
-		if(connectionMaker instanceof OracleLocalConnector)
-			connectionMaker.getConnetion("pasudo", "pasudopass", "jdbc:oracle:thin:@localhost:1521:xe");
-		
-		// MySQL 연결
-		
-		// Oracle 원격 연결
-		
+		decisionConnector();
 		
 		// 파일 데이터 값 획득 및 데이터베이스 값 삽입
 		List<String[]> allRowsData = parseMaker.read();
 		connectionMaker.insertDatabase(allRowsData);
 	}
 	
-	// 데이버베이스에서 데이터 [ 추출  ]
+	// 데이버베이스에서 데이터 [ 추출  ] 후 파일로 변환
 	public void outputDatabase(){
+		decisionConnector();
+		
+		List<String[]> allRowsData = connectionMaker.selectDatabase();
+		parseMaker.write(allRowsData);
+	}
+	
+	// DB 커넥터 결정
+	public void decisionConnector(){
 		// Oracle 로컬 연결
 		if(connectionMaker instanceof OracleLocalConnector)
 			connectionMaker.getConnetion("pasudo", "pasudopass", "jdbc:oracle:thin:@localhost:1521:xe");
@@ -48,8 +49,6 @@ public class Integration {
 		// MySQL 연결
 		
 		// Oracle 원격 연결
-		
-		List<String[]> allRowsData = connectionMaker.selectDatabase();
 	}
 	
 	// -- GETTER --
