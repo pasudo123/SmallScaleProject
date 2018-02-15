@@ -12,7 +12,7 @@ public class Main {
 		integration = getIntegration();
 		setting(integration);
 		
-//		convertDatabase2File(integration);
+		convertDatabase2File(integration);
 	}
 	
 	// 데이터베이스와 파싱 객체를 담고있는 통합 객체 획득
@@ -25,7 +25,10 @@ public class Main {
 	// 통합객체를 통해서 데이터베이스와 파서 세팅
 	public static void setting(Integration integration){
 		integration.setOracleLocalConnector();
-		integration.setTsvParseMaker();
+		
+		integration.setJsonParseMaker();
+//		integration.setTaggedFormatParseMaker();
+//		integration.setTsvParseMaker();
 	}
 	
 	// 파일을 데이터베이스로 변환
