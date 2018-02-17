@@ -64,7 +64,6 @@ public class TaggedFormatParserImpl implements ParserMaker{
 				bufferedWriter.newLine();
 				bufferedWriter.append(DOC_END_TAG);
 				bufferedWriter.newLine();
-				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
