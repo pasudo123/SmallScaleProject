@@ -2,13 +2,10 @@ package com.pasudo.parser;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 import com.univocity.parsers.tsv.TsvParser;
@@ -41,9 +38,9 @@ public class TsvParserImpl implements ParserMaker{
 	private FileWriter fileWriter = null;
 	
 	// 헤더 칼럼 명
-	public static final String COLUMN_HEADER_DOC_SEQ = "DOC_SEQ";
-	public static final String COLUMN_HEADER_TITLE = "TITLE";
-	public static final String COLUMN_HEADER_REG_DT = "REG_DT";
+	private static final String COLUMN_HEADER_DOC_SEQ = "DOC_SEQ";
+	private static final String COLUMN_HEADER_TITLE = "TITLE";
+	private static final String COLUMN_HEADER_REG_DT = "REG_DT";
 	
 	@Override
 	public void settingReadParser() {
