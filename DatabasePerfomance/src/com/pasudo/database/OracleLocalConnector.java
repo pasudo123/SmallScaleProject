@@ -43,7 +43,7 @@ public class OracleLocalConnector implements ConnectionMaker{
 	@Override
 	public void insertDatabase(List<String[]> allRowsData) {
 		
-		// 라인 : 0번째는 해당 칼럼의 헤더가 있기 때문에 생략
+		// 라인 : 0번째는 해당 칼럼의 헤더가 있기 때문에 생략 (TSV 기준)
 		for(int line = 1; line < allRowsData.size(); line++){
 			String[]data = allRowsData.get(line);
 			executeInsertQuery(data[0], data[1], data[2]);
@@ -62,7 +62,8 @@ public class OracleLocalConnector implements ConnectionMaker{
 	}
 	
 	public void executeInsertQuery(String DOC_SEQ, String TITLE, String REG_DT){
-		String query = "INSERT INTO PASUDO_DOC VALUES(?, ?, ?)";
+//		String query = "INSERT INTO PASUDO_DO VALUES(?, ?, ?)";
+		String query = "INSERT INTO PASUDO_DOC_COPY VALUES(?, ?, ?)";
 		
 		try {
 			preparedStatement = connection.prepareStatement(query);

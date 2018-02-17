@@ -49,12 +49,13 @@ public class Integration {
 		parseMaker = new TaggedFormatParserImpl();
 	}
 	
+	// JSON 파싱 메이커 세팅
 	public void setJsonParseMaker(){
 		parseMaker = new JsonParserImpl();
 	}
 	
 	
-	// 데이터를 **로컬** 데이터베이스에 [ 삽입  ]
+	// 파일의 데이터를 데이터베이스에 [ 삽입  ]
 	public void inputDatabase(){
 		decisionConnector();
 		

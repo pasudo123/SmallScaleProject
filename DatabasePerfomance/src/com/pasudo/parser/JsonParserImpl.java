@@ -64,9 +64,6 @@ public class JsonParserImpl implements ParserMaker{
 		// JSON 파싱하기 이전에 세팅
 		settingWriteParser();		
 		
-		// rowNumber
-		int number = 1;
-		
 		for (String[] rowDatas : allRowsData) {
 			
 			jsonSubObject = new JSONObject();
@@ -76,11 +73,6 @@ public class JsonParserImpl implements ParserMaker{
 			jsonSubObject.put(COLUMN_REG_DT, rowDatas[2]);
 			
 			jsonArray.add(jsonSubObject);
-
-//			number++;
-//			
-//			if(number == 10)
-//				break;
 		}// for
 		
 		// flush 및 close
