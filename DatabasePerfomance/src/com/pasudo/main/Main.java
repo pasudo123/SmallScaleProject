@@ -4,7 +4,7 @@ import com.pasudo.submain.Integration;
 
 public class Main {
 	private static Integration integration = null;
-//	private static final
+	// private static final
 	// 로컬(Oracle, MySQL)
 	// 서버(Oracle)
 	
@@ -12,8 +12,8 @@ public class Main {
 		integration = getIntegration();
 		setting(integration);
 		
-//		convertDatabase2File(integration);
-		convertFile2Database(integration);
+		convertDatabase2File(integration);
+//		convertFile2Database(integration);
 	}
 	
 	// 데이터베이스와 파싱 객체를 담고있는 통합 객체 획득
@@ -28,8 +28,8 @@ public class Main {
 		integration.setOracleLocalConnector();
 		
 //		integration.setJsonParseMaker();
-		integration.setTaggedFormatParseMaker();
-//		integration.setTsvParseMaker();
+//		integration.setTaggedFormatParseMaker();
+		integration.setTsvParseMaker();
 	}
 	
 	// 파일을 데이터베이스로 변환
@@ -39,6 +39,6 @@ public class Main {
 	
 	// 데이터베이스를 파일로 변환
 	public static void convertDatabase2File(Integration integration){
-		integration.outputDatabase();
+		integration.outputDatabase(2);
 	}
 }

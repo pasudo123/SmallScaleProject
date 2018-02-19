@@ -30,12 +30,13 @@ public class Integration {
 		connectionMaker = new OracleLocalConnector();
 	}
 	
+	
 	/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 	 * 
 	 *				    [ Parsing ] 
 	 *
 	 * (1) TSV
-	 * (2) TaggedForamt
+	 * (2) TaggedFormat
 	 * (3) JSON
 	 * 
 	 **ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
@@ -55,6 +56,14 @@ public class Integration {
 	}
 	
 	
+	/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+	 * 
+	 *		    [ DataBase, Input & Output ] 
+	 *
+	 * (1) Input
+	 * (2) Output
+	 * 
+	 **ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 	// 파일의 데이터를 데이터베이스에 [ 삽입  ]
 	public void inputDatabase(){
 		decisionConnector();
@@ -65,10 +74,10 @@ public class Integration {
 	}
 	
 	// 데이버베이스에서 데이터 [ 추출  ] 후 파일로 변환
-	public void outputDatabase(){
+	public void outputDatabase(int flag){
 		decisionConnector();
 		
-		List<String[]> allRowsData = connectionMaker.selectDatabase();
+		List<String[]> allRowsData = connectionMaker.selectDatabase(flag);
 		parseMaker.write(allRowsData);
 	}
 	

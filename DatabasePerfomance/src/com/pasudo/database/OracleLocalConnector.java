@@ -93,8 +93,11 @@ public class OracleLocalConnector implements ConnectionMaker{
 	}
 	
 	@Override
-	public List<String[]> selectDatabase() {
-		return executeSelectQuery();
+	public List<String[]> selectDatabase(int flag) {
+		if(flag == 1 || flag == -1)
+			return executeSelectSortingQuery(flag);
+		else
+			return executeSelectQuery();
 	}
 
 	@Override
@@ -106,6 +109,41 @@ public class OracleLocalConnector implements ConnectionMaker{
 			// 조회 쿼리
 			String query = "SELECT * FROM PASUDO_DOC";
 			preparedStatement = connection.prepareStatement(query);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()){
+				String docSeq = String.valueOf(resultSet.getInt("DOC_SEQ"));
+				String title = resultSet.getString("title");
+				String registerDate = resultSet.getString("REG_DT");
+				
+				String[] rowDatas = {docSeq, title, registerDate};
+				allRowsData.add(rowDatas);
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return allRowsData;
+	}
+
+	@Override
+	public List<String[]> executeSelectSortingQuery(int flag) {
+		// 데이터 삽입 객체
+		List<String[]> allRowsData = new ArrayList<String[]>();
+		
+		String sortingQuery = null;
+		
+		// +1 : 오름차순 (DOC_SEQ Column 기준)
+		if(flag == 1)
+			sortingQuery = "SELECT * FROM PASUDO_DOC ORDER BY DOC_SEQ ASC"; 
+		// -1 : 내림차순 (DOC_SEQ Column 기준)
+		if(flag == -1)
+			sortingQuery = "SELECT * FROM PASUDO_DOC ORDER BY DOC_SEQ DESC";
+		
+		try {
+			// 조회 쿼리
+			preparedStatement = connection.prepareStatement(sortingQuery);
 			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()){
