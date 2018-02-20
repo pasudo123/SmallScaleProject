@@ -85,7 +85,7 @@ public class Integration {
 	public void decisionConnector(){
 		// Oracle 로컬 연결
 		if(connectionMaker instanceof OracleLocalConnector)
-			connectionMaker.getConnetion("pasudo", "pasudopass", "jdbc:oracle:thin:@localhost:1521:xe");
+			connectionMaker.getConnetion("double", "doublepass", "jdbc:oracle:thin:@localhost:1521:xe");
 		
 		// MySQL 연결
 		

@@ -15,6 +15,12 @@ public class OracleLocalConnector implements ConnectionMaker{
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
 	
+	// 처리시간 
+	private long startTime = 0;				// 시작 나노초
+	private long endTime = 0;				// 종료 나노초
+	private long performTime = 0;			// 수행 나노초
+	private double performSecondTime = 0;	// 수행 초(소수점 3자리까지)
+	
 	@Override
 	public void getConnetion(String user, String password, String url) {
 		try {
@@ -43,13 +49,19 @@ public class OracleLocalConnector implements ConnectionMaker{
 	@Override
 	public void insertDatabase(List<String[]> allRowsData) {
 		
+		int size = allRowsData.size();
+		
+		System.out.println("------ INSERT START ------");
+		startTime = System.nanoTime();
+		
 		// 라인 : 0번째는 해당 칼럼의 헤더가 있기 때문에 생략 (TSV 기준)
-		for(int line = 1; line < allRowsData.size(); line++){
+		for(int line = 1; line < size; line++){
 			String[]data = allRowsData.get(line);
 			executeInsertQuery(data[0], data[1], data[2]);
 			
 			if(line % 10000 == 0)
-				System.out.println(data[0] + ", " + data[1] + ", " +  data[2]);
+//				System.out.println(data[0] + ", " + data[1] + ", " +  data[2]);
+				System.out.println(size + " / " + line);
 		}// for
 		
 		// connection >> close
@@ -59,11 +71,22 @@ public class OracleLocalConnector implements ConnectionMaker{
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
+		finally{
+			System.out.println("------ INSERT END ------");
+			endTime = System.nanoTime();
+			
+			performTime = (long)(endTime - startTime);
+			performSecondTime = Double.parseDouble(String.format("%.3f", performTime / Math.pow(10, 9)));
+			
+			System.out.println();
+			System.out.println("FILE2DB INSERT Perform Time (nano) : " + performTime);
+			System.out.println("FILE2DB INSERT Perform Time (second) : " + performSecondTime);
+		}
 	}
 	
 	public void executeInsertQuery(String DOC_SEQ, String TITLE, String REG_DT){
-//		String query = "INSERT INTO PASUDO_DO VALUES(?, ?, ?)";
-		String query = "INSERT INTO PASUDO_DOC_COPY VALUES(?, ?, ?)";
+		String query = "INSERT INTO PASUDO_DOC VALUES(?, ?, ?)";
+//		String query = "INSERT INTO PASUDO_DOC_COPY VALUES(?, ?, ?)";
 		
 		try {
 			preparedStatement = connection.prepareStatement(query);
