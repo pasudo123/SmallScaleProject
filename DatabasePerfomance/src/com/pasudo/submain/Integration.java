@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.pasudo.database.ConnectionMaker;
 import com.pasudo.database.OracleLocalConnector;
+import com.pasudo.database.OracleRemoteConnector;
+import com.pasudo.parser.CsvParserImpl;
 import com.pasudo.parser.JsonParserImpl;
 import com.pasudo.parser.ParserMaker;
 import com.pasudo.parser.TaggedFormatParserImpl;
@@ -29,14 +31,20 @@ public class Integration {
 		connectionMaker = new OracleLocalConnector();
 	}
 	
+	// 오라클 원격 커넥터 세팅
+	public void setOracleRemoteConnector(){
+		connectionMaker = new OracleRemoteConnector();
+	}
+	
 	
 	/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 	 * 
 	 *				    [ Parsing ] 
 	 *
-	 * (1) TSV
-	 * (2) TaggedFormat
-	 * (3) JSON
+	 * (1) -- TSV
+	 * (2) -- TaggedFormat
+	 * (3) -- JSON
+	 * (4) -- CSV
 	 * 
 	 **ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 	// TSV 파싱 메이커 세팅
@@ -54,6 +62,10 @@ public class Integration {
 		parseMaker = new JsonParserImpl();
 	}
 	
+	// CSV 파싱 메이커 세팅
+	public void setCsvParserMaker(){
+		parseMaker = new CsvParserImpl();
+	}
 	
 	/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 	 * 
@@ -65,8 +77,6 @@ public class Integration {
 	 **ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 	// 파일의 데이터를 데이터베이스에 [ 삽입  ]
 	public void inputDatabase(){
-		decisionConnector();
-
 		// 파일 데이터 값 획득 및 데이터베이스 값 삽입
 		List<String[]> allRowsData = parseMaker.read();
 		connectionMaker.insertDatabase(allRowsData);
@@ -74,20 +84,7 @@ public class Integration {
 	
 	// 데이버베이스에서 데이터 [ 추출  ] 후 파일로 변환
 	public void outputDatabase(String sortCase, int flag){
-		decisionConnector();
-		
 		List<String[]> allRowsData = connectionMaker.selectDatabase(sortCase, flag);
 		parseMaker.write(allRowsData);
-	}
-	
-	// DB 커넥터 결정
-	private void decisionConnector(){
-		// Oracle 로컬 연결
-		if(connectionMaker instanceof OracleLocalConnector)
-			connectionMaker.getConnetion("double", "doublepass", "jdbc:oracle:thin:@localhost:1521:xe");
-		
-		// MySQL 연결
-		
-		// Oracle 원격 연결
 	}
 }

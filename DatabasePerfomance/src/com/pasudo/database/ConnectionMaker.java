@@ -1,12 +1,59 @@
 package com.pasudo.database;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Scanner;
 
-public interface ConnectionMaker {
+public interface ConnectionMaker {	
+	// 데이터베이스 선택
+	static Connection decisionDatabase(ConnectionMaker connectionMaker){
+		// Oracle 로컬 연결
+		if(connectionMaker instanceof OracleLocalConnector)
+			return getConnectionOnOracle("double", "doublepass", "jdbc:oracle:thin:@localhost:1521:xe");
+		
+		// Oracle 원격 연결
+		if(connectionMaker instanceof OracleRemoteConnector)
+			return getConnectionOnOracle("scott", "tiger2016", "jdbc:oracle:thin:@//10.1.51.33:1521/ASPDB3");
+		
+		return null;
+	}
 	
-	// 데이터베이스 연결 및 Connection 객체 획득 (로컬)
-	public void getConnetion(String user, String password, String url);
+	// static method [ ORACLE ]
+	static Connection getConnectionOnOracle(String user, String password, String url){
+		Connection connection = null;
+
+		try {
+			// DB 연결
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			connection = DriverManager.getConnection(url, user, password);
+		} 
+		catch (ClassNotFoundException e) {
+			System.out.println("OracleConnector : ClassNotFound");
+			e.printStackTrace();
+		}
+		catch (SQLException e){
+			System.out.println("OracleConnector : SQLException");
+			@SuppressWarnings("resource")
+			Scanner inputLine = new Scanner(System.in);
+			
+			// SQL 에러 경우, 새롭게 user password, url을 새롭게 삽입한다.
+			String _user = inputLine.next();
+			String _pass = inputLine.next();
+			String _url = inputLine.next();
+			
+			getConnectionOnOracle(_user, _pass, _url);
+		}
+		
+		return connection;
+	}
 	
+	// static method [ MYSQL ]
+	static Connection getConnectionMySQL(String user, String password, String url){
+		return null;
+	}
+
 	
 	// 데이터베이스 값 삽입
 	public void insertDatabase(List<String[]> allRowsData);

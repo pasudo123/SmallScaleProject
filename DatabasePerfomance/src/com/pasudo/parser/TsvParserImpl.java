@@ -25,11 +25,11 @@ import com.univocity.parsers.tsv.TsvWriterSettings;
 
 public class TsvParserImpl implements ParserMaker{
 	
-	private TsvParserSettings parserSettings = null;	// TSV 파일 셋팅 객체
-	private TsvParser tsvParser = null;					// TSV 파서 객체
+	private TsvParserSettings tsvParserSettings = null;	// TSV 읽기 파일 셋팅 객체
+	private TsvParser tsvParser = null;					// TSV 읽기 파서 객체
 	
-	private TsvWriterSettings writerSettings = null;	
-	private TsvWriter tsvWriter = null;
+	private TsvWriterSettings tsvWriterSettings = null;	// TSV 쓰기 파일 셋팅 객체
+	private TsvWriter tsvWriter = null;					// TSV 쓰기 객체
 	
 	private BufferedReader bufferedReader = null;	// 파일 읽기 위함
 	private FileReader fileReader = null;			// 
@@ -44,9 +44,9 @@ public class TsvParserImpl implements ParserMaker{
 	
 	@Override
 	public void settingReadParser() {
-		parserSettings = new TsvParserSettings();
-		parserSettings.getFormat().setLineSeparator("\r\n");		// 라인단위로 읽음
-		tsvParser = new TsvParser(parserSettings);
+		tsvParserSettings = new TsvParserSettings();
+		tsvParserSettings.getFormat().setLineSeparator("\r\n");		// 라인단위로 읽음
+		tsvParser = new TsvParser(tsvParserSettings);
 	}
 	
 	@Override
@@ -73,14 +73,14 @@ public class TsvParserImpl implements ParserMaker{
 	@Override
 	public void settingWriteParser() {
 		try {
-			writerSettings = new TsvWriterSettings();
-			writerSettings.getFormat().setLineSeparator("\r\n");
+			tsvWriterSettings = new TsvWriterSettings();
+			tsvWriterSettings.getFormat().setLineSeparator("\r\n");
 			
 			// DB ㅡ> TSV (오름차순, 내림차순)
 			fileWriter = new FileWriter("src/File/doc_copy_DESC.tsv");
 			bufferedWriter = new BufferedWriter(fileWriter);
 			
-			tsvWriter = new TsvWriter(bufferedWriter, writerSettings);
+			tsvWriter = new TsvWriter(bufferedWriter, tsvWriterSettings);
 		} 
 		catch (IOException e) {
 			System.out.println("TsvParserImpl : IOException");
