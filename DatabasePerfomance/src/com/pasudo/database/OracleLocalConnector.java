@@ -1,13 +1,11 @@
 package com.pasudo.database;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class OracleLocalConnector implements ConnectionMaker{
 	
@@ -16,34 +14,12 @@ public class OracleLocalConnector implements ConnectionMaker{
 	private ResultSet resultSet = null;
 	private List<String[]> resultAllRowsData = null;
 	
-	@Override
-	public void getConnetion(String user, String password, String url) {
-		try {
-			// DB 연결
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			connection = DriverManager.getConnection(url, user, password);
-		} 
-		catch (ClassNotFoundException e) {
-			System.out.println("OracleConnector : ClassNotFound");
-			e.printStackTrace();
-		}
-		catch (SQLException e){
-			System.out.println("OracleConnector : SQLException");
-			@SuppressWarnings("resource")
-			Scanner inputLine = new Scanner(System.in);
-			
-			// SQL 에러 경우, 새롭게 user password, url을 새롭게 삽입한다.
-			String _user = inputLine.next();
-			String _pass = inputLine.next();
-			String _url = inputLine.next();
-			
-			getConnetion(_user, _pass, _url);
-		}
+	public OracleLocalConnector(){
+		connection = ConnectionMaker.decisionDatabase(this);
 	}
 
 	@Override
 	public void insertDatabase(List<String[]> allRowsData) {
-		
 		int size = allRowsData.size();
 		
 		// 라인 : 0번째는 해당 칼럼의 헤더가 있기 때문에 생략 (TSV 기준)
