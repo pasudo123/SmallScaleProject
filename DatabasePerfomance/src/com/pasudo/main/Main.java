@@ -32,9 +32,9 @@ public class Main {
 		// 해당 코드도 결국 QueryCollection 이 변경되면 변경될 수 밖에 없는 구조를 가지고 있다.
 		tableName = "PASUDO_DOC";
 		QueryCollection.addTableNameOnInsert(tableName);
-		QueryCollection.addOrderByAscOnSelect(tableName);
+		QueryCollection.addTableNameOnSelect(tableName);
 		
-		convertDatabase2File();
+//		convertDatabase2File();
 		convertFile2Database();
 		
 		//-- 시간 측정 (종료)
@@ -45,7 +45,7 @@ public class Main {
 		/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 		 * 		  [ Parser 설정 ]
 		 **ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
-//		TYPE_PARSE = EnumParseFile.TSV;
+		TYPE_PARSE = EnumParseFile.TSV;
 //		TYPE_PARSE = EnumParseFile.TAGGED_FORMAT;
 //		TYPE_PARSE = EnumParseFile.JSON;
 //		TYPE_PARSE = EnumParseFile.CSV;
@@ -58,20 +58,26 @@ public class Main {
 		 *  [ Database Connector 설정 ]
 		 **ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
 //		TYPE_DB = EnumDatabase.ORACLE_LOCAL;
-//		TYPE_DB = EnumDatabase.ORACLE_REMOTE;
+		TYPE_DB = EnumDatabase.ORACLE_REMOTE;
 //		TYPE_DB = EnumDatabase.MYSQL_LOCAL;
 		
 		integration.setConnectorMaker(TYPE_DB);
 	}
 	
-	// 파일을 데이터베이스로 변환
+	
 	private static void convertFile2Database(){
+		/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+		 *     [ FILE >> DATABASE ]
+		 **ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
 		integration.file2Database();
 	}
 	
 	// 데이터베이스를 파일로 변환
 	private static void convertDatabase2File(){
-
+		/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+		 *     [ DATABASE >> FILE ]
+		 **ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
+		
 		/**
 		 * ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 		 * 
