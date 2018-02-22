@@ -16,10 +16,10 @@ public class Main {
 		
 	public static void main(String[]args){
 		integration = getIntegration();
-		settingIntegration(integration);
-		settingPerformTimer();
+//		settingIntegration(integration);
 		
-		//-- 시간 측정 (시작)
+		//-- 타이머 생성 & 시간 측정 (시작)
+		settingPerformTimer();
 		performTimer.start();
 		
 //		convertDatabase2File(integration);

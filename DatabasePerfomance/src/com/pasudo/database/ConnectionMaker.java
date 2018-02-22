@@ -7,26 +7,32 @@ import java.util.List;
 import java.util.Scanner;
 
 public interface ConnectionMaker {	
-	// 데이터베이스 선택
+	
+	// static method [ DB 결정  ]
 	static Connection decisionDatabase(ConnectionMaker connectionMaker){
 		// Oracle 로컬 연결
 		if(connectionMaker instanceof OracleLocalConnector)
-			return getConnectionOnOracle("double", "doublepass", "jdbc:oracle:thin:@localhost:1521:xe");
+			return getConnectionOnOracle(EnumUserAccount.ORACLE_LOCAL.getID(), EnumUserAccount.ORACLE_LOCAL.getPW(), EnumUserAccount.ORACLE_LOCAL.getURL());
 		
 		// Oracle 원격 연결
 		if(connectionMaker instanceof OracleRemoteConnector)
-			return getConnectionOnOracle("scott", "tiger2016", "jdbc:oracle:thin:@//10.1.51.33:1521/ASPDB3");
+			return getConnectionOnOracle(EnumUserAccount.ORACLE_REMOTE.getID(), EnumUserAccount.ORACLE_REMOTE.getPW(), EnumUserAccount.ORACLE_REMOTE.getURL());
+		
+		// Mysql 로컬 연결
+		if(connectionMaker instanceof MysqlLocalConnector)
+			return null;
 		
 		return null;
 	}
 	
 	// static method [ ORACLE ]
 	static Connection getConnectionOnOracle(String user, String password, String url){
+		
 		Connection connection = null;
 
 		try {
 			// DB 연결
-			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Class.forName(EnumUserAccount.getClassForName(EnumUserAccount.ORACLE));
 			connection = DriverManager.getConnection(url, user, password);
 		} 
 		catch (ClassNotFoundException e) {
