@@ -33,18 +33,6 @@ public enum EnumUserAccount {
 	private static String url;
 	private static String classForName;
 	
-	public static String getClassForName(EnumUserAccount ua) {
-		switch (ua) {
-		case ORACLE:
-			return ORACLE.getClassForName();
-		case MYSQL:
-			return MYSQL.getClassForName();
-		default:
-			System.out.println("null");
-			return null;
-		}
-	}
-	
 	/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 	 * 
 	 * abstract 로 선언하지 않는다.
@@ -61,5 +49,5 @@ public enum EnumUserAccount {
 	public String getURL(){ return url; }
 	
 	// private 인 이유는, 해당 열거형 내부 메소드에서만 이용한다.
-	private String getClassForName() {return classForName; }
+	public String getClassForName() { return classForName; }
 }
