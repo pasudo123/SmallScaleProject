@@ -15,6 +15,7 @@ import com.pasudo.parser.TaggedFormatParserImpl;
 import com.pasudo.parser.TsvParserImpl;
 
 public class IntegrationImpl implements Integration{
+	
 	// ConnectionMaker & ParseMaker 를 합침
 	private ConnectionMaker connectionMaker = null;
 	private ParserMaker parserMaker = null;
