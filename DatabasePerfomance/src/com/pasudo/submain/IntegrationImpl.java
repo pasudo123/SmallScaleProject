@@ -3,37 +3,49 @@ package com.pasudo.submain;
 import java.util.List;
 
 import com.pasudo.database.ConnectionMaker;
+import com.pasudo.database.MysqlLocalConnector;
 import com.pasudo.database.OracleLocalConnector;
 import com.pasudo.database.OracleRemoteConnector;
+import com.pasudo.main.EnumDatabase;
+import com.pasudo.main.EnumParseFile;
 import com.pasudo.parser.CsvParserImpl;
 import com.pasudo.parser.JsonParserImpl;
 import com.pasudo.parser.ParserMaker;
 import com.pasudo.parser.TaggedFormatParserImpl;
 import com.pasudo.parser.TsvParserImpl;
 
-public class Integration {
+public class IntegrationImpl implements Integration{
 	// ConnectionMaker & ParseMaker 를 합침
 	private ConnectionMaker connectionMaker = null;
-	private ParserMaker parseMaker = null;
+	private ParserMaker parserMaker = null;
 	
 	
 	/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 	 * 
 	 *				   [ Connector ]
 	 *
-	 * (1) Oracle (Local)
-	 * (2) Oracle (Remote)
-	 * (3) MySQL (Local)
+	 * (1) -- Oracle (Local)
+	 * (2) -- Oracle (Remote)
+	 * (3) -- MySQL (Local)
 	 * 
 	 **ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
-	// 오라클 로컬 커넥터 세팅 
-	public void setOracleLocalConnector(){
-		connectionMaker = new OracleLocalConnector();
-	}
-	
-	// 오라클 원격 커넥터 세팅
-	public void setOracleRemoteConnector(){
-		connectionMaker = new OracleRemoteConnector();
+	@Override
+	public void setConnectorMaker(EnumDatabase database) {
+		switch (database) {
+		// 오라클 로컬 커넥터 세팅
+		case ORACLE_LOCAL:
+			connectionMaker = new OracleLocalConnector();
+			break;
+
+		// 오라클 원격 커넥터 세팅
+		case ORACLE_REMOTE:
+			connectionMaker = new OracleRemoteConnector();
+			break;
+
+		// MySQL 로컬 커넥터 세팅
+		case MYSQL_LOCAL:
+			connectionMaker = new MysqlLocalConnector();
+		}
 	}
 	
 	
@@ -47,44 +59,51 @@ public class Integration {
 	 * (4) -- CSV
 	 * 
 	 **ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
-	// TSV 파싱 메이커 세팅
-	public void setTsvParseMaker(){
-		parseMaker = new TsvParserImpl();
+	@Override
+	public void setParseMaker(EnumParseFile parseFile) {
+		switch (parseFile) {
+		// TSV 파싱 메이커 세팅
+		case TSV: // TSV 파싱 메이커 세팅
+			parserMaker = new TsvParserImpl();
+			break;
+
+		// TaggedFormat 파싱 메이커 세팅
+		case TAGGED_FORMAT:
+			parserMaker = new TaggedFormatParserImpl();
+			break;
+
+		// JSON 파싱 메이커 세팅
+		case JSON:
+			parserMaker = new JsonParserImpl();
+			break;
+
+		// CSV 파싱 메이커 세팅
+		case CSV:
+			parserMaker = new CsvParserImpl();
+		}
+		
+		return;
 	}
-	
-	// TaggedFormat 파싱 메이커 세팅
-	public void setTaggedFormatParseMaker(){
-		parseMaker = new TaggedFormatParserImpl();
-	}
-	
-	// JSON 파싱 메이커 세팅
-	public void setJsonParseMaker(){
-		parseMaker = new JsonParserImpl();
-	}
-	
-	// CSV 파싱 메이커 세팅
-	public void setCsvParserMaker(){
-		parseMaker = new CsvParserImpl();
-	}
-	
+
 	/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 	 * 
-	 *		    [ DataBase, Input & Output ] 
+	 *		   		[ FILE >> DATABASE ] 
 	 *
-	 * (1) Input
-	 * (2) Output
-	 * 
 	 **ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
-	// 파일의 데이터를 데이터베이스에 [ 삽입  ]
-	public void inputDatabase(){
-		// 파일 데이터 값 획득 및 데이터베이스 값 삽입
-		List<String[]> allRowsData = parseMaker.read();
+	@Override
+	public void file2Database() {
+		List<String[]> allRowsData = parserMaker.read();
 		connectionMaker.insertDatabase(allRowsData);
 	}
-	
-	// 데이버베이스에서 데이터 [ 추출  ] 후 파일로 변환
-	public void outputDatabase(String sortCase, int flag){
-		List<String[]> allRowsData = connectionMaker.selectDatabase(sortCase, flag);
-		parseMaker.write(allRowsData);
+
+	/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+	 * 
+	 *		   		[ DATABASE >> FILE ] 
+	 *
+	 **ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+	@Override
+	public void database2File(String standard, Integer order) {
+		List<String[]> allRowsData = connectionMaker.selectDatabase(standard, order);
+		parserMaker.write(allRowsData);
 	}
 }
