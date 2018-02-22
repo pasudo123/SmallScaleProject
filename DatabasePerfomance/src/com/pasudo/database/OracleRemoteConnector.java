@@ -35,6 +35,7 @@ public class OracleRemoteConnector implements ConnectionMaker{
 	public void insertDatabase(List<String[]> allRowsData) {
 		int size = allRowsData.size();
 		String query = null;
+		int counter = 1;
 		
 		/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 		 * 
@@ -57,13 +58,19 @@ public class OracleRemoteConnector implements ConnectionMaker{
 			String[]data = allRowsData.get(line);
 			executeInsertQuery(data[0], data[1], data[2]);
 
-			if(line % 10000 == 0)
-				System.out.println(size + " / " + line);
-			
-			/** add PreparedStatement batch **/
 			try {
+				/** add PreparedStatement batch **/
+				if(line % 1000 == 0){
+					preparedStatement.executeBatch();
+					connection.commit();
+					System.out.println("Batch "+ (counter++) +" executed successfully");
+					
+					System.out.println(size + " / " + line);
+				}
+				
+				// executeUpdate() 메소드 대신에 addBatch() 메소드 실행 
+				// addBatch() : 쿼리와 파라미터들을 배치에 추가 이후 executeBatch() 실행
 				preparedStatement.addBatch();
-				preparedStatement.clearParameters();
 			} 
 			catch (SQLException e) {
 				e.printStackTrace();
@@ -73,6 +80,7 @@ public class OracleRemoteConnector implements ConnectionMaker{
 		
 		try {
 			/** Batch END **/
+			// executeBatch() 메소드를 수행해서 한번에 쿼리를 수행한다.
 			preparedStatement.executeBatch();
 			connection.commit();
 			/** Batch END **/
@@ -88,9 +96,12 @@ public class OracleRemoteConnector implements ConnectionMaker{
 	@Override
 	public void executeInsertQuery(String DOC_SEQ, String TITLE, String REG_DT) {
 		try {
+			
+			/** 중요*, execute 하지 않는다. **/
 			preparedStatement.setInt(1, Integer.parseInt(DOC_SEQ));
 			preparedStatement.setString(2, TITLE);
 			preparedStatement.setString(3, REG_DT);
+			
 		} 
 		catch (SQLException e) {
 			System.out.println("Oracle [Remote] Connector : SQLException");
