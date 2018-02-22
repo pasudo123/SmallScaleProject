@@ -7,17 +7,20 @@ import java.util.List;
 import java.util.Scanner;
 
 public interface ConnectionMaker {	
-	
+
 	// static method [ DB 결정  ]
 	static Connection decisionDatabase(ConnectionMaker connectionMaker){
+
 		// Oracle 로컬 연결
-		if(connectionMaker instanceof OracleLocalConnector)
+		if(connectionMaker instanceof OracleLocalConnector){
+			EnumUserAccount.ORACLE_LOCAL.setUserAccount();
 			return getConnectionOnOracle(EnumUserAccount.ORACLE_LOCAL.getID(), EnumUserAccount.ORACLE_LOCAL.getPW(), EnumUserAccount.ORACLE_LOCAL.getURL());
-		
+		}
 		// Oracle 원격 연결
-		if(connectionMaker instanceof OracleRemoteConnector)
+		if(connectionMaker instanceof OracleRemoteConnector){
+			EnumUserAccount.ORACLE_REMOTE.setUserAccount();
 			return getConnectionOnOracle(EnumUserAccount.ORACLE_REMOTE.getID(), EnumUserAccount.ORACLE_REMOTE.getPW(), EnumUserAccount.ORACLE_REMOTE.getURL());
-		
+		}
 		// Mysql 로컬 연결
 		if(connectionMaker instanceof MysqlLocalConnector)
 			return null;
@@ -32,7 +35,8 @@ public interface ConnectionMaker {
 
 		try {
 			// DB 연결
-			Class.forName(EnumUserAccount.getClassForName(EnumUserAccount.ORACLE));
+			EnumUserAccount.ORACLE.setClassforName();
+			Class.forName(EnumUserAccount.ORACLE.getClassForName());
 			connection = DriverManager.getConnection(url, user, password);
 		} 
 		catch (ClassNotFoundException e) {
@@ -56,7 +60,7 @@ public interface ConnectionMaker {
 	}
 	
 	// static method [ MYSQL ]
-	static Connection getConnectionMySQL(String user, String password, String url){
+	static Connection getConnectionOnMySQL(String user, String password, String url){
 		return null;
 	}
 
