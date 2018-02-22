@@ -7,12 +7,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.pasudo.parser.EnumDocName;
+
 public class OracleLocalConnector implements ConnectionMaker{
 	
 	private Connection connection = null;
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
-	private List<String[]> resultAllRowsData = null;
+	
+	private String DOC_SEQ = EnumDocName.COLUMN_HEADER_DOC_SEQ.getName();
+	private String TITLE = EnumDocName.COLUMN_HEADER_DOC_TITLE.getName();
+	private String REG_DT = EnumDocName.COLUMN_HEADER_DOC_REG_DT.getName();
 	
 	public OracleLocalConnector(){
 		connection = ConnectionMaker.decisionDatabase(this);
@@ -42,8 +47,7 @@ public class OracleLocalConnector implements ConnectionMaker{
 	}
 	
 	public void executeInsertQuery(String DOC_SEQ, String TITLE, String REG_DT){
-		String query = "INSERT INTO PASUDO_DOC VALUES(?, ?, ?)";
-//		String query = "INSERT INTO PASUDO_DOC_COPY VALUES(?, ?, ?)";
+		String query = QueryCollection.getInsertQuery();
 		
 		try {
 			preparedStatement = connection.prepareStatement(query);
@@ -55,95 +59,40 @@ public class OracleLocalConnector implements ConnectionMaker{
 			preparedStatement.executeUpdate();
 		} 
 		catch (SQLException e) {
-			System.out.println("OracleLocalConnector : SQLException");
+			System.out.println("Oracle [Local] Connector : SQLException");
 			System.out.println(DOC_SEQ + ", " + TITLE + ", " + REG_DT);
-			System.out.println(query);
 			e.printStackTrace();
 		}
 		finally{
 			// statement >> close
-			if(preparedStatement != null)
+			if(preparedStatement != null){
 				try {
 					preparedStatement.close();
 				} 
 				catch (SQLException e) {
 					e.printStackTrace();
 				}
+			}
 		}
 	}
 	
 	@Override
-	public List<String[]> selectDatabase(String sortCase, int flag) {
-		switch(sortCase){
-			case "DOC_SEQ":
-				if(flag == 1 || flag == -1)
-					resultAllRowsData = executeSelectQueryBySortingOnDOC_SEQ(flag);
-				break;
-				
-			case "TITLE":
-				if(flag == 1 || flag == -1)
-					resultAllRowsData = executeSelectQueryBySortingOnTITLE(flag);
-				break;
-				
-			case "REG_DT":
-				if(flag == 1 || flag == -1)
-					resultAllRowsData = executeSelectQueryBySortingOnREG_DT(flag);
-				break;
-				
-			default:
-				resultAllRowsData = executeSelectQuery();
+	public List<String[]> selectDatabase(String sortCase, Integer order) {
+		if(sortCase.equals(DOC_SEQ) || sortCase.equals(TITLE) || sortCase.equals(REG_DT)){
+			if(order ==  1)
+				QueryCollection.addOrderByAscOnSelect(sortCase);
+			if(order == -1)
+				QueryCollection.addOrderByDescOnSelect(sortCase);
 		}
-		return resultAllRowsData;
+			
+		return executeSelectQuery(QueryCollection.getSelectQuery());
 	}
 
 	@Override
-	public List<String[]> executeSelectQuery() {
+	public List<String[]> executeSelectQuery(String paramQuery) {
 		// 조회 쿼리
-		String query = "SELECT * FROM PASUDO_DOC";
-					
+		String query = paramQuery;
 		return resultSetProcess(query);
-	}
-
-	@Override
-	public List<String[]> executeSelectQueryBySortingOnDOC_SEQ(int flag) {
-		String sortingQuery = null;
-		
-		// +1 : 오름차순 (DOC_SEQ Column 기준)
-		if(flag == 1)
-			sortingQuery = "SELECT * FROM PASUDO_DOC ORDER BY DOC_SEQ ASC"; 
-		// -1 : 내림차순 (DOC_SEQ Column 기준)
-		if(flag == -1)
-			sortingQuery = "SELECT * FROM PASUDO_DOC ORDER BY DOC_SEQ DESC";
-		
-		return resultSetProcess(sortingQuery);
-	}
-	
-	@Override
-	public List<String[]> executeSelectQueryBySortingOnTITLE(int flag) {
-		String sortingQuery = null;
-		
-		// +1 : 오름차순 (DOC_SEQ Column 기준)
-		if(flag == 1)
-			sortingQuery = "SELECT * FROM PASUDO_DOC ORDER BY TITLE ASC"; 
-		// -1 : 내림차순 (DOC_SEQ Column 기준)
-		if(flag == -1)
-			sortingQuery = "SELECT * FROM PASUDO_DOC ORDER BY TITLE DESC";
-		
-		return resultSetProcess(sortingQuery);
-	}
-	
-	@Override
-	public List<String[]> executeSelectQueryBySortingOnREG_DT(int flag) {
-		String sortingQuery = null;
-		
-		// +1 : 오름차순 (DOC_SEQ Column 기준)
-		if(flag == 1)
-			sortingQuery = "SELECT * FROM PASUDO_DOC ORDER BY REG_DT ASC"; 
-		// -1 : 내림차순 (DOC_SEQ Column 기준)
-		if(flag == -1)
-			sortingQuery = "SELECT * FROM PASUDO_DOC ORDER BY REG_DT DESC";
-		
-		return resultSetProcess(sortingQuery);
 	}
 
 	@Override
@@ -157,9 +106,9 @@ public class OracleLocalConnector implements ConnectionMaker{
 			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()){
-				String docSeq = String.valueOf(resultSet.getInt("DOC_SEQ"));
-				String title = resultSet.getString("TITLE");
-				String registerDate = resultSet.getString("REG_DT");
+				String docSeq = String.valueOf(resultSet.getInt(DOC_SEQ));
+				String title = resultSet.getString(TITLE);
+				String registerDate = resultSet.getString(REG_DT);
 				
 				String[] rowDatas = {docSeq, title, registerDate};
 				allRowsData.add(rowDatas);
