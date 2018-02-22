@@ -44,6 +44,7 @@ public class OracleRemoteConnector implements ConnectionMaker{
 		 *ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
 		
 		try{
+			// 기본적으로 커밋의 자동수행을 false 로 변경한다.( 기본이 true 이기 때문에 )
 			connection.setAutoCommit(false);
 			query = QueryCollection.getInsertQuery();
 			preparedStatement = connection.prepareStatement(query);
@@ -60,10 +61,10 @@ public class OracleRemoteConnector implements ConnectionMaker{
 
 			try {
 				/** add PreparedStatement batch **/
-				if(line % 1000 == 0){
-					preparedStatement.executeBatch();
-					connection.commit();
-					System.out.println("Batch "+ (counter++) +" executed successfully");
+				if(line % 30000 == 0){
+//					preparedStatement.executeBatch();
+//					connection.commit();
+//					System.out.println("Batch "+ (counter++) +" executed successfully");
 					
 					System.out.println(size + " / " + line);
 				}
