@@ -27,11 +27,7 @@ public class JsonParserImpl implements ParserMaker{
 	
 	private BufferedWriter bufferedWriter = null;	// 파일 쓰기 위함
 	private FileWriter fileWriter = null;
-	
-	private static final String COLUMN_DOC_SEQ = "DOC_SEQ";
-	private static final String COLUMN_TITLE = "TITLE";
-	private static final String COLUMN_REG_DT = "REG_DT";
-	
+
 	@Override
 	public void settingReadParser() {
 		return;
@@ -41,7 +37,6 @@ public class JsonParserImpl implements ParserMaker{
 	public List<String[]> read() {
 		return null;
 	}
-
 
 	@Override
 	public void settingWriteParser() {
@@ -68,9 +63,9 @@ public class JsonParserImpl implements ParserMaker{
 			
 			jsonSubObject = new JSONObject();
 			
-			jsonSubObject.put(COLUMN_DOC_SEQ, rowDatas[0]);
-			jsonSubObject.put(COLUMN_TITLE, rowDatas[1]);
-			jsonSubObject.put(COLUMN_REG_DT, rowDatas[2]);
+			jsonSubObject.put(EnumDocName.COLUMN_HEADER_DOC_SEQ.getName(), rowDatas[0]);
+			jsonSubObject.put(EnumDocName.COLUMN_HEADER_DOC_TITLE.getName(), rowDatas[1]);
+			jsonSubObject.put(EnumDocName.COLUMN_HEADER_DOC_REG_DT.getName(), rowDatas[2]);
 			
 			jsonArray.add(jsonSubObject);
 		}// for

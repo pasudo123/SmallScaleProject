@@ -15,14 +15,7 @@ public class TaggedFormatParserImpl implements ParserMaker{
 	
 	private BufferedReader bufferedReader = null;	// 파일 읽기 위함
 	private FileReader fileReader = null;	
-	
-	// Tagged Format 에 맞춘 형식
-	private static final String DOC_START_TAG = "^[START]";
-	private static final String DOC_COLUMN_DOC_SEQ = "[DOC_SEQ]";
-	private static final String DOC_COLUMN_TITLE = "[TITLE]";
-	private static final String DOC_COLUMN_REG_DT = "[REG_DT]";
-	private static final String DOC_END_TAG = "^[END]";
-	
+
 	@Override
 	public void settingReadParser() {
 		try{
@@ -45,22 +38,22 @@ public class TaggedFormatParserImpl implements ParserMaker{
 		String[] data = new String[3];
 		String line = null;
 		
-		data[0] = DOC_COLUMN_DOC_SEQ;
-		data[1] = DOC_COLUMN_TITLE;
-		data[2] = DOC_COLUMN_REG_DT;
+		data[0] = EnumDocName.TAG_COLUMN_DOC_SEQ.getName();
+		data[1] = EnumDocName.TAG_COLUMN_DOC_TITLE.getName();
+		data[2] = EnumDocName.TAG_COLUMN_DOC_REG_DT.getName();
 		allRowsData.add(data);
 		data = new String[3];
 		
 		try {
 			while((line = bufferedReader.readLine()) != null){
 				
-				if(line.equals(DOC_COLUMN_DOC_SEQ))
+				if(line.equals(EnumDocName.TAG_COLUMN_DOC_SEQ.getName()))
 					data[0] = bufferedReader.readLine();
 					
-				if(line.equals(DOC_COLUMN_TITLE))
+				if(line.equals(EnumDocName.TAG_COLUMN_DOC_TITLE.getName()))
 					data[1] = bufferedReader.readLine();
 						
-				if(line.equals(DOC_COLUMN_REG_DT)){
+				if(line.equals(EnumDocName.TAG_COLUMN_DOC_REG_DT.getName())){
 					data[2] = bufferedReader.readLine();
 					allRowsData.add(data);
 					data = new String[3];
@@ -94,21 +87,23 @@ public class TaggedFormatParserImpl implements ParserMaker{
 		for(String[] rowDatas : allRowsData){
 			try {
 				
-				bufferedWriter.append(DOC_START_TAG);
+				bufferedWriter.append(EnumDocName.TAG_COLUMN_START.getName());
 				bufferedWriter.newLine();
-				bufferedWriter.append(DOC_COLUMN_DOC_SEQ);
+				
+				bufferedWriter.append(EnumDocName.TAG_COLUMN_DOC_SEQ.getName());
 				bufferedWriter.newLine();
 				bufferedWriter.append(rowDatas[0]);
 				bufferedWriter.newLine();
-				bufferedWriter.append(DOC_COLUMN_TITLE);
+				bufferedWriter.append(EnumDocName.TAG_COLUMN_DOC_TITLE.getName());
 				bufferedWriter.newLine();
 				bufferedWriter.append(rowDatas[1]);
 				bufferedWriter.newLine();
-				bufferedWriter.append(DOC_COLUMN_REG_DT);
+				bufferedWriter.append(EnumDocName.TAG_COLUMN_DOC_REG_DT.getName());
 				bufferedWriter.newLine();
 				bufferedWriter.append(rowDatas[2]);
 				bufferedWriter.newLine();
-				bufferedWriter.append(DOC_END_TAG);
+				
+				bufferedWriter.append(EnumDocName.TAG_COLUMN_END.getName());
 				bufferedWriter.newLine();
 			} catch (IOException e) {
 				e.printStackTrace();

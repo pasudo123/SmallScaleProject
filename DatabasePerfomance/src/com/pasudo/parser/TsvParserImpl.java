@@ -37,11 +37,6 @@ public class TsvParserImpl implements ParserMaker{
 	private BufferedWriter bufferedWriter = null;	// 파일 쓰기 위함
 	private FileWriter fileWriter = null;
 	
-	// 헤더 칼럼 명
-	private static final String COLUMN_HEADER_DOC_SEQ = "DOC_SEQ";
-	private static final String COLUMN_HEADER_TITLE = "TITLE";
-	private static final String COLUMN_HEADER_REG_DT = "REG_DT";
-	
 	@Override
 	public void settingReadParser() {
 		tsvParserSettings = new TsvParserSettings();
@@ -94,12 +89,9 @@ public class TsvParserImpl implements ParserMaker{
 		settingWriteParser();
 		
 		// 헤더 삽입
-		tsvWriter.writeHeaders(COLUMN_HEADER_DOC_SEQ, COLUMN_HEADER_TITLE, COLUMN_HEADER_REG_DT);
-		
-		for(int i = 0; i < allRowsData.size(); i++){
-			tsvWriter.writeRow(allRowsData.get(i));
-		}
-		
+		tsvWriter.writeHeaders(EnumDocName.COLUMN_HEADER_DOC_SEQ.getName(), EnumDocName.COLUMN_HEADER_DOC_TITLE.getName(), EnumDocName.COLUMN_HEADER_DOC_REG_DT.getName());
+		for(String[] rowData : allRowsData)
+			tsvWriter.writeRow(rowData);
 		tsvWriter.close();
 	}
 }
