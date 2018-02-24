@@ -23,9 +23,9 @@ public interface ConnectionMaker {
 		}
 		// Mysql 로컬 연결
 		if(connectionMaker instanceof MysqlLocalConnector)
-			return null;
-		
-		return null;
+			EnumUserAccount.MYSQL_LOCAL.setUserAccount();
+			return getConnectionOnMySQL(EnumUserAccount.MYSQL_LOCAL.getID(), EnumUserAccount.MYSQL_LOCAL.getPW(), EnumUserAccount.MYSQL_LOCAL.getURL());
+
 	}
 	
 	// static method [ ORACLE ]
@@ -35,7 +35,7 @@ public interface ConnectionMaker {
 
 		try {
 			// DB 연결
-			EnumUserAccount.ORACLE.setClassforName();
+			EnumUserAccount.ORACLE.setClassForName();
 			Class.forName(EnumUserAccount.ORACLE.getClassForName());
 			connection = DriverManager.getConnection(url, user, password);
 		} 
@@ -61,7 +61,32 @@ public interface ConnectionMaker {
 	
 	// static method [ MYSQL ]
 	static Connection getConnectionOnMySQL(String user, String password, String url){
-		return null;
+		
+		Connection connection = null;
+		
+		try{
+			EnumUserAccount.MYSQL.setClassForName();
+			Class.forName(EnumUserAccount.MYSQL.getClassForName());
+			connection = DriverManager.getConnection(url, user, password);
+		}
+		catch (ClassNotFoundException e) {
+			System.out.println("MysqlConnector : ClassNotFound");
+			e.printStackTrace();
+		}
+		catch (SQLException e){
+			System.out.println("MysqlConnector : SQLException");
+			@SuppressWarnings("resource")
+			Scanner inputLine = new Scanner(System.in);
+			
+			// SQL 에러 경우, 새롭게 user password, url을 새롭게 삽입한다.
+			String _user = inputLine.next();
+			String _pass = inputLine.next();
+			String _url = inputLine.next();
+			
+			getConnectionOnOracle(_user, _pass, _url);
+		}
+		
+		return connection;
 	}
 	
 	
