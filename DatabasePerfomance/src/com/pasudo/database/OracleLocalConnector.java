@@ -19,6 +19,7 @@ public class OracleLocalConnector implements ConnectionMaker{
 	private String TITLE = EnumDocName.COLUMN_HEADER_DOC_TITLE.getName();
 	private String REG_DT = EnumDocName.COLUMN_HEADER_DOC_REG_DT.getName();
 	
+	// 기본 생성자
 	public OracleLocalConnector(){
 		connection = ConnectionMaker.decisionDatabase(this);
 	}
