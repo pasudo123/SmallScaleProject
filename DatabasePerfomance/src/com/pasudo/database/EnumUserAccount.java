@@ -2,10 +2,10 @@ package com.pasudo.database;
 
 public enum EnumUserAccount {
 	
-	// 초기 생성자
+	// [ORACLE]
 	ORACLE{
 		@Override
-		public void setClassforName(){
+		public void setClassForName(){
 			classForName = "oracle.jdbc.driver.OracleDriver";
 		}
 	},
@@ -25,11 +25,28 @@ public enum EnumUserAccount {
 			url = "jdbc:oracle:thin:@//10.1.51.33:1521/ASPDB3";
 		}
 	},
-	MYSQL,
-	MYSQL_LOCAL {};
+	
+	
+	// [MYSQL]
+	MYSQL{
+		@Override
+		public void setClassForName(){
+			classForName = "com.mysql.jdbc.Driver";
+		}
+	},
+	MYSQL_LOCAL {
+		@Override
+		public void setUserAccount(){
+			id = "doubler";
+			pw = "doublerpass";
+			db = "daum";
+			url = "jdbc:mysql://localhost:3306/" + getDB();
+		}
+	};
 	
 	private static String id;
 	private static String pw;
+	private static String db;
 	private static String url;
 	private static String classForName;
 	
@@ -41,12 +58,13 @@ public enum EnumUserAccount {
 	 * 
 	 *ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
 	public void setUserAccount(){}
-	public void setClassforName(){}
+	public void setClassForName(){}
 	
 	// 열거형 내부에 오버라이딩 되었고 이후에 다른 클래스에서 이용하기 위해서 public 선언
 	public String getID(){ return id; }
 	public String getPW(){ return pw; }
 	public String getURL(){ return url; }
+	public String getDB() { return db; }
 	
 	// private 인 이유는, 해당 열거형 내부 메소드에서만 이용한다.
 	public String getClassForName() { return classForName; }
