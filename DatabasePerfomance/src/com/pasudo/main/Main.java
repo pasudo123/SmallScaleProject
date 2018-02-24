@@ -58,8 +58,8 @@ public class Main {
 		 *  [ Database Connector 설정 ]
 		 **ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
 //		TYPE_DB = EnumDatabase.ORACLE_LOCAL;
-		TYPE_DB = EnumDatabase.ORACLE_REMOTE;
-//		TYPE_DB = EnumDatabase.MYSQL_LOCAL;
+//		TYPE_DB = EnumDatabase.ORACLE_REMOTE;
+		TYPE_DB = EnumDatabase.MYSQL_LOCAL;
 		
 		integration.setConnectorMaker(TYPE_DB);
 	}
