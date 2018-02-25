@@ -24,8 +24,9 @@ public interface ConnectionMaker {
 		// Mysql 로컬 연결
 		if(connectionMaker instanceof MysqlLocalConnector)
 			EnumUserAccount.MYSQL_LOCAL.setUserAccount();
-			return getConnectionOnMySQL(EnumUserAccount.MYSQL_LOCAL.getID(), EnumUserAccount.MYSQL_LOCAL.getPW(), EnumUserAccount.MYSQL_LOCAL.getURL());
-
+		
+		return getConnectionOnMySQL(EnumUserAccount.MYSQL_LOCAL.getID(), EnumUserAccount.MYSQL_LOCAL.getPW(), EnumUserAccount.MYSQL_LOCAL.getMysqlBatchUrl());
+//		return getConnectionOnMySQL(EnumUserAccount.MYSQL_LOCAL.getID(), EnumUserAccount.MYSQL_LOCAL.getPW(), EnumUserAccount.MYSQL_LOCAL.getURL());
 	}
 	
 	// static method [ ORACLE ]
@@ -67,6 +68,7 @@ public interface ConnectionMaker {
 		try{
 			EnumUserAccount.MYSQL.setClassForName();
 			Class.forName(EnumUserAccount.MYSQL.getClassForName());
+			System.out.println(url);
 			connection = DriverManager.getConnection(url, user, password);
 		}
 		catch (ClassNotFoundException e) {

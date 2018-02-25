@@ -37,7 +37,7 @@ public class MysqlLocalConnector implements ConnectionMaker{
 		
 		try{
 			// 기본적으로 커밋의 자동수행을 false 로 변경한다.( 기본이 true 이기 때문에 )
-//			connection.setAutoCommit(false);
+			connection.setAutoCommit(false);
 			query = QueryCollection.getInsertQuery();
 			preparedStatement = connection.prepareStatement(query);
 		} 
@@ -51,31 +51,30 @@ public class MysqlLocalConnector implements ConnectionMaker{
 			String[]data = allRowsData.get(line);
 			executeInsertQuery(data[0], data[1], data[2]);
 
-//			try {
+			try {
 				/** add PreparedStatement batch **/
-				if(line % 100000 == 0){
-//					preparedStatement.executeBatch();
-//					connection.commit();
-//					System.out.println("Batch "+ (counter++) +" executed successfully");
-					
+				if(line % 50000 == 0){
+					preparedStatement.executeBatch();
+					connection.commit();
+					System.out.println("Batch "+ (counter++) +" executed successfully");
 					System.out.println(size + " / " + line);
 				}
 				
 				// executeUpdate() 메소드 대신에 addBatch() 메소드 실행 
 				// addBatch() : 쿼리와 파라미터들을 배치에 추가 이후 executeBatch() 실행
-//				preparedStatement.addBatch();
-//			} 
-//			catch (SQLException e) {
-//				e.printStackTrace();
-//			}
+				preparedStatement.addBatch();
+			} 
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}// for
 		
 		
 		try {
 			/** Batch END **/
 			// executeBatch() 메소드를 수행해서 한번에 쿼리를 수행한다.
-//			preparedStatement.executeBatch();
-//			connection.commit();
+			preparedStatement.executeBatch();
+			connection.commit();
 			/** Batch END **/
 			
 			preparedStatement.close();
@@ -94,7 +93,7 @@ public class MysqlLocalConnector implements ConnectionMaker{
 			preparedStatement.setString(2, TITLE);
 			preparedStatement.setString(3, REG_DT);
 			
-			preparedStatement.executeUpdate();
+//			preparedStatement.executeUpdate();
 		} 
 		catch (SQLException e) {
 			System.out.println("Oracle [Remote] Connector : SQLException");
