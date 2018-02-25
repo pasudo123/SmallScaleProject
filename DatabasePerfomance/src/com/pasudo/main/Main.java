@@ -18,6 +18,7 @@ public class Main {
 		Integration integration = new IntegrationImpl();
 		return integration;
 	}
+	
 		
 	public static void main(String[]args){
 		integration = getIntegration();
@@ -30,7 +31,7 @@ public class Main {
 		
 		// INSERT 테이블 결정 & SELECT 테이블 결정
 		// 해당 코드도 결국 QueryCollection 이 변경되면 변경될 수 밖에 없는 구조를 가지고 있다.
-		tableName = "PASUDO_DOC";
+//		tableName = "PASUDO_DOC_COPY";
 		QueryCollection.addTableNameOnInsert(tableName);
 		QueryCollection.addTableNameOnSelect(tableName);
 		
@@ -57,9 +58,9 @@ public class Main {
 		/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 		 *  [ Database Connector 설정 ]
 		 **ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
-//		TYPE_DB = EnumDatabase.ORACLE_LOCAL;
+		TYPE_DB = EnumDatabase.ORACLE_LOCAL;
 //		TYPE_DB = EnumDatabase.ORACLE_REMOTE;
-		TYPE_DB = EnumDatabase.MYSQL_LOCAL;
+//		TYPE_DB = EnumDatabase.MYSQL_LOCAL;
 		
 		integration.setConnectorMaker(TYPE_DB);
 	}
