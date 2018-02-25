@@ -41,14 +41,25 @@ public enum EnumUserAccount {
 			pw = "doublerpass";
 			db = "daum";
 			url = "jdbc:mysql://localhost:3306/" + getDB();
+			mysqlBatchUrl = "jdbc:mysql://localhost:3306/" + getDB() + "?" + getMysqlBatchProperties();
 		}
+		
+		/**
+		 * 
+		 * [ MySQL 배치 처리 관련 참고 URL ]
+		 * 
+		 * reference : https://www.journaldev.com/2494/jdbc-batch-insert-update-mysql-oracle
+		 * 
+		 * **/
 	};
 	
 	private static String id;
 	private static String pw;
 	private static String db;
 	private static String url;
+	private static String mysqlBatchUrl;
 	private static String classForName;
+	private static String mysqlBatchProperties = "rewriteBatchedStatements=true";
 	
 	/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 	 * 
@@ -64,7 +75,9 @@ public enum EnumUserAccount {
 	public String getID(){ return id; }
 	public String getPW(){ return pw; }
 	public String getURL(){ return url; }
+	public String getMysqlBatchUrl() { return mysqlBatchUrl; }
 	public String getDB() { return db; }
+	public String getMysqlBatchProperties() { return mysqlBatchProperties; }
 	
 	// private 인 이유는, 해당 열거형 내부 메소드에서만 이용한다.
 	public String getClassForName() { return classForName; }
