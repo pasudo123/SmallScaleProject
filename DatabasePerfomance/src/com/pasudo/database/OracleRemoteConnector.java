@@ -133,8 +133,7 @@ public class OracleRemoteConnector implements ConnectionMaker{
 			if(order == -1)
 				QueryCollection.addOrderByDescOnHintSelect(sortCase);
 		}
-		
-		return executeSelectQuery(QueryCollection.getSelectHintQuery());
+				return executeSelectQuery(QueryCollection.getSelectHintQuery());
 	}
 
 	@Override

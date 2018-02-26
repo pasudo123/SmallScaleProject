@@ -72,7 +72,7 @@ public class TsvParserImpl implements ParserMaker{
 			tsvWriterSettings.getFormat().setLineSeparator("\r\n");
 			
 			// DB ㅡ> TSV (오름차순, 내림차순)
-			fileWriter = new FileWriter("src/File/doc_copy_DESC.tsv");
+			fileWriter = new FileWriter("src/File/doc_copy_hint_ASC.tsv");
 			bufferedWriter = new BufferedWriter(fileWriter);
 			
 			tsvWriter = new TsvWriter(bufferedWriter, tsvWriterSettings);

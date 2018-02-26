@@ -19,7 +19,7 @@ public class TaggedFormatParserImpl implements ParserMaker{
 	@Override
 	public void settingReadParser() {
 		try{
-			fileReader = new FileReader("src/File/tagged_format_TITLE_ASC.txt");
+			fileReader = new FileReader("src/File/tagged_format_TITLE_DESC.txt");
 			bufferedReader = new BufferedReader(fileReader);
 		}
 		catch(IOException e){
