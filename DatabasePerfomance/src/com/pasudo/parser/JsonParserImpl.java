@@ -41,7 +41,7 @@ public class JsonParserImpl implements ParserMaker{
 	@Override
 	public void settingWriteParser() {
 		try {
-			fileWriter = new FileWriter("src/File/doc_DESC.json");
+			fileWriter = new FileWriter("src/File/json_REG_DT_DESC.json");
 			bufferedWriter = new BufferedWriter(fileWriter);
 
 			jsonArray = new JSONArray();

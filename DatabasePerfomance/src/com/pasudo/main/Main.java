@@ -31,12 +31,12 @@ public class Main {
 		
 		// INSERT 테이블 결정 & SELECT 테이블 결정
 		// 해당 코드도 결국 QueryCollection 이 변경되면 변경될 수 밖에 없는 구조를 가지고 있다.
-//		tableName = "PASUDO_DOC_COPY";
+		tableName = "PASUDO_DOC";
 		QueryCollection.addTableNameOnInsert(tableName);
 		QueryCollection.addTableNameOnSelect(tableName);
-		
-//		convertDatabase2File();
-		convertFile2Database();
+
+//		convertFile2Database();
+		convertDatabase2File();
 		
 		//-- 시간 측정 (종료)
 		performTimer.end();
@@ -58,8 +58,8 @@ public class Main {
 		/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 		 *  [ Database Connector 설정 ]
 		 **ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
-		TYPE_DB = EnumDatabase.ORACLE_LOCAL;
-//		TYPE_DB = EnumDatabase.ORACLE_REMOTE;
+//		TYPE_DB = EnumDatabase.ORACLCE_LOCAL;
+		TYPE_DB = EnumDatabase.ORACLE_REMOTE;
 //		TYPE_DB = EnumDatabase.MYSQL_LOCAL;
 		
 		integration.setConnectorMaker(TYPE_DB);
@@ -83,12 +83,12 @@ public class Main {
 		 * ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 		 * 
 		 * -- [ 정렬 기준  ] : DOC_SEQ // TITLE // REG_DT
-		 * -- [ 오름차순 or 내림차순  ]
+		 * -- [ 오름차순(1) or 내림차순(-1) or 일반(0) ]
 		 * 
 		 * ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 		 * **/
-		
-		integration.database2File("REG_DT", -1);
+
+		integration.database2File("DOC_SEQ", 1);
 	}
 	
 	private static void settingPerformTimer(){

@@ -48,7 +48,7 @@ public class CsvParserImpl implements ParserMaker{
 			csvWriterSettings.setEmptyValue("Empty");
 			
 			// DB ㅡ> CSV (일반)
-			fileWriter = new FileWriter("src/File/doc_csv.csv");
+			fileWriter = new FileWriter("src/File/csv.csv");
 			bufferedWriter = new BufferedWriter(fileWriter);
 			
 			csvWriter = new CsvWriter(bufferedWriter, csvWriterSettings);
