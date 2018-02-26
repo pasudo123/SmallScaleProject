@@ -18,12 +18,12 @@ public class QueryCollection {
 	
 	// Select 구문, 오름차순
 	public static void addOrderByAscOnSelect(String standard){
-		SELECT_QUERY = QueryCollection.SELECT_QUERY.concat("WHERE " + standard + " ORDER BY ASC");
+		SELECT_QUERY = QueryCollection.SELECT_QUERY.concat("ORDER BY " + standard + " ASC");
 	}
 	
 	// Select 구문, 내림차순
 	public static void addOrderByDescOnSelect(String standard){
-		SELECT_QUERY = QueryCollection.SELECT_QUERY.concat("WHERE " + standard + " ORDER BY DESC");
+		SELECT_QUERY = QueryCollection.SELECT_QUERY.concat("ORDER BY " + standard + " DESC");
 	}
 	
 	// Select 쿼리 구문 획득
