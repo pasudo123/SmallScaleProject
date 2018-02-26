@@ -53,11 +53,11 @@ public class OracleLocalConnector implements ConnectionMaker{
 			
 			try {
 				/** add PreparedStatement batch **/
-				if(line % 1000 == 0){
-					preparedStatement.executeBatch();
-					connection.commit();
-					
-					System.out.println("Batch "+ (counter++) +" executed successfully");
+				if(line % 100000 == 0){
+//					preparedStatement.executeBatch();
+//					connection.commit();
+//					
+//					System.out.println("Batch "+ (counter++) +" executed successfully");
 					System.out.println(size + " / " + line);
 				}
 				
