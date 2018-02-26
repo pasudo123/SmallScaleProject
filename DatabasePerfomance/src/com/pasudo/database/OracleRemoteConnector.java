@@ -113,16 +113,15 @@ public class OracleRemoteConnector implements ConnectionMaker{
 
 	@Override
 	public List<String[]> selectDatabase(String sortCase, Integer order) {
-//		if(sortCase.equals(DOC_SEQ) || sortCase.equals(TITLE) || sortCase.equals(REG_DT)){
-//			if(order ==  1)
-//				QueryCollection.addOrderByAscOnSelect(sortCase);
-//			if(order == -1)
-//				QueryCollection.addOrderByDescOnSelect(sortCase);
-//		}
-//			
-//		return executeSelectQuery(QueryCollection.getSelectQuery());
-		
-		return hintSelectDatabase(sortCase, order);
+		if(sortCase.equals(DOC_SEQ) || sortCase.equals(TITLE) || sortCase.equals(REG_DT)){
+			if(order ==  1)
+				QueryCollection.addOrderByAscOnSelect(sortCase);
+			if(order == -1)
+				QueryCollection.addOrderByDescOnSelect(sortCase);
+		}
+			
+		return executeSelectQuery(QueryCollection.getSelectQuery());
+//		return hintSelectDatabase(sortCase, order);
 	}
 	
 	// 힌트 쿼리문
@@ -150,6 +149,9 @@ public class OracleRemoteConnector implements ConnectionMaker{
 			// 조회 쿼리
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
+			
+			System.out.println("OracleRemoteConnector : resultSet.setFetchSize(10000)");
+			resultSet.setFetchSize(10000);
 			
 			while(resultSet.next()){
 				String docSeq = String.valueOf(resultSet.getInt(DOC_SEQ));
