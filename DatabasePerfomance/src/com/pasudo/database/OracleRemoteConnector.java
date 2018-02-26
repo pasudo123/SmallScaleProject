@@ -113,14 +113,28 @@ public class OracleRemoteConnector implements ConnectionMaker{
 
 	@Override
 	public List<String[]> selectDatabase(String sortCase, Integer order) {
+//		if(sortCase.equals(DOC_SEQ) || sortCase.equals(TITLE) || sortCase.equals(REG_DT)){
+//			if(order ==  1)
+//				QueryCollection.addOrderByAscOnSelect(sortCase);
+//			if(order == -1)
+//				QueryCollection.addOrderByDescOnSelect(sortCase);
+//		}
+//			
+//		return executeSelectQuery(QueryCollection.getSelectQuery());
+		
+		return hintSelectDatabase(sortCase, order);
+	}
+	
+	// 힌트 쿼리문
+	private List<String[]> hintSelectDatabase(String sortCase, Integer order){
 		if(sortCase.equals(DOC_SEQ) || sortCase.equals(TITLE) || sortCase.equals(REG_DT)){
 			if(order ==  1)
-				QueryCollection.addOrderByAscOnSelect(sortCase);
+				QueryCollection.addOrderByAscOnHintSelect(sortCase);
 			if(order == -1)
-				QueryCollection.addOrderByDescOnSelect(sortCase);
+				QueryCollection.addOrderByDescOnHintSelect(sortCase);
 		}
-			
-		return executeSelectQuery(QueryCollection.getSelectQuery());
+		
+		return executeSelectQuery(QueryCollection.getSelectHintQuery());
 	}
 
 	@Override
