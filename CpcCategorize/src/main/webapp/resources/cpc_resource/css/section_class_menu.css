@@ -1,0 +1,40 @@
+
+div.mainCpcWrapper {
+    border-bottom: 1.2px dashed #1767ff;
+    padding: 10px 0px 20px 0px;
+}
+
+div.mainCpcWrapper span:nth-child(1) {
+    font-size: 26px;
+    color: #1767ff;
+}
+
+div.mainCpcWrapper span:nth-child(2) {
+    font-size: 14px;
+}
+
+div.mainCpcWrapper span:nth-child(3) {
+    font-size: 14px;
+}
+
+div.classWrapper{
+	width:1000px;
+	height:auto;
+	margin:0 auto;
+}
+
+a.classHref{
+	text-decoration: none;
+    color:#3b3838;
+    font-size:18px;
+}
+
+a.classHref:hover{
+	color:#f035b8;
+	text-decoration: underline;
+}
+
+span.translationText{
+	font-size:12px;
+}
+
