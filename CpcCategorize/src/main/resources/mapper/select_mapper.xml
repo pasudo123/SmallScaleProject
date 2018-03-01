@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="edu.doubler.dao.CpcDao">
+
+
+	<!-- 전체 CPC 섹션 획득 -->
+	<select
+		id="selectCpcSection"
+		resultType="edu.doubler.dao.CpcDto">
+		
+		SELECT
+			CODE as code
+		FROM 
+			CPC_TB
+		WHERE CODE LIKE '_'
+		
+	</select>
+	
+	
+	<!-- 해당 Code 에 대한 CPC 데이터 획득  -->
+	<select 
+		id="selectCpcData"
+		parameterType="edu.doubler.dao.CpcDtoString"
+		resultType="edu.doubler.dao.CpcDto">
+	
+		SELECT
+			CODE as code,
+			ORIGINAL as originalText,
+			TRANSLATION as translationText
+		FROM 
+			CPC_TB 
+		WHERE 
+			CODE = #{stringVariable}
+	</select>
+	
+	
+	<!--  해당 섹션에 대해서 클래스를 오름차순으로 조회   -->
+	<select
+		id="selectClassBySection" 
+		parameterType="edu.doubler.dao.CpcDtoString" 
+		resultType="edu.doubler.dao.CpcDto">
+		SELECT 
+			CODE as code,
+			ORIGINAL as originalText,
+			TRANSLATION as translationText
+		FROM CPC_TB WHERE CODE LIKE
+	
+		'${stringVariable}__'
+
+		ORDER BY CODE ASC
+	</select>
+	 
+	<!-- 해당 클래스에 대한 서브 클래스 오름차순 조회 -->
+	<select
+		id="selectSubClassByClass"
+		parameterType="edu.doubler.dao.CpcDtoString"
+		resultType="edu.doubler.dao.CpcDto">
+		SELECT 
+			CODE as code,
+			ORIGINAL as originalText,
+			TRANSLATION as translationText
+		FROM
+			CPC_TB
+		WHERE
+			CODE
+		LIKE
+		
+			'${stringVariable}_'
+			
+		ORDER BY CODE ASC
+	</select>
+	
+	<!-- 해당 서브 클래스에 대한 하위 목록 오름차순 조회 (코드만 추출) -->
+	<select
+		id="selectChildBySubClass"
+		parameterType="edu.doubler.dao.CpcDtoString"
+		resultType="edu.doubler.dao.CpcDto">
+		SELECT
+			CODE as code
+		FROM	
+			CPC_TB
+		WHERE
+			CODE
+		LIKE
+			'${stringVariable}_%'
+		ORDER BY CODE ASC
+	</select>
+</mapper>
