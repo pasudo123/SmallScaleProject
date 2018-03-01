@@ -1,0 +1,96 @@
+@CHARSET "UTF-8";
+/**** Common ****/
+
+@font-face{
+    font-family: 'NanumSquareEB';
+    src:url(../font/NanumSquareEB.ttf) format('truetype');
+}
+
+body{
+	color:#3b3838;
+    font-family:'NanumSquareEB';
+    margin:0;
+}
+
+/**
+
+ㅡㅡㅡ 기본 사이즈 설정 ㅡㅡㅡ
+
+- width : 1480px
+- height : ? px
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+**/
+
+div.Wrapper{
+    width:100%;
+    height:100%;
+}
+
+
+/**
+ㅡㅡㅡ CPC 분류표 타이틀 ㅡㅡㅡ
+**/
+div.titleWrapper{
+    width:1480px;
+    height:100px;
+    margin:0 auto;
+    /* border:1px solid red; */
+    text-align:center;
+    display:table;  
+}
+
+div.titleWrapper div{
+    /** 수직 중앙정렬 하기 위함**/    
+    display:table-cell;
+    vertical-align: middle;
+
+    /** 서비스 이름 폰트 **/
+    font-size:55px;
+}
+
+div.titleWrapper span{
+    /** 글자의 서로 간격 넓힘**/
+    padding-left:10px;
+    padding-right:10px;
+}
+
+
+/**
+ㅡㅡㅡ 섹션 메뉴 ㅡㅡㅡ
+**/
+div.menuWrapper{
+    width:1480px;
+    margin:0 auto;
+    text-align: center;
+    display:table;
+}
+
+div.menuWrapper > div.menuBar{
+    /** 수직 중앙정렬 하기 위함**/    
+    display:table-cell;
+    vertical-align: middle;
+}
+
+div.menuBar ul li{
+    display:inline;
+    padding:25px 4px;
+    font-size:20px;
+}
+
+li.gapBar{
+    margin:0 50px;
+}
+
+a.menuLink{
+    text-decoration: none;
+    color:#3b3838;
+    padding:25px 4px;
+    font-size:28px;
+}
+
+a.menuLink:hover{
+	/* 테마 색상이 되어야 함  */
+    color:#1e61ec;
+    border-bottom:2px solid #1e61ec;
+}
