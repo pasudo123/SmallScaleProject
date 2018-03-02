@@ -14,7 +14,6 @@ public class CpcDaoImpl implements CpcDao{
 	
 	// 맵퍼의 xml의 namespace를 연결하고자 하는 인터페이스의 풀 패키지 명으로 지정 --
 	private static final String NAME_SPACE = "edu.doubler.dao.CpcDao.";
-	private CpcDto cpcDto = new CpcDto();
 	private CpcDtoString cpcDtoString = new CpcDtoString();
 	
 	@Override
