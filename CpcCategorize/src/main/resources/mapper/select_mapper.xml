@@ -67,9 +67,7 @@
 		WHERE
 			CODE
 		LIKE
-		
 			'${stringVariable}_'
-			
 		ORDER BY CODE ASC
 	</select>
 	
