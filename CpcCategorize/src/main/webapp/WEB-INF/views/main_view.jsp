@@ -1,15 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE HTML>
 <HTML>
     <HEAD>
         <META CHARSET="UTF-8">
-        <link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/section_menu.css" />" >
-    	<link type="text/css" rel="stylesheet" href="<c:url value="/resources/css/section_class_menu.css" />" >
-   		<script type="text/javascript" src="<c:url value="/resources/js/jquery-3.3.1.min.js" />"></script>
-   		<script type="text/javascript" src="<c:url value="/resources/js/cpc.js" />"></script>
+        <spring:url value="/resources/cpc_resource/css/section_menu.css" var="sectionMenuCSS" />
+        <spring:url value="/resources/cpc_resource/css/section_class_menu.css" var="sectionClassMenuCSS" />
+        
+        <spring:url value="/resources/cpc_resource/js/jquery-3.3.1.min.js" var="jQuery" />
+        <spring:url value="/resources/cpc_resource/js/cpc.js" var="cpcJS" />
+        
+        <link type="text/css" rel="stylesheet" href="${sectionMenuCSS}" >
+        <link type="text/css" rel="stylesheet" href="${sectionClassMenuCSS}" >
+		
+		<script type="text/javascript" src="${jQuery}"></script>
+   		<script type="text/javascript" src="${cpcJS}"></script>
     </HEAD>
 
     <BODY>
