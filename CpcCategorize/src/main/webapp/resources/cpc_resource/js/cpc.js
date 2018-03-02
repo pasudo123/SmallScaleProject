@@ -54,23 +54,31 @@ $(document).ready(function(){
 		// CPC 코드에 대한 데이터 값
 		$.ajax({
 			type:'POST',
-			url:'./printCpcData',
-			data:{
-				"cpcCode" : name
-			},
+			url:'../../printCpcData',
+			data:{cpcCode : name},
+			dataType:"json",
 			
 			success:function(data){
 				// reference : http://blog.naver.com/PostView.nhn?blogId=k_rifle&logNo=177611312
 				// reference : http://roqkffhwk.tistory.com/35
-				// jQuery 1.4 이상의 버전에서 적용할 수 있는 방법 
-				thisObject.after($('<div/>',{
-					id:'originalDetailText',
-					
-				}));
 				
-				thisObject.after($('<div/>',{
-					
-				}));
+				// [ jQuery 셀렉터 ]
+				// reference : https://zetawiki.com/wiki/JQuery_%EC%85%80%EB%A0%89%ED%84%B0
+				// jQuery 1.4 이상의 버전에서 적용할 수 있는 방법 
+				
+				// [ $().next() ] 는 해당 태그의 바로 다음 태그를 지칭한다.
+				
+				$('a.classHref').css("color", "black");
+				$('a.classHref').next('div').css("display", "none");
+				
+				$(thisObject).css("color", "#f035b8");
+				
+				var animationWrapper = $(thisObject).next('div.animationWrapper');
+				var object = data;
+				
+				$(animationWrapper).css("display", "block");
+				$(animationWrapper).find('div.originalTextWrapper').text(object.originalText);
+				$(animationWrapper).find('div.translationTextWrapper').text(object.translationText);
 			}
 		});
 	});

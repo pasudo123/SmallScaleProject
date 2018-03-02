@@ -1,14 +1,24 @@
 package edu.doubler.main;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.doubler.dao.CpcDto;
 import edu.doubler.service.CpcService;
@@ -28,7 +38,7 @@ public class HomeController {
 	private CpcDto cpcDataDetail = null;
 	
 	// 기본 홈 화면
-	@RequestMapping("/")
+	@RequestMapping(value="/")
 	public String init(HttpServletRequest request, Model model){
 		/** ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ **/
 		model.addAttribute("mainCpcSection", getCpcSection());
@@ -39,7 +49,7 @@ public class HomeController {
 	
 	
 	// 섹션 선택 이후 클래스 추출
-	@RequestMapping("/{sectionName}")
+	@RequestMapping(value="/{sectionName}")
 	public String selectSection(
 	@PathVariable(value="sectionName") String sectionName,
 	Model model){
@@ -59,7 +69,7 @@ public class HomeController {
 	
 	// 클래스 선택 이후 서브 클래스 추출
 	// @PathVariable을 이용한 경로 변수 지정
-	@RequestMapping("/{sectionName}/{className}")
+	@RequestMapping(value="/{sectionName}/{className}")
 	public String selectClass(
 	@PathVariable(value="className") String className, Model model){
 		/** ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ **/
@@ -77,7 +87,7 @@ public class HomeController {
 	
 	// 서브 클래스 선택 이후 서브 클래스 하위 목록 전체 조회
 	// @PathVariable 을 이용
-	@RequestMapping("/{sectionName}/{className}/{subClassName}")
+	@RequestMapping(value="/{sectionName}/{className}/{subClassName}")
 	public String selectSubClass(
 	@PathVariable(value="subClassName") String subClassName, Model model){
 		/** ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ **/
@@ -94,14 +104,23 @@ public class HomeController {
 	}
 	
 	// ajax 이용 상세 데이터 획득
-	@RequestMapping("/printCpcData")
-	public String selectCpcData(HttpServletRequest request, Model model){
+	@RequestMapping(value="/printCpcData", method=RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String selectCpcData(@RequestParam("cpcCode") String paramCode, Model model) throws JsonGenerationException, JsonMappingException, IOException{
 		
-		String cpcCode = request.getParameter("cpcCode");
-		cpcDataDetail = cpcService.selectCpcData(cpcCode);
-		model.addAttribute("cpcDataDetail", cpcDataDetail);
+		cpcDataDetail = cpcService.selectCpcData(paramCode);
 		
-		return getMainView();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("code", cpcDataDetail.getCode());
+		map.put("originalText", cpcDataDetail.getOriginalText());
+		map.put("translationText", cpcDataDetail.getTranslationText());
+		
+		System.out.println(cpcDataDetail.getTranslationText());
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		String jsonString = objectMapper.writeValueAsString(map);
+		
+		return jsonString;
 	}
 	
 	
