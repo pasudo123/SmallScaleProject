@@ -42,9 +42,7 @@ public class CpcServiceImpl implements CpcService{
 		 * 
 		 * ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 		 **/
-		String parseCode = parseUrlName(code);
-
-		return cpcDao.selectCpcData(parseCode);
+		return cpcDao.selectCpcData(code);
 	}
 
 	
@@ -58,8 +56,6 @@ public class CpcServiceImpl implements CpcService{
 		 * ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 		 **/
 
-		sectionName = parseUrlName(sectionName);
-		
 		EnumSection[] enumSection = EnumSection.values();
 		for(EnumSection sectionType : enumSection){
 			if(sectionType.getSectionName().equals(sectionName)){
@@ -101,10 +97,5 @@ public class CpcServiceImpl implements CpcService{
 		
 		return subClassData;
 		
-	}
-	
-	// 들어오는 값에 대한 URL 전처리
-	private String parseUrlName(String name) {
-		return name.replaceAll("/", "");
 	}
 }
