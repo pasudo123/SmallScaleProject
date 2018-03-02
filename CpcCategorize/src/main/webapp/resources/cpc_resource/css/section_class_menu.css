@@ -23,6 +23,10 @@ div.classWrapper{
 	margin:0 auto;
 }
 
+div.dataWrapper{
+	padding-top:10px;
+}
+
 a.classHref{
 	text-decoration: none;
     color:#3b3838;
@@ -32,6 +36,10 @@ a.classHref{
 a.classHref:hover{
 	color:#f035b8;
 	text-decoration: underline;
+}
+
+div.animationWrapper{
+	display:none;
 }
 
 span.translationText{
