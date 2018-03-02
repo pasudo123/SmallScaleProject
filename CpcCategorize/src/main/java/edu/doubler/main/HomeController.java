@@ -25,6 +25,7 @@ public class HomeController {
 	private List<CpcDto> subClassDataList = null;
 	private List<CpcDto> childDataList = null;
 	private CpcDto cpcData = null;
+	private CpcDto cpcDataDetail = null;
 	
 	// 기본 홈 화면
 	@RequestMapping("/")
@@ -88,6 +89,17 @@ public class HomeController {
 		
 		model.addAttribute("cpcData", cpcData);
 		model.addAttribute("subDataList", childDataList);
+		
+		return getMainView();
+	}
+	
+	// ajax 이용 상세 데이터 획득
+	@RequestMapping("/printCpcData")
+	public String selectCpcData(HttpServletRequest request, Model model){
+		
+		String cpcCode = request.getParameter("cpcCode");
+		cpcDataDetail = cpcService.selectCpcData(cpcCode);
+		model.addAttribute("cpcDataDetail", cpcDataDetail);
 		
 		return getMainView();
 	}
