@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.douler.dao.PagingDao">
+	<select
+		id="getDataCount"
+		parameterType="StringVariable"
+		resultType="java.lang.Integer">
+		
+		<![CDATA[
+			SELECT count(*) FROM CPC_TB WHERE CODE LIKE '${stringVariable}_%'
+		]]>
+	</select>
+	
+	<select
+		id="getCpcDataList"
+		parameterType="java.util.Map"
+		resultType="edu.doubler.dao.CpcDto">
+		
+		<![CDATA[
+			SELECT CPC_DATA.* FROM 
+				(SELECT ROWNUM as rn, A.* FROM 
+					(SELECT * FROM CPC_TB WHERE CODE LIKE '${keyword}_%' ORDER BY CODE ASC) A
+				WHERE ROWNUM <= #{endNumber}) CPC_DATA
+			WHERE CPC_DATA.rn >= #{startNumer}
+		]]>
+	</select>
+</mapper>
