@@ -72,7 +72,7 @@
 	<!-- 해당 서브 클래스에 대한 하위 목록 오름차순 조회 (코드만 추출) -->
 	<select
 		id="selectChildBySubClass"
-		parameterType="edu.doubler.dao.CpcDtoString"
+		parameterType="StringVariable"
 		resultType="CpcData">
 		SELECT
 			CODE as code
