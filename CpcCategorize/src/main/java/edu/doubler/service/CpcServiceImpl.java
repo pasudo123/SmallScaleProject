@@ -17,7 +17,6 @@ public class CpcServiceImpl implements CpcService{
 	private List<CpcDto> sectionData = null;
 	private List<CpcDto> classData = null;
 	private List<CpcDto> subClassData = null;
-	
 
 	@Override
 	public List<CpcDto> selectCpcSection() {
