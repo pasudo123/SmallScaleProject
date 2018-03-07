@@ -46,3 +46,18 @@ span.translationText{
 	font-size:12px;
 }
 
+div.pagingWrapper {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+a.pagingBtn {
+    margin: 0px 5px;
+    text-decoration: none;
+    color: black;
+}
+
+a.pagingBtn:hover {
+    color: #1767ff;
+}
