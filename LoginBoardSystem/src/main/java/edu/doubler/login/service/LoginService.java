@@ -1,10 +1,12 @@
 package edu.doubler.login.service;
 
-import edu.doubler.login.domain.EnumDomainName;
+import edu.doubler.login.domain.AppleUser;
 
 public interface LoginService {
 	
-	// 로그인 진입
+	// id, pw 체크
+	public boolean checkUser(AppleUser appleUser);
+	
 	// 로그인 인증
 	// 로그인 결과
 }
