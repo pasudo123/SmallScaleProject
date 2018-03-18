@@ -8,6 +8,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.jdom.input.SAXBuilder;
 
 public class OpenAPI {
 	public static void main(String[]args){
@@ -17,7 +18,7 @@ public class OpenAPI {
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 		
 		// URL 설정
-		String url = EnumURLOnTourAPI.SELECT_AREA_CODE.getURL();
+		String url = EnumURLOnTourAPI.SELECT_AREA_BASED_LIST.getURL();
 		url += "?";
 		url += EnumParameterOnTourAPI.KEY.getKey() + "=" + EnumParameterOnTourAPI.KEY.getValue();
 		url += "&";
