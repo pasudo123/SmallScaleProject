@@ -1,0 +1,176 @@
+@charset "UTF-8";
+/**** Common ****/
+
+@font-face{
+    font-family: 'NanumSquareEB';
+    src:url(../font/NanumSquareEB.ttf) format('truetype');
+}
+
+@font-face{
+    font-family: 'NanumSquareB';
+    src:url(../font/NanumSquareB.ttf) format('truetype');
+}
+
+body{
+    color:#3b3838;
+    font-family:'NanumSquareEB';
+    margin:0;
+    width:100%;
+    height:auto;
+}
+
+div.bodyWrapper{
+    width:100%;
+    height:auto;
+}
+
+div.topLineWrapper{
+    width:100%;
+    height:10px;
+    background: blueviolet;
+}
+
+div.menuWrapper{
+    width:1480px;
+    height:100px;
+    margin:0 auto;
+    /* background:lightblue; */
+}
+
+div.highLevelMenu{
+    width:1480px;
+    height:100px;
+    display:table;
+    /* background: red; */
+}
+
+div.highLevelMenu > div{
+    display:table-cell;
+    vertical-align: middle;
+}
+
+div.highLevelMenu > div > div{
+    display:flex;
+    flex-direction:row;
+}
+
+hr{
+    width:1480px;
+    text-align: center;
+    border-bottom:none;
+    margin:0 auto;
+}
+/**
+lefeSide width : 160px;
+center width : 1080px;
+rightSide width : 240px;
+-----------------------
++) 1480px 결과 (= menu width)
+
+**/
+/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
+div.leftSide{
+    width:160px;
+    height:76px;
+    /* background: blanchedalmond; */
+}
+
+div.leftSide > img.logo{
+    width:76px;
+    height:auto;
+    margin-left:10px;
+    cursor:pointer;
+}
+
+div.leftSide > div{
+    float:right;
+    margin-top:24px;
+    margin-right:28px;
+    /* border:1px solid white; */
+    font-size:15px;
+    cursor:pointer;
+}
+
+/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
+div.center{
+    width:1080px;
+    height:76px;
+    /* background: lawngreen; */
+}
+
+div.center > ul{
+    margin-top: 63px; 
+    padding: 0px; 
+}
+
+li.mainList{
+    /* border:1px solid red; */
+    list-style-type: none; 
+    float:left;
+    width:60px;
+}
+
+li.mainList{
+    margin-left:160px;
+}
+
+span.mainTag{
+    font-size:18px;
+    color:#3b3838;
+}
+
+span.mainTag:hover{
+    cursor:pointer;
+    text-decoration: underline;
+}
+
+span.mainTag, span.subTag{
+    text-align: center;
+    text-decoration: none;
+    display:block;
+}
+
+span.subTag{
+    font-size:14px;
+    color:white;
+}
+
+span.subTag:hover{
+    color:blueviolet;
+    cursor:pointer;
+    text-decoration: underline;
+}
+
+li.mainList > ul{
+    list-style-type: none;
+    margin-top: 5px;
+    padding:0;
+
+    /** drop down menu **/
+    display:none; 
+    /** display:block; **/
+
+    width:150px;
+    background: gray;
+    padding-top:10px;
+    padding-bottom:10px;
+
+    /**
+    z-index & position :
+    https://developer.mozilla.org/ko/docs/Web/CSS/Understanding_z-index/Adding_z-index
+    **/
+    position: relative;
+    z-index:10;
+}
+
+ul.subList li{
+    margin-top:15px;
+    margin-bottom:15px;
+}
+
+/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
+div.rightSide{
+    width:240px;
+    height:76px;
+    background: rgb(18, 28, 88);
+}

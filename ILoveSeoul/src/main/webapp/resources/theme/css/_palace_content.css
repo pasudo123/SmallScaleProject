@@ -1,0 +1,50 @@
+@charset "UTF-8";
+/**** Common ****/
+
+@font-face{
+    font-family: 'NanumSquareEB';
+    src:url(../font/NanumSquareEB.ttf) format('truetype');
+}
+
+@font-face{
+    font-family: 'NanumSquareB';
+    src:url(../font/NanumSquareB.ttf) format('truetype');
+}
+
+div.contentWrapper{
+    margin:0 auto;
+    width:980px;
+}
+
+div.mapAndListWrapper{
+    margin-top:15px;
+    margin-bottom:20px;
+    width:980px;
+    height:540px;
+
+    display:flex;
+    flex-direction: row;
+}
+
+div.mapWrapper{
+    flex:1.8;
+    background: gray;
+}
+
+div.listWrapper{
+    flex:1;
+    background:goldenrod;
+}
+
+/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+            [ 다음 지도 API 관련 CSS ]
+        
+   - KEY : 0455bd291b8e2cb0f8f7532ada1c8f41
+       
+**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+
+div#map{
+    width:100%;
+    height:100%;
+}

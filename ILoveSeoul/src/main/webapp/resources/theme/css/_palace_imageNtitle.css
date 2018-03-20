@@ -1,0 +1,82 @@
+@charset "UTF-8";
+/**** Common ****/
+
+@font-face{
+    font-family: 'NanumSquareB';
+    src:url(../font/NanumSquareB.ttf) format('truetype');
+}
+
+/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
+div.imageAndTitleWrapper{
+    margin:0 auto;
+    width:760px;
+    height:180px;
+    border-bottom:1px solid black;
+}
+
+div.imageAndTitleWrapper > div{
+    margin-top:15px;
+    height:165px;
+    background: black;
+    border-top:2px solid white;
+    border-bottom:2px solid white;
+
+    display:flex;
+    flex-direction: row;
+    z-index:5;
+    /* flex : https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+}
+
+div.imageAndWrapper{
+    flex:2.5;
+    height:165px;
+    background: transparent;
+
+    /**
+    이미지 수직 가운데 정렬을 위해서 부모 태그도 수정
+    **/ 
+    overflow: hidden;
+    position: relative;
+}
+
+div.andTitleWrapper{
+    flex:4;
+    height:165px;
+    background:#3b3838;
+    color:white;
+}
+
+div.andTitleWrapper > div{
+    width:100%;
+    height:165px;
+    display:table;
+}
+
+div.andTitleWrapper > div > span{
+    display:table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+div.andTitleWrapper > div > span > span{
+    padding:42px 165px;
+    border:2px solid white;
+    font-size:24px;
+    font-family: 'NanumSquareB';
+    letter-spacing: 5px;
+}
+
+
+div.imageAndTitleWrapper img{
+    /**
+    https://jonathannicol.com/blog/2014/06/16/centre-crop-thumbnails-with-css/
+    **/
+    width:100%;
+    height:auto;
+    position: absolute;
+    left:50%;
+    top:50%;
+    -webkit-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+}
