@@ -78,4 +78,7 @@ nb-configuration.xml
 release.properties
 pom.xml.releaseBackup
 pom.xml.tag
+<<<<<<< HEAD
 /DaumNewsService/
+=======
+>>>>>>> cb77bba46633e09eaacca054b89b9b9b3e096dfb
