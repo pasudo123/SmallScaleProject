@@ -21,7 +21,7 @@ div.mapAndListWrapper{
     margin-bottom:20px;
     width:980px;
     height:540px;
-
+	
     display:flex;
     flex-direction: row;
 }
@@ -33,7 +33,7 @@ div.mapWrapper{
 
 div.listWrapper{
     flex:1;
-    background:goldenrod;
+/*     background:goldenrod; */
 }
 
 /**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
@@ -47,4 +47,68 @@ div.listWrapper{
 div#map{
     width:100%;
     height:100%;
+}
+
+/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+		   [ 위치 기반 관련 데이터 CSS ]
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
+div.listTitleWrapper{
+/*     background:red; */
+    width:100%;
+    height:60px;
+}
+
+div.list{
+    width:100%;
+    height:420px;
+/*     background:lightgrey; */
+}
+
+div.list ul{
+    margin:0;
+    padding:0;
+    height:420px;
+}
+
+div.list > li{
+    list-style:none;
+}
+
+div.list li > div{
+    width:100%;
+    height:64px;
+    margin-top:30px;
+    display:flex;
+}
+
+div.thumbnailWrapper{
+    border:1px solid white;
+    flex:3;
+}
+
+div.thumbnailWrapper img{
+    width:100%;
+    height:auto;
+}
+
+div.locationInfoWrapper{
+    border:1px solid red;
+    flex:6;
+    font-size:14px;
+    line-height:21px;
+    width:1px;
+}
+
+div.locationInfoWrapper div{
+	/* 	텍스트 생략 기호 사용 */
+	overflow: hidden; 
+	text-overflow: ellipsis;
+	white-space:nowrap;
+}
+
+div.locationPathToWrapper{
+    border:1px solid blue;
+    flex:2;
 }

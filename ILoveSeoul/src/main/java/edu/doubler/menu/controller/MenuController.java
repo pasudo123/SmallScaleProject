@@ -1,8 +1,6 @@
 package edu.doubler.menu.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import edu.doubler.domain.AreaBasedData;
-import edu.doubler.domain.PalaceType;
 import edu.doubler.enum_api.EnumPalaceType;
 import edu.doubler.menu.service.MenuService;
 
@@ -27,29 +23,53 @@ public class MenuController {
 	private static final Logger logger = LoggerFactory.getLogger(MenuController.class);
 	EnumPalaceType[]palaceTypes = EnumPalaceType.values();
 	
+	// -- 시작화면
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Model model) {
+		
 		model.addAttribute("palaceTypes", palaceTypes);
+		
 		return "i_love_seoul/lls_palace_menu";
 	}
 	
-	@RequestMapping(value = "/select_sigungu", method = RequestMethod.POST)
-	public String selectMenu(
-	@RequestParam("parentCate") String parentCate,
-	@RequestParam("childCate") String childCate,
+	// -- 주변 살피기
+	@RequestMapping(value = "/show_observe", method=RequestMethod.POST)
+	public String observe(
+	@RequestParam("palaceName") String palaceName,	// 고궁 이름	
+	@RequestParam("mapX") String mapX,				// 위도
+	@RequestParam("mapY") String mapY,				// 경도
+	@RequestParam("radius") String radius,			// 반경
 	Model model){
 		
-		logger.info("선택 카테고리 : " + parentCate);
-		logger.info("선택한 자치구 : " + childCate);
+		logger.info(palaceName + " 주변살피기");
+		List<Object> locationDataList = menuServive.selectListOnLocationBasedInfo(mapX, mapY, "1000");
 		
-		List<AreaBasedData> dataList = menuServive.selectList(parentCate, childCate);
+		model.addAttribute("palaceName", palaceName);
+		model.addAttribute("palaceMapX", mapX);
+		model.addAttribute("palaceMapY", mapY);
+		model.addAttribute("locationDataList", locationDataList);
 		
-		for(AreaBasedData data : dataList){
-			logger.info(data.toString());
-		}
-		
-		model.addAttribute("dataList", dataList);
-		
-		return "i_love_seoul/lls_list";
+		return "i_love_seoul/lls_content";
 	}
+	
+	// -- 주변 살피기 페이지 이동 ( 페이지 처리 )
+	@RequestMapping(value = "/observe_movement", method=RequestMethod.GET)
+	public String observeMovement(
+	@RequestParam("page") String page,
+	Model model){
+		
+		
+		
+		return null;
+	}
+	
+	@RequestMapping(value = "/show_pathTo", method=RequestMethod.POST)
+	public String pathTo(){
+		
+		logger.info("가는 길");
+		
+		return null;
+	}
+	
+	// -- 길찾기 
 }

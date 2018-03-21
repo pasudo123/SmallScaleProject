@@ -15,7 +15,7 @@
 		    <div class="andTitleWrapper">
 		        <div>
 		            <span>
-		                <span class="palaceName">궁이름</span>
+		                <span class="palaceName">박 성 동</span>
 		            </span>
 		        </div>
 		    </div>

@@ -7,20 +7,29 @@ public enum EnumParameterOnTourAPI {
 	 * - 사용 OS
 	 * - 서비스명
 	 * - 리턴 타입 
-	 * - 한 페이지의 결과수
+	 * - 한 페이지의 결과수 ( 4개 )
 	 * - 페이지 번호
 	 * - 정렬순 (조회순 : 이미지 있는 것 위주)
-	 * - 지역코드 (서울, 고정값)
-	 * - 시군구 코드
+	 * ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+	 * - 위도 (mapX)
+	 * - 경도 (mapY)
+	 * ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+	 * - 반경 (3Km)
 	 * ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
+	
+	// ㅡㅡ 공통 파라미터
 	KEY("ServiceKey", "tyrbXoE8jfVmZvX%2FFKgs9vd4zUEwUB30QLmcqddik7nLGFOLSmwZxil%2FQ1Hj9u6q%2BsjZhFJwFOngtvc6EcGrSA%3D%3D"),
 	MOBILE_OS("MobileOS", "ETC"),
 	MOBILE_APP("MobileApp", "doublerTour"),
 	JSON("_type", "json"),
-	NUMBER_OF_ROWS("numOfRows", "5"),
+	NUMBER_OF_ROWS("numOfRows", "4"),
 	PAGE_NO("pageNo", "1"),
 	ARRANGE("arrange", "P"),
-	AREA_CODE("areaCode", "1");
+	
+	// ㅡㅡ 특정 파라미터 ( LocationBasedList )
+	MAP_X("mapX"),
+	MAP_Y("mapY"),
+	RADIUS("radius");
 	
 	private String key = null;
 	private String value = null;

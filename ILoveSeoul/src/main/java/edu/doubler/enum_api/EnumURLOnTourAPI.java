@@ -13,7 +13,11 @@ public enum EnumURLOnTourAPI {
 	 * 
 	 * - 활용 사례명 : doublerTour
 	 * ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
-	SELECT_AREA_BASED_LIST("http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList");
+	
+	// 지역기반 위치 조회
+	// 장소기반 위치 조회
+	SELECT_AREA_BASED_LIST("http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList"),
+	SELECT_LOCATION_BASED_LIST("http://api.visitkorea.or.kr/openapi/service/rest/KorService/locationBasedList");
 	
 	private String url = null;
 	
