@@ -18,10 +18,14 @@
             	
                 // 궁궐 이름
             	var palaceName;
+                var palaceEngName;
 				var addr;
 				var mapX;
 				var mapY;
-				var radius= "testRadius";
+				var pageNo = 1;
+				
+				// setInterval() 호출 
+				var timer;
 				
 				// 메인 메뉴 클릭
                 $('span.mainTag').click(function(){
@@ -32,11 +36,16 @@
 
                         $(this).css("color", "royalblue");
                         $(this).next().slideDown(250);
+                        
                         palaceName = $(this).text();
+                        palaceEngName = $(this).attr("id");
                         
                         addr = $(this).next().find('input#addr').val();
                         mapX = $(this).next().find('input#mapX').val();
                         mapY = $(this).next().find('input#mapY').val();
+                        
+                        // setInterval() 중지 ( 혹시 시작되고 있는 게 있을수도 있으니깐 )
+                        clear(timer);
                     }
                     
                     // 기존의 메뉴를 클릭하는 경우 (닫기)
@@ -57,15 +66,35 @@
                 	
                 	// 가는 길, 주변 살피기
                 	if(purpose == "pathTo")
-                		urlText = "/show_pathTo";
+                		urlText = "./show_pathTo";
                 	else if(purpose = "observe")
-                		urlText = "/show_observe";
+                		urlText = "./show_observe";
                 	
 					// 이름 변경              	
                 	$('span.palaceName').text(palaceName);
-                	
+					
+					// img 에 setInterval() 걸기
+					$(function(){
+						var count = 1;
+						
+						// 3초마다 사진 변경
+						timer = setInterval(function(){			
+							$('div.imageAndWrapper').find('img').fadeOut(2000, function(){
+								$('div.imageAndWrapper').find('img').attr("src", "resources/image/palaceImage/" + palaceEngName + "_" + count + ".jpg");
+								$('div.imageAndWrapper').find('img').fadeIn(2000);
+							});
+							
+							count = count + 1;
+							
+							if(count == 5)
+								count = 1;
+							
+						}, 6000);
+					});
+					
+					
                 	$.ajax({
-                		data : {"palaceName":palaceName, "mapX" : mapX, "mapY" : mapY, "radius" : radius},
+                		data : {"palaceName":palaceName, "mapX" : mapX, "mapY" : mapY, "pageNo" : pageNo},
                 		type : "POST",
                 		url : urlText,
                 		success:function(data){
@@ -92,7 +121,7 @@
                     <div>
                         <div>
                             <div class="leftSide">
-                                <img class="logo" src="resources/image/block.png"  />
+                                <img class="logo" src="resources/image/mainLogo.png"  />
                                 <div>
                                     <div>I</div>
                                     <div>Love</div>
@@ -137,7 +166,7 @@
 			</div>
 	
 			<div class="botLineWrapper">
-	            
+	            <div></div>
             </div>
         </div>
     </BODY>

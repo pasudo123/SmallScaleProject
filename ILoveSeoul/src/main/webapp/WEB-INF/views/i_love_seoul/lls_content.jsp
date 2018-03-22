@@ -11,8 +11,23 @@
         
         <SCRIPT>
         	$(document).ready(function(){
+        		
+        		var totalCount = '${totalCount}';
+        		var pageNo = '${pageNo}';
+        		
+        		// [ 이전 ] 보이기
+        		if(pageNo == '' || pageNo == 1)
+        			$('div.prev').css("visibility", "hidden");
+        		else
+        			$('div.prev').css("visibility", "visible");
+        		
+        		if(pageNo == '' || pageNo * 4 > totalCount)
+        			$('div.next').css("visibility", "hidden");
+        		else
+        			$('div.next').css("visibility", "visible");
+				
+        		// 길 찾기 버튼 클릭
         		$('div.locationPathToWrapper').click(function(){
-        			
         			// 길찾기 url 창 띄워주기 
         			// http://map.daum.net/link/to/name(도착 장소명), mapY(도착 위도) ,mapX(도착 경도)
         			var tag = $(this).prev();
@@ -26,19 +41,96 @@
         			// 창 새롭게 띄우기
                     window.open(url, "_blank");  
         		});
+        		
+//         		ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+//         		*
+//         		*	  	   [ 페이지 이동 처리 관련 jQuery 로직 ]
+//         		*
+//         		ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+        		// 이전 혹은 다음 버튼 클릭
+        		$('div.prev').find('span').click(function(){
+        			var pageNo = $('input#pageNo').val();
+        			shift(parseInt(pageNo)-1);
+        		});
+        		
+				$('div.next').find('span').click(function(){
+					var pageNo = $('input#pageNo').val();
+					shift(parseInt(pageNo)+1);
+        		});
+				
+				function shift(pageNo){
+					var mapX = $('input#mapX').val();
+					var mapY = $('input#mapY').val();
+					var palaceName = $('input#palaceName').val();
+					
+					$.ajax({
+                		data : {"mapX" : mapX, "mapY" : mapY, "pageNo" : pageNo},
+                		dataType : 'json',
+                		type : "POST",
+                		url : "./" + palaceName + "/observe_movement",
+                		success:function(data){
+                			var array = data.item;
+                			
+                			// json 내용
+                			for(var i in array){
+//                 				console.log(array[i].title);
+//                 				console.log(array[i].addr1);
+//                 				console.log(array[i].tel);
+                				
+                				var typeIndex = parseInt(i) + 1;
+                				var telText = " - ";
+                				
+                				$('div.list').find('li:nth-of-type(' + typeIndex + ')').find('img').attr("src", array[i].firstimage2);
+                				$('div.list').find('li:nth-of-type(' + typeIndex + ')').find('input#mapX').val(array[i].mapx);
+                				$('div.list').find('li:nth-of-type(' + typeIndex + ')').find('input#mapY').val(array[i].mapy);
+                				$('div.list').find('li:nth-of-type(' + typeIndex + ')').find('input#bigImage').val(array[i].firstimage1);
+                				$('div.list').find('li:nth-of-type(' + typeIndex + ')').find('div.locationTitle').text(array[i].title);
+                				$('div.list').find('li:nth-of-type(' + typeIndex + ')').find('div.locationAddr').text(array[i].addr1);
+                				
+                				if(array[i].tel == null)
+                					telText = " - ";
+                				else
+                					telText = array[i].tel;
+                				
+                				$('div.list').find('li:nth-of-type(' + typeIndex + ')').find('div.locationTel').text(telText);
+                			}
+                			
+                			
+                			// 페이지 관련 처리
+                			var totalCount = data.totalCount;
+                			var pageNo = data.pageNo;
+                			$('input#pageNo').val(pageNo);
+                			
+                    		if(pageNo == '' || pageNo == 1)
+                    			$('div.prev').css("visibility", "hidden");
+                    		else
+                    			$('div.prev').css("visibility", "visible");
+                    		
+                    		if(pageNo == '' || pageNo * 4 > totalCount)
+                    			$('div.next').css("visibility", "hidden");
+                    		else
+                    			$('div.next').css("visibility", "visible");
+                    		
+                    		
+                    		// 장소 네 곳을 보여준다.
+                    		makerArray(array);
+                    		
+                		}// success(function(){})
+                	});
+				}
         	});
         </SCRIPT>
     </HEAD>
 
-	<BODY>
+	<BODY class="contentBody">
 		<div class="mapAndListWrapper" style="visibility:hidden;">
 			<div class="mapWrapper">
-				<div id="map"></div>
+<%-- 				<c:import url="./lls_map.jsp"></c:import> --%>
+<!-- 				<div id="map"></div> -->
 			</div>
 	
 			<div class="listWrapper">
 				<div class="listTitleWrapper">
-				
 				</div>
 				
 				<div class="list">
@@ -80,10 +172,19 @@
 							</li>
 						</c:forEach>
 					</ul>
+					
+					<SCRIPT>
+						
+					</SCRIPT>
 				</div>
 				
 				<div class="listPointerWrapper">
-					
+					<input type="hidden" name="palaceName" id="palaceName" value="${palaceName}" />
+					<input type="hidden" name="pageNo" id="pageNo" value="${pageNo}" />
+					<input type="hidden" name="mapX" id="mapX" value="${palaceMapX}" />
+					<input type="hidden" name="mapY" id="mapY" value="${palaceMapY}" />
+					<div class="prev"><span>이전</span></div>
+					<div class="next"><span>다음</span></div>
 				</div>
 			</div>
 		</div>
@@ -95,7 +196,10 @@
 		
 		 -->
 		<SCRIPT>
-		 	//지도를 담을 영역의 DOM 레퍼런스
+		 	// 동적 지도 생성
+		 	var $divTag = $("<div id='map'></div>");
+		 	$('div.mapWrapper').append($divTag);
+		 	
 			var container = document.getElementById('map');
 			
 			var palaceMapX = '${palaceMapY}';
@@ -122,6 +226,49 @@
 			
 			// 마커가 지도 위에 표시되도록 설정합니다
 			marker.setMap(map);
+			
+			// 커스텀 오버레이 메소드
+			function makerArray(array){
+				// 삭제 후 동적 지도 생성
+				$('div#map').remove();
+				var $divTag = $("<div id='map'></div>");
+			 	$('div.mapWrapper').append($divTag);
+			 	
+				// <div id=map</div> 을 동적으로				
+				var container = document.getElementById('map');
+				var options = { //지도를 생성할 때 필요한 기본 옵션
+					center : new daum.maps.LatLng(37.578547, 126.976993), 	//지도의 중심좌표.
+					level : 5 												//지도의 레벨(확대, 축소 정도)
+				};
+				
+				var map = new daum.maps.Map(container, options);
+				
+				// 이미지
+				var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+			    
+			    for(var i in array){
+			    	console.log(array[i].mapy);
+			    	console.log(array[i].mapx);
+			    	console.log(array[i].title);
+			    	console.log("\n");
+			    	
+			    	var a = array[i].mapy;
+			    	var b = array[i].mapx;
+			    	
+			    	// 마커 이미지의 이미지 크기 입니다
+				    var imageSize = new daum.maps.Size(24, 35); 
+				    
+				    // 마커 이미지를 생성합니다    
+				    var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize); 
+				    
+			    	var maker = new daum.maps.Marker({
+			    		map:map,	// 마커를 표시할 지도
+			    		position:new daum.maps.LatLng(a, b),
+			    		title:array[i].title,
+			    		image:markerImage
+			    	});
+			    }
+			}
 		</SCRIPT>
 	</BODY>
 </HTML>
