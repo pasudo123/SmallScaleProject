@@ -86,15 +86,28 @@ div.list li > div{
 div.thumbnailWrapper{
     border:1px solid white;
     flex:3;
+    
+    /**
+    	이미지 수직 가운데 정렬을 위해서 부모 태그도 수정
+    **/ 
+    overflow: hidden;
+    position: relative;
 }
 
 div.thumbnailWrapper img{
     width:100%;
     height:auto;
+    
+    position: absolute;
+    left:50%;
+    top:50%;
+    -webkit-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
 }
 
 div.locationInfoWrapper{
-    border:1px solid red;
+/*     border:1px solid red; */
     flex:6;
     font-size:14px;
     line-height:21px;
@@ -109,6 +122,43 @@ div.locationInfoWrapper div{
 }
 
 div.locationPathToWrapper{
-    border:1px solid blue;
     flex:2;
+}
+
+div.locationPathToWrapper img{
+	width:100%;
+	cursor:pointer;
+	border-radius: 15px;
+	margin-left:5px;
+}
+
+/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+  [ list prev / next Button ]
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
+div.listPointerWrapper{
+	display:flex;
+}
+
+div.prev{
+	flex:1;
+	text-align:left;
+	margin-left:30px;
+}
+
+div.prev > span:hover{
+	cursor:pointer;
+	color:blueviolet;
+}
+
+div.next{
+	flex:1;
+	text-align:right;
+	margin-right:30px;
+}
+
+div.next > span:hover{
+	cursor:pointer;
+	color:blueviolet;
 }

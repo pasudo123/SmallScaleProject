@@ -17,10 +17,10 @@ div.imageAndTitleWrapper{
 div.imageAndTitleWrapper > div{
     margin-top:15px;
     height:165px;
-    background: black;
+    background: white;
     border-top:2px solid white;
     border-bottom:2px solid white;
-
+	
     display:flex;
     flex-direction: row;
     z-index:5;
@@ -33,7 +33,7 @@ div.imageAndWrapper{
     background: transparent;
 
     /**
-    이미지 수직 가운데 정렬을 위해서 부모 태그도 수정
+    	이미지 수직 가운데 정렬을 위해서 부모 태그도 수정
     **/ 
     overflow: hidden;
     position: relative;
@@ -73,6 +73,7 @@ div.imageAndTitleWrapper img{
     **/
     width:100%;
     height:auto;
+    
     position: absolute;
     left:50%;
     top:50%;
