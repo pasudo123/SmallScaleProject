@@ -13,66 +13,93 @@ public class LocationBasedData {
 	private String readCount = null; 				// 조회수
 	private String contentTypeId = null; 			// 관광타입
 	
-	@Override
-	public String toString() {
-		return "LocationBasedData [title=" + title + ", addr=" + addr + ", mapX=" + mapX + ", mapY=" + mapY + ", tel="
-				+ tel + ", imageURL1=" + imageURL1 + ", imageURL2=" + imageURL2 + ", readCount=" + readCount
-				+ ", contentTypeId=" + contentTypeId + "]";
-	}
+	private String totalCount = null;				// 전체 조회 수
 	
 	// -- getter() & setter()
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	public String getAddr() {
 		return addr;
 	}
+
 	public void setAddr(String addr) {
 		this.addr = addr;
 	}
+
 	public String getMapX() {
 		return mapX;
 	}
+
 	public void setMapX(String mapX) {
 		this.mapX = mapX;
 	}
+
 	public String getMapY() {
 		return mapY;
 	}
+
 	public void setMapY(String mapY) {
 		this.mapY = mapY;
 	}
+
 	public String getTel() {
 		return tel;
 	}
+
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
+
 	public String getImageURL1() {
 		return imageURL1;
 	}
+
 	public void setImageURL1(String imageURL1) {
 		this.imageURL1 = imageURL1;
 	}
+
 	public String getImageURL2() {
 		return imageURL2;
 	}
+
 	public void setImageURL2(String imageURL2) {
 		this.imageURL2 = imageURL2;
 	}
+
 	public String getReadCount() {
 		return readCount;
 	}
+
 	public void setReadCount(String readCount) {
 		this.readCount = readCount;
 	}
+
 	public String getContentTypeId() {
 		return contentTypeId;
 	}
+
 	public void setContentTypeId(String contentTypeId) {
 		this.contentTypeId = contentTypeId;
+	}
+
+	public String getTotalCount() {
+		return totalCount;
+	}
+
+	public void setTotalCount(String totalCount) {
+		this.totalCount = totalCount;
+	}
+
+	@Override
+	public String toString() {
+		return "LocationBasedData [title=" + title + ", addr=" + addr + ", mapX=" + mapX + ", mapY=" + mapY + ", tel="
+				+ tel + ", imageURL1=" + imageURL1 + ", imageURL2=" + imageURL2 + ", readCount=" + readCount
+				+ ", contentTypeId=" + contentTypeId + ", totalCount=" + totalCount + "]";
 	}
 }

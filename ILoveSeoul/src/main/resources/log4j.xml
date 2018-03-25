@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="edu.doubler.menu">
+	<logger name="edu.doubler">
 		<level value="info" />
 	</logger>
 	
