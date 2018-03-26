@@ -1,0 +1,72 @@
+@CHARSET "UTF-8";
+
+@font-face{
+    font-family: 'NanumSquareEB';
+    src:url(../font/NanumSquareEB.ttf) format('truetype');
+}
+
+@font-face{
+    font-family: 'NanumSquareB';
+    src:url(../font/NanumSquareB.ttf) format('truetype');
+}
+
+div.mapWrapper{
+    margin:0 auto;
+    width:880px;
+    height:600px;
+    margin-bottom:100px;
+    border:1px solid gray;
+}
+
+div#map_div{
+	
+}
+
+form#routeForm{
+	margin:0 auto;
+	margin-top:50px;
+	width:880px;
+}
+
+div.labelWrapper{
+	font-family: 'NanumSquareB';
+	font-size:20px;
+}
+
+div.formWrapper{
+	margin-top:20px;
+}
+
+input#startPoint{
+	font-family: 'NanumSquareB';
+	border: 0;
+	border-bottom: 2px solid #0034ff73;
+	width: 870px;
+	font-size: 16px;
+	line-height: 35px;
+	height: 30px;
+	text-align: center;
+	padding: 5px;
+	background: transparent;
+}
+
+input#startPoint:focus{
+	outline: 0;
+	color: #3b3838;
+	border-bottom: 2px solid #0032f4;
+}
+
+div.submitWrapper{
+	margin-top:10px;
+	margin-bottom:10px;
+	width:880px;
+}
+
+input#button{
+	position:relative;
+	left:800px;
+	width:80px;
+	height:30px;
+	background:lavender;
+}
+
