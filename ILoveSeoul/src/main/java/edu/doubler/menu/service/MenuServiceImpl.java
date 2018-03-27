@@ -20,9 +20,9 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import edu.doubler.domain.LocationBasedData;
 import edu.doubler.enum_api.EnumParameterOnTourAPI;
 import edu.doubler.enum_api.EnumURLOnTourAPI;
+import edu.doubler.menu.domain.LocationBasedData;
 
 @Service
 public class MenuServiceImpl implements MenuService {

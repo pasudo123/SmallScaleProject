@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.deser.impl.ManagedReferenceProperty;
 
 import edu.doubler.course.domain.EndAddress;
 import edu.doubler.course.domain.MyAddress;
@@ -226,9 +225,10 @@ public class CourseMakerImpl implements CourseMaker{
 			e.printStackTrace();
 		}
 		
-		for(int i = 0; i < routeList.size(); i++){
-			logger.info( i + " : " + routeList.get(i).toString());
-		}
+		// 경남 통영시 북신동 일성한빛타운
+//		for(int i = 0; i < routeList.size(); i++){
+//			logger.info( i + " : " + routeList.get(i));
+//		}
 		
 		return routeList;
 	}

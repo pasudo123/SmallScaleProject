@@ -1,5 +1,6 @@
 package edu.doubler.course.controller;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.doubler.course.domain.EndAddress;
 import edu.doubler.course.domain.MyAddress;
@@ -27,13 +29,12 @@ public class CourseController {
 	private static final Logger logger = LoggerFactory.getLogger(CourseController.class);
 	
 	@RequestMapping(value="/route", method=RequestMethod.POST)
-	public String getRoute(Model model,
-	@RequestParam("startPoint") String startPoint,
-	@RequestParam("endPoint") String endPoint){
+	@ResponseBody
+	public LinkedHashMap<String, Object>[] getRoute(
+	@RequestParam("startPoint") String startPoint){
 		
 		logger.info("길찾기 버튼 클릭");
 		logger.info(startPoint);
-		logger.info(endPoint);
 		
 		// 주소 >> 좌표 변환 
 		logger.info("주소 >> 좌표");
@@ -47,9 +48,15 @@ public class CourseController {
 		// 좌표 >> 길찾기 수행
 		logger.info("좌표 >> 길찾기");
 		List<RouteInfo> routeList = courseMaker.getRoute(myAddress, endAddress);
+		@SuppressWarnings("unchecked")
+		LinkedHashMap<String, Object>[]linkedHashMap = new LinkedHashMap[routeList.size()];
 		
-		model.addAttribute("routeList", routeList);
+		for(int i = 0; i < linkedHashMap.length; i++){
+			linkedHashMap[i] = new LinkedHashMap<String, Object>();
+			linkedHashMap[i] = routeList.get(i).getHashMap();
+//			logger.info(linkedHashMap[i].toString());
+		}
 		
-		return "i_love_seoul/lls_course";
+		return linkedHashMap;
 	}
 }

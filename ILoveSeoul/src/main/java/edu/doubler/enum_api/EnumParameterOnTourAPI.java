@@ -8,13 +8,12 @@ public enum EnumParameterOnTourAPI {
 	 * - 서비스명
 	 * - 리턴 타입 
 	 * - 한 페이지의 결과수 ( 4개 )
-	 * - 페이지 번호
 	 * - 정렬순 (조회순 : 이미지 있는 것 위주)
 	 * ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 	 * - 위도 (mapX)
 	 * - 경도 (mapY)
-	 * ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 	 * - 반경 (3Km)
+	 * - 페이지 번호
 	 * ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
 	
 	// ㅡㅡ 공통 파라미터
@@ -23,13 +22,13 @@ public enum EnumParameterOnTourAPI {
 	MOBILE_APP("MobileApp", "doublerTour"),
 	JSON("_type", "json"),
 	NUMBER_OF_ROWS("numOfRows", "4"),
-	PAGE_NO("pageNo", "1"),
 	ARRANGE("arrange", "P"),
 	
 	// ㅡㅡ 특정 파라미터 ( LocationBasedList )
 	MAP_X("mapX"),
 	MAP_Y("mapY"),
-	RADIUS("radius");
+	RADIUS("radius"),
+	PAGE_NO("pageNo");
 	
 	private String key = null;
 	private String value = null;

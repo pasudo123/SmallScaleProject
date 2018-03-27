@@ -7,6 +7,7 @@
 <HTML>
     <HEAD>
         <META CHARSET="UTF-8">
+        <link type="text/css" rel="stylesheet" href="/resources/css/_palace_content.css"/>
         <SCRIPT type="text/javascript" src="/resources/js/jquery-3.3.1.min.js"></SCRIPT>
         
         <SCRIPT>
@@ -59,15 +60,22 @@
         		});
 				
 				function shift(pageNo){
-					var mapX = $('input#mapX').val();
-					var mapY = $('input#mapY').val();
-					var palaceName = $('input#palaceName').val();
+					var mapX = $('div.listPointerWrapper').find('input#mapX').val();
+					var mapY = $('div.listPointerWrapper').find('input#mapY').val();
+					var palaceName = $('div.listPointerWrapper').find('input#palaceName').val();
 					
+// 					ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+// 					*
+// 					*			[  AJAX 통신  ] - async : false
+// 					*
+// 					ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 					$.ajax({
                 		data : {"mapX" : mapX, "mapY" : mapY, "pageNo" : pageNo},
                 		dataType : 'json',
                 		type : "POST",
+                		async : false,
                 		url : "./" + palaceName + "/observe_movement",
+                		
                 		success:function(data){
                 			var array = data.item;
                 			
@@ -80,7 +88,7 @@
                 				var typeIndex = parseInt(i) + 1;
                 				var telText = " - ";
                 				
-                				$('div.list').find('li:nth-of-type(' + typeIndex + ')').find('img').attr("src", array[i].firstimage2);
+                				$('div.list').find('li:nth-of-type(' + typeIndex + ')').find('div.thumbnailWrapper img').attr("src", array[i].firstimage2);
                 				$('div.list').find('li:nth-of-type(' + typeIndex + ')').find('input#mapX').val(array[i].mapx);
                 				$('div.list').find('li:nth-of-type(' + typeIndex + ')').find('input#mapY').val(array[i].mapy);
                 				$('div.list').find('li:nth-of-type(' + typeIndex + ')').find('input#bigImage').val(array[i].firstimage1);
@@ -113,7 +121,7 @@
                     		
                     		
                     		// 장소 네 곳을 보여준다.
-                    		makerArray(array);
+                    		makerArray(mapY, mapX, array);
                     		
                 		}// success(function(){})
                 	});
@@ -125,8 +133,6 @@
 	<BODY class="contentBody">
 		<div class="mapAndListWrapper" style="visibility:hidden;">
 			<div class="mapWrapper">
-<%-- 				<c:import url="./lls_map.jsp"></c:import> --%>
-<!-- 				<div id="map"></div> -->
 			</div>
 	
 			<div class="listWrapper">
@@ -166,16 +172,12 @@
 									</div>
 									
 									<div class="locationPathToWrapper">
-										길찾기.
+										<img src="/resources/image/pathTo.png" />
 									</div>
 								</div>
 							</li>
 						</c:forEach>
 					</ul>
-					
-					<SCRIPT>
-						
-					</SCRIPT>
 				</div>
 				
 				<div class="listPointerWrapper">
@@ -196,53 +198,55 @@
 		
 		 -->
 		<SCRIPT>
-		 	// 동적 지도 생성
-		 	var $divTag = $("<div id='map'></div>");
-		 	$('div.mapWrapper').append($divTag);
-		 	
-			var container = document.getElementById('map');
+			initMap('${palaceMapY}', '${palaceMapX}')
 			
-			var palaceMapX = '${palaceMapY}';
-		 	var palaceMapY = '${palaceMapX}';
-		 	
-		 	// 기본 : 제주도 위치
-		 	if(palaceMapX == null || palaceMapY == null){
-		 		palaceMapX = 33.450701;
-		 		palaceMapY = 126.570667;
-		 	}
-		 	
-			var options = { //지도를 생성할 때 필요한 기본 옵션
-				center : new daum.maps.LatLng(palaceMapX, palaceMapY), 	//지도의 중심좌표.
-				level : 5 												//지도의 레벨(확대, 축소 정도)
-			};
-		
-			var map = new daum.maps.Map(container, options); 			//지도 생성 및 객체 리턴
-		
-			var markerPosition = new daum.maps.LatLng(palaceMapX, palaceMapY);
-			// 마커를 생성합니다
-			var marker = new daum.maps.Marker({
-			    position: markerPosition
-			});
+			// 전역변수
+			var map;
 			
-			// 마커가 지도 위에 표시되도록 설정합니다
-			marker.setMap(map);
-			
-			// 커스텀 오버레이 메소드
-			function makerArray(array){
-				// 삭제 후 동적 지도 생성
+			function initMap(mapY, mapX){
+				// 동적 지도 생성
+				// <div id=map</div> 을 동적으로	
 				$('div#map').remove();
-				var $divTag = $("<div id='map'></div>");
+			 	var $divTag = $("<div id='map'></div>");
 			 	$('div.mapWrapper').append($divTag);
 			 	
-				// <div id=map</div> 을 동적으로				
 				var container = document.getElementById('map');
+				
+				var palaceMapX = mapY;
+			 	var palaceMapY = mapX;
+			 	
+			 	// 기본 : 제주도 위치
+			 	if(palaceMapX == null || palaceMapY == null){
+			 		palaceMapX = 33.450701;
+			 		palaceMapY = 126.570667;
+			 	}
+			 	
 				var options = { //지도를 생성할 때 필요한 기본 옵션
-					center : new daum.maps.LatLng(37.578547, 126.976993), 	//지도의 중심좌표.
+					center : new daum.maps.LatLng(palaceMapX, palaceMapY), 	//지도의 중심좌표.
 					level : 5 												//지도의 레벨(확대, 축소 정도)
 				};
+			
+				map = new daum.maps.Map(container, options); 			//지도 생성 및 객체 리턴
+			
+				var markerPosition = new daum.maps.LatLng(palaceMapX, palaceMapY);
+				// 마커를 생성합니다
+				var marker = new daum.maps.Marker({
+				    position: markerPosition
+				});
 				
-				var map = new daum.maps.Map(container, options);
+				// 마커가 지도 위에 표시되도록 설정합니다
+				marker.setMap(map);
+			}
+			
+			// 커스텀 오버레이 메소드
+			function makerArray(mapY, mapX, array){
+				initMap(mapY, mapX);
 				
+				console.log(mapY + " : " + mapX)
+				
+				//
+				//
+				// 여기서 주변 네 곳의 위치를 찍어주는 로직이다.
 				// 이미지
 				var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
 			    
