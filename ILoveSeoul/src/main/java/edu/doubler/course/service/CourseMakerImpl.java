@@ -49,6 +49,10 @@ public class CourseMakerImpl implements CourseMaker{
 			
 			uri += geocoding.getKey() + "=" + geocoding.getValue();
 			
+			// 주소 세팅을 다시 지운다.
+			if(geocoding == EnumFullTextGeocodingOnSKT.FULL_ADDR && geocoding.getValue() != null)
+				geocoding.setValue(null);
+			
 			// 맨 마지막은 앤드 연산자 붙이지 않는다.
 			if(geocoding != EnumFullTextGeocodingOnSKT.APP_KEY)
 				uri += "&";
@@ -92,7 +96,10 @@ public class CourseMakerImpl implements CourseMaker{
 		}
 		catch(IOException e){
 			// 주소 똑바로 입력하라고 다시 클라이언트에게 알려준다.
+			
+			myAddress = null;
 			e.printStackTrace();
+			return;
 		}
 	}
 
@@ -223,6 +230,7 @@ public class CourseMakerImpl implements CourseMaker{
 		}
 		catch(IOException e){
 			e.printStackTrace();
+			return null;
 		}
 		
 		// 경남 통영시 북신동 일성한빛타운

@@ -15,6 +15,7 @@ Spring form 태그 라이브러리는 Spring Web MVC 와 통합된다.
     <HEAD>
         <META CHARSET="UTF-8">
         <SCRIPT type="text/javascript" src="/resources/js/jquery-3.3.1.min.js"></SCRIPT>
+        <SCRIPT type="text/javascript" src="/resources/js/parse.js"></SCRIPT>
         <link type="text/css" rel="stylesheet" href="/resources/css/_palace_course.css"/>
    		<SCRIPT type="text/javascript">
    			$(document).ready(function(){
@@ -48,31 +49,9 @@ Spring form 태그 라이브러리는 Spring Web MVC 와 통합된다.
    					    async:false,
    					    success:function(data){
    					    	
-//    					    	for(var i = 0; i < data.length; i++){
-//    					    		var coordList = getCoordinate(data[i].type, data[i].coordinateList);
-//    					    		var name = data[i].name;
-//    					    		var desc = data[i].desc;
-   					    		
-//    					    		var totalTime;
-//    					    		var totalDistance;;
-//    					    		var time;
-//    					    		var dist;
-   					    		
-//    					    		if(i == 0){
-//    					    			totalTime = data[0].totalTime;
-//    					    			totalDistance = data[0].totalDistance;
-//    					    		}
-//    					    		else{
-//    					    			time = data[i].time;
-//    					    			dist = data[i].distance;
-//    					    		}
-//    					    	}
+   					    	parseData(data);
    					    	
-   					    	var startPoint = getCoordinate(data[0].type, data[0].coordinateList);
-   					    	var endPoint = getCoordinate(data[data.length-1].type, data[data.length-1].coordinateList);
-   					    	
-   					    	// 출발점 위도 경도를 파라미터 삽입
- 					    	initTMap(startPoint[0].split("=")[1], startPoint[1].split("=")[1], endPoint[0].split("=")[1], endPoint[1].split("=")[1]);
+   					    	initTMap(data.startPointLng, data.startPointLat, data.endPointLat, data.endPointLng);
    					    	
 							// Clear the form
 							$('input#startPoint').val('');
@@ -98,23 +77,21 @@ Spring form 태그 라이브러리는 Spring Web MVC 와 통합된다.
    				map = new Tmap.Map({
    					div:'map_div',
 					width : "880px",
-					height : "660px",
+					height : "600px",
    				});
    				
    				// REST API에서 제공되는 경오, 교통정보, POI 데이터 쉽게 처리 클래스
    				var tData = new Tmap.TData();
 				
    				// 시작 좌표 (출발 좌표)
-   				var s_lonLat = new Tmap.LonLat(Number(startMapX), Number(startMapY));
-//    				var s_lonLat = new Tmap.LonLat(startMapX, startMapY);
+   				var s_lonLat = new Tmap.LonLat(Number(startMapY), Number(startMapX));
    				
    				// 종료 좌표 (고궁 좌표)
-   				var e_lonLat = new Tmap.LonLat(Number(endMapX), Number(endMapY));
-//    				var e_lonLat = new Tmap.LonLat(endMapX, endMapY);
+   				var e_lonLat = new Tmap.LonLat(Number(endMapY), Number(endMapX));
    				
    				var optionObj = {
- 					reqCoordType:"EPSG:4326",	// 요청 좌표계 옵션 설정
-   					resCoordType:"EPSG:4326"		// 응답 좌표계 옵션 설정
+ 					reqCoordType:"WGS84GEO",		// 요청 좌표계 옵션 설정
+   					resCoordType:"EPSG3857"			// 응답 좌표계 옵션 설정
    				}
    				
    				// 경로 탐색 데이터를 콟백 함수를 통해 XML로 리턴
@@ -123,8 +100,6 @@ Spring form 태그 라이브러리는 Spring Web MVC 와 통합된다.
    				tData.events.register("onComplete", tData, onComplete);		//데이터 로드가 성공적으로 완료되었을 때 발생하는 이벤트를 등록합니다.
    				tData.events.register("onProgress", tData, onProgress);		//데이터 로드중에 발생하는 이벤트를 등록합니다.
    				tData.events.register("onError", tData, onError);			//데이터 로드가 실패했을 떄 발생하는 이벤트를 등록합니다.
-   				
-//    				map.setCenter(new Tmap.LonLat("126.986072", "37.570028").transform("EPSG:4326", "EPSG:3857"), 15);
    			}
    			
    			//데이터 로드가 성공적으로 완료되었을 때 발생하는 이벤트 함수 입니다. 
