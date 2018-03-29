@@ -1,8 +1,5 @@
 package news_crawler.crawler;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-
 import news_crawler.domain.News;
 
 public interface Crawler {
@@ -28,16 +25,36 @@ public interface Crawler {
 	static final String EXE_PATH = "src\\news_crawler\\web-driver\\chromedriver.exe";
 	static final String SYSTEM_PROPERTY = "webdriver.chrome.driver";
 	
-	default WebDriver setWebDriver(String URI){
-		System.setProperty(SYSTEM_PROPERTY, EXE_PATH);
-		WebDriver webDriver = new ChromeDriver();
-		webDriver.get(URI);
-		
-		return webDriver;
-	}
-	
 	/*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 	 * 			Find 에 대한 메소드 전략은 'By' 라는 로케이터 또는 쿼리 객체를 이용
 	 *ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 	public News parsingData(String uri);
+	
+	
+	/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+	 * [ ImplicityWait Command ] [ 은연중으로  ]
+	 * 
+	 * 셀레니움에게 페이지에서 요소를 찾을 수 없다는 예외에
+	 * 대해서 예외를 던지기 이전에 일정시간을 기다리도록 할 수 있다.
+	 * 
+	 * WebDriver 가 즉시 가져올 수 없는 요소들을 찾는 경우 특정시간 DOM을 polling 하도록 기다린다.
+	 * implicit waits 를 설정함으로써, 브라우저 내 페이지의 요소를 검색할 대기시간 설정이 가능
+	 * 
+	 * reference : http://toolsqa.com/selenium-webdriver/wait-commands/
+	 * 
+	 * ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+	 * [ FluentWait Command ] [ 부드럽고 능동적인  ]
+	 * 
+	 * 각각의 FluentWait 인스턴스는 조건을 기다리는 최대시간을 정의한다.
+	 * 또한 NoSuchElementExceptions 와 같이 대기 중에 특정 유형의 예외를 무시하도록 설정이 가능
+	 * ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+	 * [ ExplicitWait Command ] [ 노골적으로  ]
+	 * ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
+	
+	// XPATH 테크닉
+	// http://toolsqa.com/selenium-webdriver/choosing-effective-xpath/
+	
+	// Element Not Visible Exception
+	// Exception : http://learn-automation.com/exceptions-in-selenium-webdriver/
+	// http://learn-automation.com/solve-elementnotvisibleexception-in-selenium-webdriver/
 }
