@@ -33,7 +33,7 @@ public class CrawlServiceOnDaum implements CrawlService{
 		WebElement newsContentElement = webDriver.findElement(By.className("news_view"));
 
 		FluentWait<WebDriver> fluentWait = new FluentWait<WebDriver>(webDriver);
-		fluentWait.withTimeout(Duration.ofMinutes(10));		// 인스턴스 조건을 기다리는 최대 시간 (10분 설정)
+		fluentWait.withTimeout(Duration.ofMinutes(10));		// // FluentWait 인스턴스가 조건을 기다리는 최대 시간 (10분 설정)
 				
 		// <입력 파라미터, apply() 메소드 반환 값>
 		Function<WebDriver, Boolean> commentViewFunction = new Function<WebDriver, Boolean>(){
