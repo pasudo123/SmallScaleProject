@@ -1,6 +1,7 @@
 package news_crawler.launcher;
 
 import news_crawler.crawler.Crawler;
+import news_crawler.crawler.DaumNewsCrawler;
 import news_crawler.crawler.NaverNewsCrawler;
 import news_crawler.domain.News;
 
@@ -9,6 +10,12 @@ public class Factory {
 		if(uri.contains("naver")){
 			Crawler crawler = new NaverNewsCrawler();
 			
+			return crawler.parsingData(uri);
+		}
+		
+		if(uri.contains("daum")){
+			Crawler crawler = new DaumNewsCrawler();
+
 			return crawler.parsingData(uri);
 		}
 		
