@@ -6,7 +6,8 @@ import edu.doubler.crawler.domain.News;
 
 public interface CrawlService {
 	
-	static final String EXE_PATH = "C:\\Users\\Daumsoft\\workspace_Spring\\NewsCrawler\\src\\main\\resources\\WebDriver\\chromedriver.exe";
+//	static final String EXE_PATH = "C:\\Users\\Daumsoft\\workspace_Spring\\NewsCrawler\\src\\main\\resources\\WebDriver\\chromedriver.exe";
+	static final String EXE_PATH = "C:\\DoubleR\\SmallScaleProject\\NewsCrawler\\src\\main\\resources\\WebDriver\\chromedriver.exe";
 	static final String SYSTEM_PROPERTY = "webdriver.chrome.driver";
 	
 	/**

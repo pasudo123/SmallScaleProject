@@ -3,6 +3,7 @@ package edu.doubler.crawler.service;
 import java.time.Duration;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -41,6 +42,8 @@ public class CrawlServiceOnNaver implements CrawlService{
 		
 		FluentWait<WebDriver> fluentWait = new FluentWait<WebDriver>(webDriver);
 		fluentWait.withTimeout(Duration.ofMinutes(10));		// 인스턴스 조건을 기다리는 최대 시간 (10분 설정)
+		fluentWait.pollingEvery(Duration.ofSeconds(10));	// CPU가 리소스에 접근하기 위한 폴링 간격 조절 (10초)
+		fluentWait.ignoring(NoSuchElementException.class);
 		
 		// [ 댓 글 더 보 기 ] 클릭
 		WebElement viewMoreCommentElement = webDriver.findElement(By.className("u_cbox_in_view_comment"));

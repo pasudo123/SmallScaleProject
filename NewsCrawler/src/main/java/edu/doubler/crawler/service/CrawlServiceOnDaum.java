@@ -3,6 +3,7 @@ package edu.doubler.crawler.service;
 import java.time.Duration;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -11,7 +12,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.FluentWait;
-import org.springframework.stereotype.Service;
 
 import com.google.common.base.Function;
 
@@ -35,6 +35,7 @@ public class CrawlServiceOnDaum implements CrawlService{
 		FluentWait<WebDriver> fluentWait = new FluentWait<WebDriver>(webDriver);
 		fluentWait.withTimeout(Duration.ofMinutes(10));		// FluentWait 인스턴스가 조건을 기다리는 최대 시간 (10분 설정)
 		fluentWait.pollingEvery(Duration.ofSeconds(10));	// CPU가 리소스에 접근하기 위한 폴링 간격 조절 (10초)
+		fluentWait.ignoring(NoSuchElementException.class);
 				
 		// <입력 파라미터, apply() 메소드 반환 값>
 		Function<WebDriver, Boolean> commentViewFunction = new Function<WebDriver, Boolean>(){
