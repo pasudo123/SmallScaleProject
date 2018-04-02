@@ -42,7 +42,7 @@ public class CrawlServiceOnNaver implements CrawlService{
 		
 		FluentWait<WebDriver> fluentWait = new FluentWait<WebDriver>(webDriver);
 		fluentWait.withTimeout(Duration.ofMinutes(10));		// 인스턴스 조건을 기다리는 최대 시간 (10분 설정)
-		fluentWait.pollingEvery(Duration.ofSeconds(10));	// CPU가 리소스에 접근하기 위한 폴링 간격 조절 (10초)
+//		fluentWait.pollingEvery(Duration.ofSeconds(3));	// CPU가 리소스에 접근하기 위한 폴링 간격 조절 (10초)
 		fluentWait.ignoring(NoSuchElementException.class);
 		
 		// [ 댓 글 더 보 기 ] 클릭
@@ -57,7 +57,6 @@ public class CrawlServiceOnNaver implements CrawlService{
 				
 				// css 값 확인
 				Boolean isDisplay = viewMoreComment.getCssValue("display").equals("block")?true:false;
-						
 				// 중단 (클릭할 요소가 없기 때문에)
 				if(!isDisplay){
 					return true;
@@ -69,7 +68,6 @@ public class CrawlServiceOnNaver implements CrawlService{
 				}
 			}
 		};
-		
 		
 		fluentWait.until(commentViewFunction);
 		
