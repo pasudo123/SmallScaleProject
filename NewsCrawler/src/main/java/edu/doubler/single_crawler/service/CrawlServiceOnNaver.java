@@ -1,4 +1,4 @@
-package edu.doubler.crawler.service;
+package edu.doubler.single_crawler.service;
 
 import java.time.Duration;
 import java.util.LinkedHashMap;
@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.base.Function;
 
-import edu.doubler.crawler.domain.News;
-import edu.doubler.crawler.domain.NewsComment;
+import edu.doubler.single_crawler.domain.News;
+import edu.doubler.single_crawler.domain.NewsComment;
 
 @Service
 public class CrawlServiceOnNaver implements CrawlService{
@@ -26,7 +26,6 @@ public class CrawlServiceOnNaver implements CrawlService{
 		System.setProperty(SYSTEM_PROPERTY, EXE_PATH);
 		ChromeDriver webDriver = new ChromeDriver();
 		webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		
 		webDriver.get(uri);
 		
 		/***************************************************************************/
@@ -45,9 +44,16 @@ public class CrawlServiceOnNaver implements CrawlService{
 //		fluentWait.pollingEvery(Duration.ofSeconds(3));	// CPU가 리소스에 접근하기 위한 폴링 간격 조절 (10초)
 		fluentWait.ignoring(NoSuchElementException.class);
 		
+		// [ 댓 글 더 보 기 ] 블럭 확인
+		WebElement viewMoreBlock = webDriver.findElement(By.className("u_cbox_view_comment"));
+		
 		// [ 댓 글 더 보 기 ] 클릭
 		WebElement viewMoreCommentElement = webDriver.findElement(By.className("u_cbox_in_view_comment"));
-		viewMoreCommentElement.click();
+		
+		// [ 댓 글 더 보 기 ] 블럭 CSS 확인
+		Boolean isDisplay = viewMoreBlock.getCssValue("display").equals("block")?true:false;
+		if(isDisplay)
+			viewMoreCommentElement.click();
 		
 		Function<WebDriver, Boolean> commentViewFunction = new Function<WebDriver, Boolean>(){
 			@Override
@@ -57,6 +63,7 @@ public class CrawlServiceOnNaver implements CrawlService{
 				
 				// css 값 확인
 				Boolean isDisplay = viewMoreComment.getCssValue("display").equals("block")?true:false;
+				
 				// 중단 (클릭할 요소가 없기 때문에)
 				if(!isDisplay){
 					return true;

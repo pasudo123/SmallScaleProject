@@ -1,4 +1,4 @@
-package edu.doubler.crawler.domain;
+package edu.doubler.single_crawler.domain;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,8 @@
-package edu.doubler.crawler.service;
+package edu.doubler.single_crawler.service;
 
 import java.util.LinkedHashMap;
 
-import edu.doubler.crawler.domain.News;
+import edu.doubler.single_crawler.domain.News;
 
 public interface CrawlService {
 	

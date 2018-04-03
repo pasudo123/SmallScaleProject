@@ -1,4 +1,4 @@
-package edu.doubler.crawler.controller;
+package edu.doubler.single_crawler.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import edu.doubler.crawler.service.CrawlService;
-import edu.doubler.crawler.service.CrawlServiceOnDaum;
-import edu.doubler.crawler.service.CrawlServiceOnNaver;
+import edu.doubler.single_crawler.service.CrawlService;
+import edu.doubler.single_crawler.service.CrawlServiceOnDaum;
+import edu.doubler.single_crawler.service.CrawlServiceOnNaver;
 
 @Controller
 public class CrawlerController {
@@ -19,15 +19,6 @@ public class CrawlerController {
 	
 	@RequestMapping("/crawler")
 	public String mainView(Model model){
-		
-		// 관련 공부
-		// logger.info(PageContext.REQUEST);
-		
-		// Daum Test
-		// http://v.media.daum.net/v/20180330132100152
-		
-		// Naver Test
-		// http://news.naver.com/main/read.nhn?mode=LSD&mid=shm&sid1=100&oid=001&aid=0009993216
 		
 		logger.info("main view 호출");
 		return "news_crawler";

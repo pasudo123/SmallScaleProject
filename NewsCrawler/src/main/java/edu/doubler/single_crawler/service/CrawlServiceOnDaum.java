@@ -1,4 +1,4 @@
-package edu.doubler.crawler.service;
+package edu.doubler.single_crawler.service;
 
 import java.time.Duration;
 import java.util.LinkedHashMap;
@@ -15,8 +15,8 @@ import org.openqa.selenium.support.ui.FluentWait;
 
 import com.google.common.base.Function;
 
-import edu.doubler.crawler.domain.News;
-import edu.doubler.crawler.domain.NewsComment;
+import edu.doubler.single_crawler.domain.News;
+import edu.doubler.single_crawler.domain.NewsComment;
 
 public class CrawlServiceOnDaum implements CrawlService{
 	
