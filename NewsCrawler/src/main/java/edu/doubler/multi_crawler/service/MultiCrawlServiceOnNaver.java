@@ -64,6 +64,7 @@ public class MultiCrawlServiceOnNaver implements MultiCrawlService{
 				uri = EnumSite.NAVER.getSiteURI();
 				uri += "&";
 			}// for(섹션별)
+			
 		}// for(날짜별 : 7일)
 		
 		/* ExecutorService 종료 */
