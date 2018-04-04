@@ -3,6 +3,8 @@ package edu.doubler.multi_crawler.service;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import edu.doubler.multi_crawler.domain.EnumNaverSection;
 import edu.doubler.multi_crawler.domain.EnumSite;
@@ -25,6 +27,9 @@ public class MultiCrawlServiceOnNaver implements MultiCrawlService{
 		
 		calendar.set(year, month-1, days);
 		
+		// 4 개의 풀을 fix
+		ExecutorService executorService = Executors.newFixedThreadPool(3);
+		
 		// 날짜별 + 섹션별
 		for(int day = 0; day < 7; day++){
 			
@@ -43,22 +48,30 @@ public class MultiCrawlServiceOnNaver implements MultiCrawlService{
 				uri += "&";
 				uri += "date=" + crawlTime;
 				
-				/**
-				 * WebDriver Tool 사용
-				 * **/
-				ParserOnNaverNews parserOnNaverNews = new ParserOnNaverNews();
-				parserOnNaverNews.crawling(new ParserFactory().init(uri), naverSection.getName());
+				ThreadPool crawlThread = new ThreadPool();
+				crawlThread.setName(naverSection.getName());
+				crawlThread.setURI(uri);
+				executorService.execute(crawlThread);
 				
+				/**
+				 * WebDriver Tool 사용 (단순 한개씩 시도)
+				 * **/
+//				ParserOnNaverNews parserOnNaverNews = new ParserOnNaverNews();
+//				parserOnNaverNews.setting(new ParserFactory().init(uri), naverSection.getName());
+//				parserOnNaverNews.rankCrawling();
 				
 				// uri 초기화
 				uri = EnumSite.NAVER.getSiteURI();
 				uri += "&";
-				break;
 			}// for(섹션별)
-			break;
-		}// for(날짜별)
+		}// for(날짜별 : 7일)
 		
+		/* ExecutorService 종료 */
+		executorService.shutdown();
 		
+		/* ExecutorService 종료되었는지 확인. */
+		while(!executorService.isTerminated()) {}
+
 	}// process() : @Override
 	
 	public static void main(String[]args){

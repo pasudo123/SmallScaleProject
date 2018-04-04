@@ -22,10 +22,14 @@ import edu.doubler.single_crawler.domain.NewsComment;
 public class ParserOnNaverNews {
 	ChromeDriver webDriver;
 	News news;
+	String name;
 	
-	public void crawling(ChromeDriver paramWebDriver, String name){
-		this.webDriver = paramWebDriver;
-		
+	public void setting(ChromeDriver paramWebDriver, String paramName){
+		webDriver = paramWebDriver;
+		name = paramName;
+	}
+	
+	public void rankCrawling(){
 		List<WebElement> links = webDriver.findElements(By.tagName("a"));
 		List<String> rankUrlList = new ArrayList<String>();
 		
@@ -35,9 +39,9 @@ public class ParserOnNaverNews {
 			
 			if(rankingUrl.contains("rankingSeq")){
 				rankUrlList.add(rankingUrl);
-				count++; // 실제 랭킹 1위 ~ 10위
+				count++; // 실제 랭킹 1위 ~ 10위 (count 로 계산)
 				i++;
-				
+
 				if(count >= 10)
 					break;
 			}
@@ -49,8 +53,12 @@ public class ParserOnNaverNews {
 			crawling();
 			save(name, rank);
 		}
+		
+		// 웹드라이버 종료
+		webDriver.quit();
 	}
 	
+	// Overload
 	// 데이터 긁어오기
 	private void crawling(){
 		
@@ -149,7 +157,7 @@ public class ParserOnNaverNews {
 			bw.write(news.getTitle());
 			bw.write("\n");
 			bw.write(news.getContent());
-			bw.write("\n============================================\n");
+			bw.write("\n========================================================================================\n");
 			
 			List<NewsComment> newsList = news.getComment();
 
