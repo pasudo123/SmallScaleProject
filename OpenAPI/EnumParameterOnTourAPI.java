@@ -13,7 +13,7 @@ public enum EnumParameterOnTourAPI {
 	 * - 지역코드 (서울, 고정값)
 	 * - 시군구 코드
 	 * ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
-	KEY("ServiceKey", "tyrbXoE8jfVmZvX%2FFKgs9vd4zUEwUB30QLmcqddik7nLGFOLSmwZxil%2FQ1Hj9u6q%2BsjZhFJwFOngtvc6EcGrSA%3D%3D"),
+	KEY("ServiceKey", "ServiceKey"),
 	MOBILE_OS("MobileOS", "ETC"),
 	MOBILE_APP("MobileApp", "doublerTour"),
 	JSON("_type", "json"),
