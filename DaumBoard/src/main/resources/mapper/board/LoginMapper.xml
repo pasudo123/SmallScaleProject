@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<!-- 
+로그인과 관련된 mapper xml
+-->
+ 
+<mapper namespace="com.doubler.login">
+	<select id="checkUser" 
+	parameterType="com.doubler.login.domain.User"
+	resultType="java.lang.Integer">
+	<![CDATA[ 
+		SELECT 
+			count(*) 
+		FROM 
+			USER_TB 
+		WHERE 
+			USER_ID = #{userId} AND USER_PW = #{userPw}
+	]]>
+	</select>
+</mapper> 

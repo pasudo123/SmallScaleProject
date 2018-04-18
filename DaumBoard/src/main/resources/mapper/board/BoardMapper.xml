@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<!-- 
+(1)
+인터페이스로 선언된 BoardDAO 를 네임스페이스 경로로 설정
+네임스페이스에는 패키지명을 포함한 해당 인터페이스의 경로를 완전히 작성
+여기 네임스페이스와 BoardDAOImpl String 클래스 네임스페이스가 동일해야 한다.
+	
+(2)
+쿼리문 작성의 경우,
+ORA-00911: invalid character , java.sql.SQLException:
+의 에러가 발생한다. 
+쿼리에서는 틀린게 없지만 ';', 세미콜론을 제거해주어야 한다.
+ -->
+ 
+<mapper namespace="com.doubler.board.BoardDAO">
+	<select id="getContentCount" resultType="java.lang.Integer">
+		SELECT
+			count(*)
+		FROM
+			WEB_BOARD_TB
+	</select>
+	
+	<!-- 
+	큰 번호가 더 최근에 생성됬기 때문에 내림차순 정렬 
+	즉, 최신날짜가 위로 올라옴 
+	-->
+	<select id="getBoardList" parameterType="com.doubler.board.util.BoardPagingNumber" resultType="com.doubler.board.dto.BoardContentDTO">
+		<![CDATA[ 
+		
+		SELECT 	
+			TO_CHAR(CONTENT_DATE, 'yyyy-mm-dd hh24:mi:ss') as contentDate,
+		  	CONTENT_NUM as contentNum,
+		  	CONTENT_TITLE as contentTitle,
+		  	CONTENT_WRITER as contentWriter,
+		  	CONTENT_DETAIL as contentDetail,
+		  	CONTENT_HIT as contentHit
+		FROM 
+			WEB_BOARD_TB 
+		WHERE
+			content_NUM >= #{startNum} AND content_NUM <= #{endNum}
+		ORDER BY 
+			CONTENT_NUM DESC
+	
+		]]>
+ 	</select>
+ 	
+ 	
+ 	
+ 	<!-- 글쓰기 -->
+ 	<!-- 날짜(디폴트), 번호, 제목, 작성자, 내용, 조회수(디폴트) -->
+ 	<insert id="writeContent">
+ 		<![CDATA[	
+ 		
+ 		INSERT INTO WEB_BOARD_TB 
+ 			(CONTENT_NUM, CONTENT_TITLE, CONTENT_WRITER, CONTENT_DETAIL)
+ 		VALUES 
+ 			(#{contentNum}, #{contentTitle}, #{contentWriter}, #{contentDetail})
+		]]>
+ 	</insert>
+ 	
+ 	
+ 	<!-- 하나의 게시글만 조회 -->
+	<select id="getContent" resultType="com.doubler.board.dto.BoardContentDTO">
+		<![CDATA[
+		SELECT 
+			CONTENT_NUM as contentNum,
+			CONTENT_WRITER as contentWriter,
+			CONTENT_TITLE as contentTitle,
+		  	CONTENT_DETAIL as contentDetail
+		FROM 
+		  	WEB_BOARD_TB WHERE CONTENT_NUM = #{contentNum}
+	  	]]>
+	</select>
+	
+	
+	<!-- 조회수 증가 -->
+	<update id="updateHit">
+		<![CDATA[
+		UPDATE
+		  	WEB_BOARD_TB
+		SET
+		  	CONTENT_HIT = CONTENT_HIT + 1
+		WHERE
+	  		CONTENT_NUM = #{contentNum}
+		]]>
+	</update>
+	
+	
+	<!-- 삭제 -->
+	<delete id="deleteContent">
+		<![CDATA[
+		DELETE FROM 
+		  	WEB_BOARD_TB
+		WHERE
+	  		CONTENT_NUM = #{contentNum}
+	  	]]>
+	</delete>
+	
+	
+	<!-- 삭제 이후 게시글 번호 부분 갱신 -->
+	<update id="updateContentNum">
+		<![CDATA[
+		UPDATE 
+		  	WEB_BOARD_TB
+		SET
+		  	CONTENT_NUM = CONTENT_NUM - 1
+		WHERE CONTENT_NUM > #{contentNum}
+		]]>
+	</update>
+	
+	
+	<!-- 게시글 수정 -->
+	<update id="updateContentDetail">
+		<![CDATA[
+		UPDATE
+			WEB_BOARD_TB
+		SET
+			CONTENT_TITLE = #{contentTitle},
+			CONTENT_DETAIL = #{contentDetail}
+		WHERE
+			CONTENT_NUM = #{contentNum}
+		]]>
+	</update>
+</mapper>
