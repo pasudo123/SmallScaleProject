@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h2>권한 승인 완료 화면</h2>
-	<a href="/oauth20/token">토근 발급 받기</a>
+	<h2>Token 을 발급받은 화면</h2>
+	<BR>
 </body>
 </html>

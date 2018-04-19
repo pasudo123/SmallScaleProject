@@ -3,7 +3,7 @@ package edu.doubler.client.util;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
-public enum EnumSettings {
+public enum EnumClient2OWNER {
 	
 	CLIENT_ID("client_id", "KJgReXGkt5_K3KHbtiWx"),
 	CLIENT_SECRET_KEY("client_secret", "ulT5KGzUch"),
@@ -16,19 +16,23 @@ public enum EnumSettings {
 		}
 	},
 	CLIENT_TO_OWNER_API_URL("api_url", "http://localhost:8181/oauth20/authorize"),
-	CLIENT_TO_OWNER_CALLBACK_URL("callback_url", "http://localhost:8180/oauth20/callback"),
+	CLIENT_TO_OWNER_CALLBACK_URL("callback_url", "http://localhost:8180/oauth20/authorize/callback"),
 	CLIENT_TO_OWNER_RESPONSE_TYPE("response_type", "code"),
-	CLIENT_TO_OWNER_SCORE("scope","read");
+	CLIENT_TO_OWNER_SCOPE("scope","read");
 	
 	private String key = null;
 	private String value = null;
 	
-	private EnumSettings(String key){
+	private EnumClient2OWNER(String key){
 		this.key = key;
 	}
 	
-	private EnumSettings(String key, String value){
+	private EnumClient2OWNER(String key, String value){
 		this.key = key;
+		this.value = value;
+	}
+	
+	public void setValue(String value){
 		this.value = value;
 	}
 	

@@ -28,7 +28,7 @@
 				</tr>
 			</table>
 		</form:form>
-		<a href="/oauth20/authorize">더블 게시판 계정으로 로그인</a>
+		<a href="/oauth20/authorize">인증하기</a>
 	</div>
 </body>
 </html>
