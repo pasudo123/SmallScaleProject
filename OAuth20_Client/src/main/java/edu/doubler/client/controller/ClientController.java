@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.junit.runner.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.doubler.client.domain.StateVo;
 import edu.doubler.client.domain.User;
@@ -83,8 +85,9 @@ public class ClientController {
 		return CLIENT_DIRECTORY + "/" + "callback_view";
 	}
 	
+	@SuppressWarnings("unused")
 	@RequestMapping(value="/oauth20/token")
-	public String tokenRequest(HttpServletRequest request){
+	public String tokenRequest(Model model){
 		/**
 		 * [ Client ㅡㅡ> Authorization Server ]
 		 * - 아래의 파라미터를 보내고 이후 Access Token 을 발급받는다.
@@ -94,18 +97,40 @@ public class ClientController {
 		 * - api_url
 		 * - callback_url
 		 * - code
+		 * 
+		 * URLConnection 을 이용해서 보내고 이후에 토큰을 반환받는다.
 		 * **/
-		String apiUrl = authRequestService.getApiFullUrlOnToken();
 		
-		return "redirect:" + apiUrl;
+		logger.info("== " + "oauth20/token : 코드 전송");
+		Map<String, String> map = authRequestService.oauth20RequestToken();
+		logger.info("== " + "oauth20/token : 액세스 토큰 반환");
+		logger.info("== " + map.toString());
+		
+		model.addAttribute("access_token", map.get("access_token"));
+		model.addAttribute("refresh_token", map.get("refresh_token"));
+		model.addAttribute("token_type", map.get("token_type"));
+		model.addAttribute("expires_in", map.get("expires_in"));
+		model.addAttribute("jsonLine", map.get("jsonLine"));
+		
+		/**
+		 * [ Authorization Server ㅡㅡ> Client ]
+		 * **/
+		if(map == null)
+			return CLIENT_DIRECTORY + "/" + "token_error_view";
+		return CLIENT_DIRECTORY + "/" + "token_view";
 	}
 	
+	
+	/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+	 * 사용하지 않는다.
+	 * ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
 	@RequestMapping(value="/oauth20/token/callback")
-	public String showCallbackView(){
+	public String showCallbackView(HttpServletRequest reqeust){
 		/**
 		 * [ Authorization Server ㅡㅡ> Client ]
 		 * **/
 		
+		logger.info("== " + "token/callback 컨트롤러 진입");
 		return CLIENT_DIRECTORY + "/" + "token_view";
 	}
 }

@@ -1,5 +1,6 @@
 package com.doubler.oauth.controller;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -116,17 +117,19 @@ public class OAuthController {
 	}
 	
 	@RequestMapping(value="/oauth20/token", method=RequestMethod.GET)
-	public String tokenClientId(HttpServletRequest request){
+	public void tokenClientId(HttpServletRequest request, HttpServletResponse response){
 		logger.info("== 인증서버 진입 : 토큰 획득을 위함");
 		
 		// (1) token 획득
 		// (1-1) Client Id & Client Secret Key 를 DB 비교
-		// (1-2)   존재 >> code 확인 >> Access Token & Refresh Token & Token Type & expires_in JSON 형태롭 반환
+		// (1-2)   존재 >> code 확인 >> Access Token & Refresh Token & Token Type & expires_in JSON 형태로 반환
 		// (1-3) 미 존재 >> callback URL, 에러 메세지 같이
+		// (1-4) ** [필독] void 형태로 response 에 데이터를 담아 보냄.
 		String clientId = request.getParameter("client_id");
 		String clientSecret = request.getParameter("client_secret");
 		String code = request.getParameter("code");
-		String callbackUrl = request.getParameter("callback_url");
+		String scope = request.getParameter("scope");
+//		String callbackUrl = request.getParameter("callback_url");
 		String sessionCode = codeMapData.get(code).getCode();
 		
 		// client_id & client_secret 확인
@@ -134,7 +137,10 @@ public class OAuthController {
 		
 		if(!flag){
 			logger.info("== " + "Client ID & Client Secret KEY 미존재");
-			return "redirect:" + callbackUrl;
+			try {
+			response.sendError(400, "클라이언트 아이디 및 시크릿 미존재");
+			return;
+		} catch (IOException e) {e.printStackTrace();}
 		}
 		logger.info("== " + "Client ID & Client Secret KEY 존재");
 		
@@ -142,7 +148,10 @@ public class OAuthController {
 		logger.info("== code 검사");
 		if(!sessionCode.equals(code)){
 			logger.info("== code 검사 실패");
-			return "redirect:" + callbackUrl;
+			try {
+				response.sendError(400, "code 검사 실패");
+				return;
+			} catch (IOException e) {e.printStackTrace();}
 		}
 		
 		codeMapData.remove(code);
@@ -151,11 +160,21 @@ public class OAuthController {
 		
 		// 토큰 생성 JSON 형식, accessToken 을 키 값 tokenVo 를 밸류
 		TokenVo tokenVo = oauthService.generateToken();
+		tokenVo.setScope(scope);
+		
+		// 해당 액세스 토큰에 대한 관련 데이터 전부 저장
 		tokenMapData.put(tokenVo.getAccessToken(), tokenVo);
 		logger.info("== 토큰 생성 완료 및 해쉬맵 저장");
 		
-		// HttpClient 전송
-		return "redirect:" + callbackUrl;
+		response.setHeader("access_token", tokenVo.getAccessToken());
+		response.setHeader("refresh_token", tokenVo.getRefreshToken());
+		response.setHeader("token_type", tokenVo.getTokenType());
+		response.setHeader("expires_in", String.valueOf(tokenVo.getExpiresIn()));
+		try {
+			response.getOutputStream().print(tokenVo.toJSON());
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
-	
 }

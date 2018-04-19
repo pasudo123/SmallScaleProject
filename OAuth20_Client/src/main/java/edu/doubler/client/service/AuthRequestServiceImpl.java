@@ -1,9 +1,14 @@
 package edu.doubler.client.service;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -116,7 +121,7 @@ public class AuthRequestServiceImpl implements AuthRequestService{
 		return false;
 	}
 	
-	public String getApiFullUrlOnToken(){
+	private String getApiFullUrlOnToken(){
 		
 		HashMap<String, String> map = getTokenParameter();
 		Object[]keyArray = map.keySet().toArray();
@@ -147,5 +152,62 @@ public class AuthRequestServiceImpl implements AuthRequestService{
 		}
 		
 		return url.toString();
+	}
+	
+	public Map<String, String> oauth20RequestToken(){
+		
+		Map<String, String> mapData = new HashMap<String, String>();
+		
+		String apiUrl = getApiFullUrlOnToken();
+		String responseLine = null;
+		
+		URL url = null;
+		HttpURLConnection conn = null;
+		try {
+			logger.info("== " + "http 송수신 시도");
+			
+			url = new URL(apiUrl);
+			conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			BufferedReader br = null;
+			
+			int responseCode = conn.getResponseCode();
+			if(responseCode == 200){	
+				logger.info("== " + "http 송수신 성공");
+				logger.info("== " + "인증서버에서 받은 데이터");
+				
+				logger.info("access_token : " + conn.getHeaderField("access_token"));
+				logger.info("refresh_token : " + conn.getHeaderField("refresh_token"));
+				logger.info("token_type : " + conn.getHeaderField("token_type"));
+				logger.info("expires_in : " + conn.getHeaderField("expires_in"));
+				
+				mapData.put("access_token", conn.getHeaderField("access_token"));
+				mapData.put("refresh_token", conn.getHeaderField("refresh_token"));
+				mapData.put("token_type", conn.getHeaderField("token_type"));
+				mapData.put("expires_in", conn.getHeaderField("expires_in"));
+				
+				br = new BufferedReader(new InputStreamReader(conn.getInputStream()));	
+			}
+			else{
+				logger.info("== " + "http 송수신 실패");
+				br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+				
+				return null;
+			}
+			
+			String inputLine = null;
+			StringBuilder sb = new StringBuilder();
+			while((inputLine = br.readLine()) != null)
+				sb.append(inputLine);
+			
+			br.close();
+			responseLine = sb.toString();
+		}
+		catch(Exception e){
+			logger.info(e.getMessage());
+		}
+		
+		mapData.put("jsonLine", responseLine);
+		return mapData;
 	}
 }
