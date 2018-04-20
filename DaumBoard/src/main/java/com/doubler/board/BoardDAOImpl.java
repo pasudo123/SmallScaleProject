@@ -24,6 +24,11 @@ public class BoardDAOImpl implements BoardDAO{
 	}
 	
 	@Override
+	public List<BoardContentDTO> getBoardList(){
+		return sqlSession.selectList(nameSpace + ".getFullBoardList");
+	}
+	
+	@Override
 	public List<BoardContentDTO> getBoardList(BoardPagingNumber boardPagingNumber) {
 		return sqlSession.selectList(nameSpace + ".getBoardList", boardPagingNumber);
 	}

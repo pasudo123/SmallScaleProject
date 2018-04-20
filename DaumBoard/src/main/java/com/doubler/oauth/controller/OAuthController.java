@@ -162,7 +162,7 @@ public class OAuthController {
 		TokenVo tokenVo = oauthService.generateToken();
 		tokenVo.setScope(scope);
 		
-		// 해당 액세스 토큰에 대한 관련 데이터 전부 저장
+		// 해쉬맵 저장 : 해당 액세스 토큰에 대한 관련 데이터 전부 저장
 		tokenMapData.put(tokenVo.getAccessToken(), tokenVo);
 		logger.info("== 토큰 생성 완료 및 해쉬맵 저장");
 		
@@ -176,5 +176,9 @@ public class OAuthController {
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public Map<String, TokenVo> getTokenMapData(){
+		return tokenMapData;
 	}
 }

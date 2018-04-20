@@ -11,23 +11,23 @@
 	<H3>OAuth2.0 을 통한 OpenAPI 개발</H3>
 	
 	<div>
-		<form:form modelAttribute="user">
-			<table>
-				<tr>
-					<td>ID : </td>
-					<td><form:input path="userId" /></td>
-				</tr>
+<%-- 		<form:form modelAttribute="user"> --%>
+<!-- 			<table> -->
+<!-- 				<tr> -->
+<!-- 					<td>ID : </td> -->
+<%-- 					<td><form:input path="userId" /></td> --%>
+<!-- 				</tr> -->
 				
-				<tr>
-					<td>PW : </td>
-					<td><form:password path="userPw" /></td>
-				</tr>
+<!-- 				<tr> -->
+<!-- 					<td>PW : </td> -->
+<%-- 					<td><form:password path="userPw" /></td> --%>
+<!-- 				</tr> -->
 				
-				<tr>
-					<td colspan="2"><input type="submit" value="로그인" /></td>
-				</tr>
-			</table>
-		</form:form>
+<!-- 				<tr> -->
+<!-- 					<td colspan="2"><input type="submit" value="로그인" /></td> -->
+<!-- 				</tr> -->
+<!-- 			</table> -->
+<%-- 		</form:form> --%>
 		<a href="/oauth20/authorize">인증하기</a>
 	</div>
 </body>

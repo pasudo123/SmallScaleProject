@@ -17,11 +17,28 @@ ORA-00911: invalid character , java.sql.SQLException:
  -->
  
 <mapper namespace="com.doubler.board.BoardDAO">
+	
 	<select id="getContentCount" resultType="java.lang.Integer">
 		SELECT
 			count(*)
 		FROM
 			WEB_BOARD_TB
+	</select>
+	
+	<select
+	id="getFullBoardList"
+	resultType="com.doubler.board.dto.BoardContentDTO">
+	<![CDATA[
+		SELECT 
+			TO_CHAR(CONTENT_DATE, 'yyyy-mm-dd hh24:mi:ss') as contentDate,
+		  	CONTENT_NUM as contentNum,
+		  	CONTENT_TITLE as contentTitle,
+		  	CONTENT_WRITER as contentWriter,
+		  	CONTENT_DETAIL as contentDetail,
+		  	CONTENT_HIT as contentHit
+		FROM
+			WEB_BOARD_TB
+	]]>	
 	</select>
 	
 	<!-- 

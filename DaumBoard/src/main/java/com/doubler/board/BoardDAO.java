@@ -10,6 +10,9 @@ public interface BoardDAO {
 	// 게시글 전체 카운트 가져오는 기능
 	public int getContentCount();
 	
+	// 게시판의 게시글 전체 다 가져오는 기능
+	public List<BoardContentDTO> getBoardList();
+	
 	// 게시판의 게시글 가져오는 기능
 	public List<BoardContentDTO> getBoardList(BoardPagingNumber boardPagingNumber);
 	
