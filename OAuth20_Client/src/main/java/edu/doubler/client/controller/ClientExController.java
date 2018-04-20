@@ -126,4 +126,13 @@ public class ClientExController {
 		
 		return responseLine;
 	}
+	
+	
+	/**
+	 * 자바스크립트로 비동기 통신을 위한 화면
+	 * **/
+	@RequestMapping(value="/oauth20/ex/js")
+	public String getOAuthClientJavascriptView(){
+		return CLIENT_DIRECTORY + "/" + "oauth_client_js_example";
+	}
 }
