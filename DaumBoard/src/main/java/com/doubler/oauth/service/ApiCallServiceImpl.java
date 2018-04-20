@@ -34,7 +34,7 @@ public class ApiCallServiceImpl implements ApiCallService{
 			JSONObject jsonSubObject = new JSONObject();
 			jsonSubObject.put("date", boardContentList.get(i).getContentDate());
 			jsonSubObject.put("title", boardContentList.get(i).getContentTitle());
-			jsonSubObject.put("write", boardContentList.get(i).getContentWriter());
+			jsonSubObject.put("writer", boardContentList.get(i).getContentWriter());
 			jsonSubObject.put("content", boardContentList.get(i).getContentDetail());
 			jsonSubObject.put("hit", boardContentList.get(i).getContentHit());
 			jsonArray.add(jsonSubObject);
