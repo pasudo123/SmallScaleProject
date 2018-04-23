@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.doubler.EnumViewPath;
-import com.doubler.board.BoardService;
-import com.doubler.board.dto.BoardContentDTO;
+import com.doubler.board.dao.BoardContentDTO;
+import com.doubler.board.service.BoardService;
 import com.doubler.board.util.BoardPaging;
 import com.doubler.board.util.BoardSequenceNumber;
 import com.doubler.board.util.PagingMovement;
@@ -36,25 +36,25 @@ public class HomeController {
 	private PagingMovement pagingMovement = new PagingMovementImpl();			// 페이징 이동 객체
 	
 	
-	// 게시판 리스트 보여주는 컨트롤러
-	@RequestMapping(value="boardList", method=RequestMethod.GET)
-	public String showboardList(HttpServletRequest request, Model model){
-		int contentCount = boardService.getContentCount();				// 최근에 작성된 번호 추출
-		contentNumber = boardSequenceNum.getContentNumber(contentCount);
-		boardPaging.setPagesCount(contentCount);
-		
-		String pageNumber = request.getParameter("paging");
-		
-		if(pageNumber != null){
-			boardPaging = pagingMovement.chooseMovement(pageNumber);
-		}
-		
-		model.addAttribute("pagingInfoMap", boardPaging.getPagingInformation());
-		model.addAttribute("boardContent", boardService.getBoardList(boardPaging.getPagingInformation(), contentCount));
-		
-		return EnumViewPath.BOARD_LIST_VIEW.getPath();
-	}
-	
+//	// 게시판 리스트 보여주는 컨트롤러
+//	@RequestMapping(value="boardList", method=RequestMethod.GET)
+//	public String showboardList(HttpServletRequest request, Model model){
+//		int contentCount = boardService.getContentCount();				// 최근에 작성된 번호 추출
+//		contentNumber = boardSequenceNum.getContentNumber(contentCount);
+//		boardPaging.setPagesCount(contentCount);
+//		
+//		String pageNumber = request.getParameter("paging");
+//		
+//		if(pageNumber != null){
+//			boardPaging = pagingMovement.chooseMovement(pageNumber);
+//		}
+//		
+//		model.addAttribute("pagingInfoMap", boardPaging.getPagingInformation());
+//		model.addAttribute("boardContent", boardService.getBoardList(boardPaging.getPagingInformation(), contentCount));
+//		
+//		return EnumViewPath.BOARD_LIST_VIEW.getPath();
+//	}
+//	
 	
 	// 게시판 글쓰기 폼 보여주는 컨트롤러
 	@RequestMapping(value="boardWriteView")

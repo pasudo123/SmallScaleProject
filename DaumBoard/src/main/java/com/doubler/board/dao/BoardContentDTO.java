@@ -1,4 +1,4 @@
-package com.doubler.board.dto;
+package com.doubler.board.dao;
 
 public class BoardContentDTO {
 	private String contentDate;		// 작성날짜

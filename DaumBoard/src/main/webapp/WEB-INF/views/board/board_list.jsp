@@ -18,25 +18,22 @@
 	<div>
 		<table width="500" cellpadding="0" cellspacing="0" border="1">
 			<tr>
-				<td>번호</td>
+				<td>날짜</td>
 				<td>제목</td>
 				<td>작성자</td>
-				<td>날짜</td>
 				<td>조회수</td>
 			</tr>
 			
+						
 			<c:forEach items="${boardContent}" var="boardContent">
-			<tr>
-				<td>${boardContent.contentNum}</td>
-				
-				<td>
-					<a href="boardList/boardContentView?contentNum=${boardContent.contentNum}">${boardContent.contentTitle}</a>
-				</td>
-				
-				<td>${boardContent.contentWriter}</td>
-				<td>${boardContent.contentDate}</td>
-				<td>${boardContent.contentHit}</td>
-			</tr>
+				<tr>
+					<td>${boardContent.contentDate}</td>
+					<td>
+						<a href="boardList/boardContentView?contentNum=${boardContent.contentNum}">${boardContent.contentTitle}</a>
+					</td>
+					<td>${boardContent.contentWriter}</td>
+					<td>${boardContent.contentHit}</td>
+				</tr>
 			</c:forEach>
 		</table>
 	</div>

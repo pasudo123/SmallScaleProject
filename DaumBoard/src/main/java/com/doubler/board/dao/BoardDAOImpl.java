@@ -1,4 +1,4 @@
-package com.doubler.board;
+package com.doubler.board.dao;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.doubler.board.dto.BoardContentDTO;
+import com.doubler.board.constants.EnumDatabase;
 import com.doubler.board.util.BoardPagingNumber;
 
 @Repository
@@ -14,23 +14,21 @@ public class BoardDAOImpl implements BoardDAO{
 	
 	@Autowired
 	private SqlSession sqlSession;
-	
-	private String nameSpace = "com.doubler.board.BoardDAO";
 	private BoardContentDTO boardContentDto = new BoardContentDTO();
 	
 	@Override
 	public int getContentCount() {
-		return sqlSession.selectOne(nameSpace + ".getContentCount");
+		return sqlSession.selectOne(EnumDatabase.NAME_SPACE + "." +EnumDatabase.QUERY_ON_GET_CONTENT_COUNT);
 	}
 	
 	@Override
 	public List<BoardContentDTO> getBoardList(){
-		return sqlSession.selectList(nameSpace + ".getFullBoardList");
+		return sqlSession.selectList(EnumDatabase.NAME_SPACE.getValue() + ".getFullBoardList");
 	}
 	
 	@Override
 	public List<BoardContentDTO> getBoardList(BoardPagingNumber boardPagingNumber) {
-		return sqlSession.selectList(nameSpace + ".getBoardList", boardPagingNumber);
+		return sqlSession.selectList(EnumDatabase.NAME_SPACE.getValue() + ".getBoardList", boardPagingNumber);
 	}
 	
 	@Override
@@ -41,31 +39,31 @@ public class BoardDAOImpl implements BoardDAO{
 		boardContentDto.setContentWriter(contentWriter);
 		boardContentDto.setContentDetail(contentDetail);
 		
-		sqlSession.insert(nameSpace + ".writeContent", boardContentDto);
+		sqlSession.insert(EnumDatabase.NAME_SPACE.getValue() + ".writeContent", boardContentDto);
 	}
 
 	@Override
 	public BoardContentDTO getContent(int contentNum) {
 		boardContentDto.setContentNum(contentNum);
-		return sqlSession.selectOne(nameSpace + ".getContent", boardContentDto);
+		return sqlSession.selectOne(EnumDatabase.NAME_SPACE.getValue() + ".getContent", boardContentDto);
 	}
 	
 	@Override
 	public void updateHit(int contentNum){
 		boardContentDto.setContentNum(contentNum);
-		sqlSession.update(nameSpace + ".updateHit", boardContentDto);
+		sqlSession.update(EnumDatabase.NAME_SPACE.getValue() + ".updateHit", boardContentDto);
 	}
 
 	@Override
 	public void deleteContent(int contentNum) {
 		boardContentDto.setContentNum(contentNum);
-		sqlSession.delete(nameSpace + ".deleteContent", boardContentDto);
+		sqlSession.delete(EnumDatabase.NAME_SPACE.getValue() + ".deleteContent", boardContentDto);
 	}
 
 	@Override
 	public void updateContentNum(int contentNum) {
 		boardContentDto.setContentNum(contentNum);
-		sqlSession.update(nameSpace + ".updateContentNum", boardContentDto);
+		sqlSession.update(EnumDatabase.NAME_SPACE + ".updateContentNum", boardContentDto);
 	}
 
 	@Override
@@ -74,6 +72,6 @@ public class BoardDAOImpl implements BoardDAO{
 		boardContentDto.setContentTitle(contentTitle);
 		boardContentDto.setContentDetail(contentDetail);
 		
-		sqlSession.update(nameSpace + ".updateContentDetail", boardContentDto);
+		sqlSession.update(EnumDatabase.NAME_SPACE + ".updateContentDetail", boardContentDto);
 	}
 }

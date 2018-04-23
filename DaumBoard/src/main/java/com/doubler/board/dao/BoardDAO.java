@@ -1,8 +1,7 @@
-package com.doubler.board;
+package com.doubler.board.dao;
 
 import java.util.List;
 
-import com.doubler.board.dto.BoardContentDTO;
 import com.doubler.board.util.BoardPagingNumber;
 
 public interface BoardDAO {
@@ -33,5 +32,4 @@ public interface BoardDAO {
 	
 	// 게시판 글 수정 기능
 	public void updateContentDetail(int contentNum, String contentTitle, String contentDetail);
-
 }

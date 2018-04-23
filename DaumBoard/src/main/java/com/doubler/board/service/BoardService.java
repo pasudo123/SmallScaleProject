@@ -1,9 +1,9 @@
-package com.doubler.board;
+package com.doubler.board.service;
 
 import java.util.HashMap;
 import java.util.List;
 
-import com.doubler.board.dto.BoardContentDTO;
+import com.doubler.board.dao.BoardContentDTO;
 
 public interface BoardService {
 	

@@ -20,6 +20,9 @@
 					return;
 				}	
 				
+				// accessToken 출력
+				console.log(accessToken);
+				
 				// XMLHttpRequest 는 same-origin 정책을 따른다.
 				// 따라서 다른 도메인으로 요청이 불가 (CORS)
 				var xmlHttp = new XMLHttpRequest();

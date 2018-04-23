@@ -15,6 +15,7 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+		
 	</context-param>
 	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
@@ -49,7 +50,6 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-	<!-- ㅂ라 -->
 	<filter>
 	   <filter-name>encodingFilter</filter-name>
 	   <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

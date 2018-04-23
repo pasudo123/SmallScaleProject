@@ -16,7 +16,7 @@ ORA-00911: invalid character , java.sql.SQLException:
 쿼리에서는 틀린게 없지만 ';', 세미콜론을 제거해주어야 한다.
  -->
  
-<mapper namespace="com.doubler.board.BoardDAO">
+<mapper namespace="BoardMapper">
 	
 	<select id="getContentCount" resultType="java.lang.Integer">
 		SELECT

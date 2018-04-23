@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.doubler.oauth.domain.TokenVo;
 import com.doubler.oauth.service.ApiCallService;
 
+//@CrossOrigin(origins="*")
 @Controller
 public class ApiCallController {
 	/**
@@ -38,6 +40,17 @@ public class ApiCallController {
 		logger.info("== " + "게시판 api 호출");
 		
 		logger.info("== " + "accessToken 확인하기");
+		
+		/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+		 * 
+		 * 		    [ 서버에서 CORS요청을 처리할 때 지정하는 헤더 ]
+		 * - Access-Control-Allow-Origin: <origin> | *
+		 * (1) <origin> : 요청 도메인의 URI 를 지정
+		 * (2) * : 모든 도메인은 서버로 접근 허용
+		 * 
+		 * ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Credentials", "true");
 		
 		/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 		 * 

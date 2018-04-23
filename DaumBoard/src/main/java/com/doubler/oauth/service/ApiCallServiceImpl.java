@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.doubler.board.BoardDAO;
-import com.doubler.board.dto.BoardContentDTO;
+import com.doubler.board.dao.BoardContentDTO;
+import com.doubler.board.dao.BoardDAO;
 
 @Service
 public class ApiCallServiceImpl implements ApiCallService{

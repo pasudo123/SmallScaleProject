@@ -1,4 +1,4 @@
-package com.doubler.board;
+package com.doubler.board.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +7,9 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.doubler.board.dto.BoardContentDTO;
+
+import com.doubler.board.dao.BoardContentDTO;
+import com.doubler.board.dao.BoardDAO;
 import com.doubler.board.util.BoardPagingNumber;
 
 @Service
