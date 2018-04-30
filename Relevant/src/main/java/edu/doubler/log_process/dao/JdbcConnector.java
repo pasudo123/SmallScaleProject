@@ -1,10 +1,10 @@
-package edu.doubler.preprocess.database;
+package edu.doubler.log_process.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class JdbcConnector {
+public interface JdbcConnector {
 	public static Connection getConnection() {
 		Connection conn = null;
 
@@ -30,6 +30,7 @@ public class JdbcConnector {
 			System.out.println("Unkonwn error");
 			e.printStackTrace();
 		}
+		
 		return conn;
 	}
 }
