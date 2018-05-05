@@ -1,22 +1,24 @@
 package edu.doubler.log_process.keyword;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.ConcurrentModificationException;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.json.simple.JSONObject;
 
 import edu.doubler.log_process.BufferedReaderCallback;
+import edu.doubler.log_process.domain.KeywordMentionMapper;
 import edu.doubler.log_process.domain.LogMapper;
 
 public class KeywordMentionCorrelat {
@@ -37,7 +39,7 @@ public class KeywordMentionCorrelat {
 	boolean isPossibleMonthly = false;
 	
 	private Hashtable<String, Integer> correlatDailyMentionTable;
-	private Hashtable<String, Integer> correlatWeeklyMentionTable;
+	private Hashtable<String, Integer> correlatWeeklyMentionTable[];
 	private Hashtable<String, Integer> correlatMonthlyMentionTable;
 	
 	public static void main(String[]args){
@@ -64,15 +66,21 @@ public class KeywordMentionCorrelat {
 					if(logMapper != null){
 						String keyword = logMapper.getSearchKeyword();
 						
-						// 불필요한 키워드는 생략
-						if(KeywordLogLauncher.isUselessPattern(keyword))
+						/** 불필요한 키워드는 따로 저장 혹은 생략 선택 **/
+						if(KeywordLogLauncher.isUselessPattern(keyword)){
+//							writeUselessLog(line);
 							continue;
+						}
 						
 						if(table.get(keyword) == null){
 							table.put(keyword, 1);
 						}
 						else
 							table.put(keyword, table.get(keyword) + 1);
+					}
+					else{
+						/** null 데이터면 해당 Line 따로 저장 혹은 생략 선택 **/
+						
 					}
 				}// while : 한 줄씩 읽음
 				
@@ -86,26 +94,31 @@ public class KeywordMentionCorrelat {
 		process(path, brCallback); 
 	}
 	
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void process(String path, BufferedReaderCallback brCallback){
 		
 		ArrayList<Hashtable<String, Integer>> monthlyMentionList = null;
-		ArrayList<Hashtable<String, Integer>> weeklyMentionList = null;
+		ArrayList<Hashtable<String, Integer>> weeklyMentionList[] = null;
 		Hashtable<String, Integer> dailyMentionTable = null;
 		
 		int monthCount = 0;
-		int weekCount = 0;
+		int weekCount = 0, weekIndex = 0;
+		
 		
 		try{
 			File[]dailyDirectoryList = new File(path).listFiles();
 			int directorySize = dailyDirectoryList.length;
 			
 			if(directorySize >= KeywordMentionEnum.MENTION_ON_WEEKLY.getDays()){
-				weeklyMentionList = new ArrayList<Hashtable<String, Integer>>();
+				int weeklySize = directorySize / KeywordMentionEnum.MENTION_ON_WEEKLY.getDays();
+				weeklyMentionList = new ArrayList[weeklySize];
+				
+				for(int i = 0; i < weeklySize; i++)
+					weeklyMentionList[i] = new ArrayList<Hashtable<String, Integer>>();
+				
 				isPossibleWeekly = true;
 			}
 			
-			// 월간(30일), 주간(7일), 일간 : 언급량 카운트 (상위 3개)
 			if(directorySize >= KeywordMentionEnum.MENTION_ON_MONTH.getDays()){
 				monthlyMentionList = new ArrayList<Hashtable<String, Integer>>();
 				isPossibleMonthly = true;
@@ -127,6 +140,7 @@ public class KeywordMentionCorrelat {
 				
 				int tableIndex = 0;
 				int length = logFileList.length;
+				
 				Hashtable[] table = new Hashtable[length];
 				
 				for(File logFile : logFileList){
@@ -144,8 +158,16 @@ public class KeywordMentionCorrelat {
 				}
 				
 				// 주간 : 누적
-				if(isPossibleWeekly && weekCount <= KeywordMentionEnum.MENTION_ON_WEEKLY.getDays()){
-					weeklyMentionList.add(dailyMentionTable);
+				if(isPossibleWeekly){
+					if(weekCount <= KeywordMentionEnum.MENTION_ON_WEEKLY.getDays()){
+						weeklyMentionList[weekIndex].add(dailyMentionTable);
+					}
+					else{
+						if(weekIndex + 1 < weeklyMentionList.length){
+							weeklyMentionList[++weekIndex].add(dailyMentionTable);
+							weekCount = 1;
+						}
+					}
 				}
 				
 				// 월간 : 누적
@@ -166,13 +188,17 @@ public class KeywordMentionCorrelat {
 			
 			// 주간 상위 키워드를 추출할 수 있는 경우
 			if(isPossibleWeekly){
-				int size = weeklyMentionList.size();
-				Hashtable[] weeklyMetionTables = new Hashtable[size];
-
-				for(int i = 0; i < weeklyMentionList.size(); i++)
-					weeklyMetionTables[i] = weeklyMentionList.get(i);
+				int length = weeklyMentionList.length;
+				Hashtable[][] weeklyMetionTables = new Hashtable[weeklyMentionList.length][7];
+				correlatWeeklyMentionTable = new Hashtable[weeklyMentionList.length];
 				
-				correlatWeeklyMentionTable = calcMention(weeklyMetionTables);
+				for(int i = 0; i < length; i++){
+					for(int j = 0; j < weeklyMentionList[i].size(); j++){
+						weeklyMetionTables[i][j] = weeklyMentionList[i].get(j);
+					}
+					
+					correlatWeeklyMentionTable[i] = calcMention(weeklyMetionTables[i]);
+				}
 			}
 			
 			// 월간 상위 키워드를 추출할 수 있는 경우
@@ -188,21 +214,59 @@ public class KeywordMentionCorrelat {
 			
 			System.out.println("===============");
 			System.out.println(correlatDailyMentionTable.size());
-			System.out.println(correlatWeeklyMentionTable.size());
+			for(int i = 0; i < correlatWeeklyMentionTable.length; i++)
+				System.out.print(correlatWeeklyMentionTable[i].size() + "  ");
+			System.out.println();
 			System.out.println(correlatMonthlyMentionTable.size());
 			
+			// 해당 횟수 미만은 제거.
 			reductionTable(correlatDailyMentionTable, 100);
 			reductionTable(correlatWeeklyMentionTable, 500);
 			reductionTable(correlatMonthlyMentionTable, 1000);
 			
 			System.out.println("===============");
+			System.out.println("== 카운트 미만 키워드 제거 ==");
 			System.out.println(correlatDailyMentionTable.size());
-			System.out.println(correlatWeeklyMentionTable.size());
+			for(int i = 0; i < correlatWeeklyMentionTable.length; i++)
+				System.out.print(correlatWeeklyMentionTable[i].size() + "  ");
+			System.out.println();
 			System.out.println(correlatMonthlyMentionTable.size());
 			
-			System.out.println(toJsonString(correlatDailyMentionTable));
-			System.out.println(toJsonString(correlatWeeklyMentionTable));
-			System.out.println(toJsonString(correlatMonthlyMentionTable));
+			/**ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+			 * 
+			 * 키워드 & 언급량이 정렬된 ArrayList 반환
+			 * 
+			 * ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ**/
+			ArrayList<KeywordMentionMapper> sortedDailyMention = getSortedKeywordMentionArray(correlatDailyMentionTable);
+			ArrayList<KeywordMentionMapper> sortedWeeklyMention[] = getSortedKeywordMentionArray(correlatWeeklyMentionTable);
+			ArrayList<KeywordMentionMapper> sortedMonthlyMention = getSortedKeywordMentionArray(correlatMonthlyMentionTable);
+			
+			// [ 3개 - 5개 - 10개  ]
+			System.out.println("== 일간 상위 키워드 ==");
+			for(int i = sortedDailyMention.size() - 1; i >= sortedDailyMention.size() - 3; i--)
+				System.out.println(sortedDailyMention.get(i).getKeyword() + " : " + sortedDailyMention.get(i).getMentionCount());
+			
+			System.out.println("== 주간 상위 키워드 ==");
+			for(int i = 0; i < sortedWeeklyMention.length; i++){
+				System.out.println("== " + (sortedWeeklyMention.length - i) + " 주차 상위 키워드 ==");
+				for(int j = sortedWeeklyMention[i].size() - 1; j >= sortedWeeklyMention[i].size() - 5; j--){
+					System.out.println(sortedWeeklyMention[i].get(j).getKeyword() + " : " + sortedWeeklyMention[i].get(j).getMentionCount());
+				}
+			}
+			
+			System.out.println("== 월간 상위 키워드 ==");
+			for(int i = sortedMonthlyMention.size() - 1; i >= sortedMonthlyMention.size() - 10; i--)
+				System.out.println(sortedMonthlyMention.get(i).getKeyword() + " : " + sortedMonthlyMention.get(i).getMentionCount());
+			
+			System.out.println("\n\n===================");
+			System.out.println("== 일간 상위 키워드 ==");
+			System.out.println(toJsonString(sortedDailyMention));
+			for(int i = 0; i < sortedWeeklyMention.length; i++){
+				System.out.println("== " + (sortedWeeklyMention.length - i) + " 주차 상위 키워드 ==");
+				System.out.println(toJsonString(sortedWeeklyMention[i]));
+			}
+			System.out.println("== 월간 상위 키워드 ==");
+			System.out.println(toJsonString(sortedMonthlyMention));
 		}
 		catch(IOException e){
 			System.out.println(e.getMessage());
@@ -259,6 +323,47 @@ public class KeywordMentionCorrelat {
 		}
 	}
 	
+	// deleteCount 미만의 횟수를 가진 키워드 삭제
+	// 주간 키워드에 대한 [ 메소드 오버로딩  ]
+	private void reductionTable(Hashtable<String, Integer> table[], int deleteCount){
+		Object dummy = new Object();
+		
+		for(int i = 0; i < table.length; i++){
+			synchronized(dummy){
+				Enumeration<String> enumeration = table[i].keys();
+				try{
+					while (enumeration.hasMoreElements()) {
+						String key = enumeration.nextElement();
+						int cnt = table[i].get(key);
+			
+						if (cnt < deleteCount)
+							table[i].remove(key);
+					}
+				}
+				catch(ConcurrentModificationException e){
+					System.out.println(e.getMessage());
+					System.out.println("해쉬테이블 Iterator 부분에서 오류");
+					System.exit(1);
+				}
+			}
+		}// for
+	}
+	
+	// List 를 Json 으로 변환
+	@SuppressWarnings("unchecked")
+	private String toJsonString(ArrayList<KeywordMentionMapper> list){
+		int length = list.size()-1;
+		JSONObject jsonObject = new JSONObject();
+		
+		for(int i = length; i >= 0; i--){
+			jsonObject.put(list.get(i).getKeyword(), list.get(i).getMentionCount());
+		}
+		
+		return jsonObject.toJSONString();
+	}
+	
+	// 
+	
 	// 문자열을 JSON으로 변환
 	@SuppressWarnings("unchecked")
 	private String toJsonString(Hashtable<String, Integer> table){
@@ -272,6 +377,71 @@ public class KeywordMentionCorrelat {
 		
 		return dailyJsonObject.toJSONString();
 	}
+
+	private ArrayList<KeywordMentionMapper> getSortedKeywordMentionArray(Hashtable<String, Integer> table){
+		ArrayList<KeywordMentionMapper> list = new ArrayList<KeywordMentionMapper>();
+
+		Enumeration<String> enumeration = table.keys();
+		while(enumeration.hasMoreElements()){
+			String keyword = enumeration.nextElement();
+			int mentionCount = table.get(keyword);
+			
+			list.add(new KeywordMentionMapper(keyword, mentionCount));
+		}
+		
+		list.sort(new Comparator<KeywordMentionMapper>(){
+			@Override
+			public int compare(KeywordMentionMapper obj1, KeywordMentionMapper obj2) {
+				return (obj1.getMentionCount() - obj2.getMentionCount());
+			}
+		});
+		
+		return list;
+	}
 	
-	// 일간 상위 키워드 정리
+	@SuppressWarnings("unchecked")
+	// [ 메소드 오버로딩  ]
+	private ArrayList<KeywordMentionMapper>[] getSortedKeywordMentionArray(Hashtable<String, Integer> table[]){
+		ArrayList<KeywordMentionMapper> list[] = new ArrayList[table.length];
+		
+		for(int i = 0; i < list.length; i++)
+			list[i] = new ArrayList<KeywordMentionMapper>();
+		
+		for(int i = 0; i < table.length; i++){
+			Enumeration<String> enumeration = table[i].keys();
+			while(enumeration.hasMoreElements()){
+				String keyword = enumeration.nextElement();
+				int mentionCount = table[i].get(keyword);
+				
+				list[i].add(new KeywordMentionMapper(keyword, mentionCount));
+			}
+			
+			list[i].sort(new Comparator<KeywordMentionMapper>(){
+				@Override
+				public int compare(KeywordMentionMapper obj1, KeywordMentionMapper obj2) {
+					return (obj1.getMentionCount() - obj2.getMentionCount());
+				}
+			});
+		}
+		
+		return list;
+	}
+	
+	private void writeUselessLog(String line){
+		FileWriter fw = null;
+		BufferedWriter bw = null;
+		
+		try {
+			fw = new FileWriter("C:\\Users\\Daumsoft\\Desktop\\MelonLog\\useless\\uselessLog.log", true);
+			bw = new BufferedWriter(fw);
+			
+			bw.write(line);
+			bw.write("\n");
+			bw.flush();
+			bw.close();
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

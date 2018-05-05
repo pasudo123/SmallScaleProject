@@ -85,6 +85,7 @@ public class MusicMemberCorrelat implements Runnable{
 		File file = new File(reWritePath + "\\" + newLogName);
 		
 		try {
+			// true 값을 통해서 맨 아랫단에 쓰겠다는 의미
 			bw = new BufferedWriter(new FileWriter(file, true));
 			
 			fis = new FileInputStream(logFile.getAbsolutePath());

@@ -33,7 +33,15 @@ public class KeywordExtractor implements Runnable{
 			br = new BufferedReader(new InputStreamReader(fis, "euc-kr"));
 			
 			while((line = br.readLine()) != null){
-				LogMapper logMapper = logProcessor.getLogMapper(line);
+				Object object = logProcessor.getLogMapper(line);
+				LogMapper logMapper = null;
+				
+				if(object instanceof LogMapper){
+					logMapper = (LogMapper) object;
+				}
+				if(object instanceof String){
+					// 로그 저장
+				}
 				
 				if(logMapper != null){
 					KeywordLogLauncher.addKeywordAtSet(logMapper.getSearchKeyword());

@@ -1,4 +1,4 @@
-package edu.doubler.preprocess.person;
+package edu.doubler.log_process.member;
 
 import java.util.Random;
 
@@ -7,10 +7,16 @@ public class MusicMember {
 	private String memberGender = null;
 	private String memberBirthday = null;
 	
-	public MusicMember(String memeberKey){
+	public MusicMember(String memberKey){
 		setGender();
 		setBirth();
-		this.memberKey = memeberKey;
+		this.memberKey = memberKey;
+	}
+	
+	public MusicMember(String memberKey, String memberGender, String memberBirthday){
+		this.memberKey = memberKey;
+		this.memberGender = memberGender;
+		this.memberBirthday = memberBirthday;
 	}
 	
 	// 남/녀 선택
@@ -51,5 +57,9 @@ public class MusicMember {
 				+ "[memberKey=" + memberKey 
 				+ ", memberGender=" + memberGender 
 				+ ", memberBirthday=" + memberBirthday + "]";
+	}
+	
+	public String toTsvString(){
+		return memberKey + "\t" + memberGender + "\t" + memberBirthday;
 	}
 }

@@ -15,6 +15,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class SingerExtractorByTime {
+	
+	/**
+	 * 
+	 * 10분단위의 로그 데이터에서, 중복을 제거하고 다시 10분단위의 로그데이터로 다시 파일 저장
+	 * 
+	 * **/
+	
 	public static void main(String[]args){
 		
 		boolean flag = true;
