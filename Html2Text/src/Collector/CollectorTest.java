@@ -3,6 +3,7 @@ package Collector;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,16 +12,24 @@ import org.junit.Test;
 
 public class CollectorTest {
 	ArrayList<StringBuilder> builderList = new ArrayList<StringBuilder>();
+	@SuppressWarnings("unused")
+	private static int width;
+	
+	/**
+	 * 
+	 * **/
 	
 	@Test
 	public void Collect(){
 		Document document = null;
 		
-		display();
-		
 		try {
 			document = Jsoup.connect("http://www.daumsoft.com/contextualCA.html").get();
 			Element body = document.body();
+			
+			if(body.select("table").size() != 0)
+				display();
+			
 			body.select("script").remove();
 			body.select("style").remove();
 			body.select("label").remove();
@@ -43,6 +52,14 @@ public class CollectorTest {
 		}
 	}
 
+	@SuppressWarnings("resource")
+	private void display(){
+		System.out.println("table 의 너비를 설정하시오");
+		System.out.print("(1)40 | (2)60 | (3)80 | (4)100 : ");
+		width = Integer.parseInt(new Scanner(System.in).next());
+		System.out.println();
+	}
+	
 	private void process(String string){
 		String input = string;
 		input = input.replaceAll("<!--(.*?)-->","");
@@ -56,7 +73,6 @@ public class CollectorTest {
 			String s = lineElement[i];
 			
 			/** 엔티티 및 태그 변경 **/
-			
 			if(s.equalsIgnoreCase("[pn]") || s.equalsIgnoreCase("[/pn]") || s.equalsIgnoreCase("[brn]")){
 				builderList.add(new StringBuilder());
 				newLine++;
@@ -95,23 +111,33 @@ public class CollectorTest {
 				newLine++;
 			}
 			
-			else if(s.equalsIgnoreCase("[th]") || s.equalsIgnoreCase("[tbody]") || s.equalsIgnoreCase("[thead]")){
+			else if(s.equalsIgnoreCase("[tbody]") || s.equalsIgnoreCase("[thead]")){
 				continue;
 			}
 			
-			else if(s.equalsIgnoreCase("[/th]") || s.equalsIgnoreCase("[/tbody]") || s.equalsIgnoreCase("[/thead]")){
+			else if(s.equalsIgnoreCase("[/tbody]") || s.equalsIgnoreCase("[/thead]")){
 				continue;
 			}
 			
 			else if(s.equalsIgnoreCase("[tr]")){
-				builderList.get(newLine).append("|");
+				builderList.get(newLine).append("| ");
 			}
 			
 			else if(s.equalsIgnoreCase("[/tr]")){
 				builderList.get(newLine).append("|");
-				
 				builderList.add(new StringBuilder());
 				newLine++;
+			}
+			
+			else if(s.equalsIgnoreCase("[th]")){
+				continue;
+			}
+			
+			else if(s.equalsIgnoreCase("[/th]")){
+				if(i < lineElement.length - 1 && lineElement[i+1].equals("[/tr]"))
+					continue;
+				else
+					builderList.get(newLine).append("| ");
 			}
 			
 			else if(s.equalsIgnoreCase("[td]")){
@@ -122,7 +148,7 @@ public class CollectorTest {
 				if(i < lineElement.length - 1 && lineElement[i+1].equals("[/tr]"))
 					continue;
 				else
-					builderList.get(newLine).append("|");
+					builderList.get(newLine).append("| ");
 			}
 			
 			else if(s.equals("")){
