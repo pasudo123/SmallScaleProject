@@ -1,0 +1,1308 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<link rel="stylesheet" type="text/css" href="https://t1.daumcdn.net/tistory_admin/blogs/style/menubar.css?_version_=412fa4c3095830140e107f0bef1b3882cf40049b" /><!--[if lt IE 9]><script src="https://t1.daumcdn.net/tistory_admin/lib/jquery/jquery-1.12.4.min.js"></script><![endif]--><!--[if gte IE 9]>
+<!--><script src="https://t1.daumcdn.net/tistory_admin/lib/jquery/jquery-3.2.1.min.js"></script><!--<![endif]-->
+<script>var tjQuery = jQuery.noConflict(true);</script><style type="text/css">.tt_article_useless_p_margin p {padding-top:0 !important;padding-bottom:0 !important;margin-top:0 !important;margin-bottom:0 !important;}</style><meta name="referrer" content="always"><link rel="icon" href="//t1.daumcdn.net/tistory_admin/static/top/favicon_0630.ico" /><link rel="apple-touch-icon" href="//i1.daumcdn.net/thumb/C180x180/?fname=http%3A%2F%2Fcfile1.uf.tistory.com%2Fimage%2F224A4F3D58DB4F34217DF6">
+<link rel="apple-touch-icon" sizes="76x76" href="//i1.daumcdn.net/thumb/C76x76/?fname=http%3A%2F%2Fcfile1.uf.tistory.com%2Fimage%2F224A4F3D58DB4F34217DF6">
+<link rel="apple-touch-icon" sizes="120x120" href="//i1.daumcdn.net/thumb/C120x120/?fname=http%3A%2F%2Fcfile1.uf.tistory.com%2Fimage%2F224A4F3D58DB4F34217DF6">
+<link rel="apple-touch-icon" sizes="152x152" href="//i1.daumcdn.net/thumb/C152x152/?fname=http%3A%2F%2Fcfile1.uf.tistory.com%2Fimage%2F224A4F3D58DB4F34217DF6"><meta name="description" content="데이터형 예약어 비트수 범위 ①논리형 boolean 8bit (1바이트) true, false ②문자형 char 16bit 유니코드 (2바이트) 수치로는 0 ~ 65535('\u0000'~'\uFFFF') 유니코드:영어,숫자-1바이트, 그외 다국어-2바이트..">
+
+<!-- BEGIN OPENGRAPH -->
+<link rel="canonical" href="http://aventure.tistory.com/59" /><meta property="og:type" content="article"><meta property="og:url" content="http://aventure.tistory.com/59" ><meta property="og:site_name" content="H.A.P.P.Y" ><meta property="og:title" content="자바의 기본데이터형과 크기" ><meta name="by" content="일찐옵하" ><meta property="og:description" content="데이터형 예약어 비트수 범위 ①논리형 boolean 8bit (1바이트) true, false ②문자형 char 16bit 유니코드 (2바이트) 수치로는 0 ~ 65535('\u0000'~'\uFFFF') 유니코드:영어,숫자-1바이트, 그외 다국어-2바이트.." ><meta property="og:image" content="https://t1.daumcdn.net/cssjs/icon/557567EA016E200001" >
+<!-- END OPENGRAPH -->
+
+
+
+<!-- BEGIN TWITTERCARD -->
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@TISTORY"><meta name="twitter:title" content="자바의 기본데이터형과 크기" ><meta name="twitter:description" content="데이터형 예약어 비트수 범위 ①논리형 boolean 8bit (1바이트) true, false ②문자형 char 16bit 유니코드 (2바이트) 수치로는 0 ~ 65535('\u0000'~'\uFFFF') 유니코드:영어,숫자-1바이트, 그외 다국어-2바이트.." ><meta property="twitter:image" content="https://t1.daumcdn.net/cssjs/icon/557567EA016E200001" >
+<!-- END TWITTERCARD -->
+
+
+
+<!-- BEGIN DAUMAPP -->
+<meta property="dg:plink" content="http://aventure.tistory.com/59" ><meta name="plink" content="http://aventure.tistory.com/59" ><meta name="title" content="자바의 기본데이터형과 크기" ><meta name="article:media_name" content="H.A.P.P.Y" ><meta property="article:mobile_url" content="http://aventure.tistory.com/m/59" ><meta property="article:pc_url" content="http://aventure.tistory.com/59" ><meta property="article:mobile_view_url" content="http://aventure.tistory.com/m/59" ><meta property="article:pc_view_url" content="http://aventure.tistory.com/59" ><meta property="article:talk_channel_view_url" content="http://aventure.tistory.com/m/59" ><meta property="article:pc_service_home" content="http://www.tistory.com" ><meta property="article:mobile_service_home" content="http://www.tistory.com/m" ><meta property="article:txid" content="208426_59" /><meta property="article:published_time" content="2007-05-11T08:11:00+09:00" ><meta property="og:regDate" content="20070511081100" ><meta property="article:modified_time" content="2007-05-11T08:11:00+09:00" >
+<!-- END DAUMAPP -->
+
+
+
+<!-- BEGIN STRUCTURED_DATA -->
+<script type="application/ld+json">{"@context":"http:\/\/schema.org","@type":"BlogPosting","mainEntityOfPage":{"@id":"http:\/\/aventure.tistory.com\/59"},"url":"http:\/\/aventure.tistory.com\/59","headline":"\uc790\ubc14\uc758 \uae30\ubcf8\ub370\uc774\ud130\ud615\uacfc \ud06c\uae30","description":"\ub370\uc774\ud130\ud615 \uc608\uc57d\uc5b4 \ube44\ud2b8\uc218 \ubc94\uc704 \u2460\ub17c\ub9ac\ud615 boolean 8bit (1\ubc14\uc774\ud2b8) true, false \u2461\ubb38\uc790\ud615 char 16bit \uc720\ub2c8\ucf54\ub4dc (2\ubc14\uc774\ud2b8) \uc218\uce58\ub85c\ub294 0 ~ 65535('\\u0000'~'\\uFFFF') \uc720\ub2c8\ucf54\ub4dc:\uc601\uc5b4,\uc22b\uc790-1\ubc14\uc774\ud2b8, \uadf8\uc678 \ub2e4\uad6d\uc5b4-2\ubc14\uc774\ud2b8..","author":{"@type":"Person","name":"\uc77c\ucc10\uc635\ud558"},"image":{"@type":"ImageObject","url":"https:\/\/t1.daumcdn.net\/cssjs\/icon\/557567EA016E200001","width":"800px","height":"800px"},"datePublished":"20070511T08:11:00+09:00","dateModified":"20070511T08:11:00+09:00","publisher":{"@type":"Organization","name":"TISTORY","logo":{"@type":"ImageObject","url":"https:\/\/t1.daumcdn.net\/cssjs\/icon\/557567EA016E200001","width":"800px","height":"800px"}}}</script>
+<!-- END STRUCTURED_DATA -->
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<link rel="alternate" type="application/rss+xml" title="H.A.P.P.Y" href="http://aventure.tistory.com/rss" />
+<link rel="stylesheet" media="screen" type="text/css" href="https://tistory1.daumcdn.net/tistory/208426/skin/style.css?_T_=1310797964" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<title>H.A.P.P.Y :: 자바의 기본데이터형과 크기</title>
+<link rel="stylesheet" href="https://t1.daumcdn.net/tistory_admin/blogs/plugins/lightbox/assets/css/lightbox.min.css?_version_=412fa4c3095830140e107f0bef1b3882cf40049b" />
+<link rel="stylesheet" type="text/css" href="https://t1.daumcdn.net/tistory_admin/blogs/plugins/TistoryProfileLayer/style.css?_version_=412fa4c3095830140e107f0bef1b3882cf40049b" />
+<script type="text/javascript" src="https://t1.daumcdn.net/tistory_admin/blogs/plugins/TistoryProfileLayer/profile.js?_version_=412fa4c3095830140e107f0bef1b3882cf40049b"></script>
+<script type="text/javascript">
+        window.TistoryBlog = {
+            url: "http://aventure.tistory.com",
+            tistoryUrl: "http://aventure.tistory.com"
+        };
+        var servicePath = "";
+        var blogURL = "";
+    </script>
+
+	<script> (function() { window.orgjQuery = window.jQuery; window.jQuery = tjQuery })()</script>
+    <script src="https://t1.daumcdn.net/section/uoclike/news/uoclike.min.js"></script>
+	<script> (function() { window.jQuery = window.orgjQuery; delete window.orgjQuery })()</script>
+    <script>
+		(function($) {
+			$.fn.extend({
+				size: function () {
+					return this.length
+				}
+			});
+			$.fn.UOCLike.defaults.updateServiceCategory = true;
+					})(tjQuery)
+    </script>
+        <script type="text/javascript" src="https://t1.daumcdn.net/tistory_admin/blogs/script/_/base.js?_version_=412fa4c3095830140e107f0bef1b3882cf40049b"></script>
+        <link rel="stylesheet" type="text/css" href="https://t1.daumcdn.net/tistory_admin/blogs/style/dialog.css?_version_=412fa4c3095830140e107f0bef1b3882cf40049b"/>
+            <link rel="stylesheet" type="text/css" href="https://t1.daumcdn.net/tistory_admin/blogs/style/postBtn.css?_version_=412fa4c3095830140e107f0bef1b3882cf40049b"/>
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script></head>
+<body>
+<script src="https://t1.daumcdn.net/tistory_admin/blogs/plugins/RainbowLink/rainbow.js?_version_=412fa4c3095830140e107f0bef1b3882cf40049b" type="text/javascript"></script>
+
+<script type="text/javascript">
+	(function() {
+		if (!window.T) {
+			window.T = {}
+		}
+		window.T.config = {"TOP_SSL_URL":"https:\/\/www.tistory.com","PREVIEW":false,"ROLE":"user","PREV_PAGE":"\/58","NEXT_PAGE":"\/60","BLOG":{"isDormancy":true,"title":"H.A.P.P.Y"},"NEED_COMMENT_LOGIN":true,"COMMENT_LOGIN_CONFIRM_MESSAGE":"\uc774 \ube14\ub85c\uadf8\ub294 \ud734\uba74 \uc0c1\ud0dc\uc774\ubbc0\ub85c \ub85c\uadf8\uc778\ud55c \uc0ac\uc6a9\uc790\uc5d0\uac8c\ub9cc H.A.P.P.Y \uc791\uc131\uc774 \ud5c8\uc6a9\ub429\ub2c8\ub2e4. \uc9c0\uae08 \ub85c\uadf8\uc778\ud558\uc2dc\uaca0\uc2b5\ub2c8\uae4c?","LOGIN_URL":"https:\/\/www.tistory.com\/auth\/login\/?redirectUrl=http%3A%2F%2Faventure.tistory.com%2F59","DEFAULT_URL":"http:\/\/aventure.tistory.com","USER":{"name":"DoubleR","homepage":"http:\/\/pasudo123.tistory.com"}};
+	})();
+</script>
+
+<script type="text/javascript" src="https://t1.daumcdn.net/tistory_admin/blogs/script/blog/common.js?_version_=412fa4c3095830140e107f0bef1b3882cf40049b"></script>
+<div style="margin:0; padding:0; border:none; background:none; float:none; clear:none; z-index:0"></div>
+	<div id="wrapTop">
+		<div class="tCenter"></div><div class="tRight"></div>
+	</div>
+	<div id="wrapMid">
+		<div class="mRight">
+			<div id="container">
+				<div id="header">
+					<div class="blogTitle">
+						<h1><a href="/">H.A.P.P.Y</a></h1>
+					</div>
+					<div class="blogMenu">
+						<div class="wrapBlogMenu">
+							<ul>
+								<li class="tab_bloghome"><a href="/">블로그홈</a></li>
+								<li class="tab_localog"><a href="/location">지역로그</a></li>
+								<li class="tab_taglog"><a href="/tag">태그로그</a></li>
+								<li class="tab_media"><a href="/media">미디어로그</a></li>
+								<li class="tab_guestbook"><a href="/guestbook">방명록</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- header close -->
+				<hr />
+		    <div id="wrapContent">
+					<div id="content">
+						
+			
+						
+			
+						
+			
+						
+			
+						
+			
+						
+						
+						
+			
+						
+							<div class="entry">
+								<div class="titleWrap">
+									<h2><a href="/59">자바의 기본데이터형과 크기</a></h2>
+										<span class="category"><a href="/category/%E2%94%80%E2%94%80LANGUAGE/JAVA">──LANGUAGE/JAVA</a> </span>
+										<span class="date">2007.05.11 08:11</span>
+								</div><!-- titleWrap close -->
+								
+								<div class="article">
+									<div id="post-view" class="post-view pcol2">
+		<font style ='font-size: 9pt; font-family: 1092568_9;'><P><FONT face=verdana></FONT>&nbsp;</P>
+<TABLE style="WIDTH: 535px; HEIGHT: 432px" cellSpacing=0 cellPadding=0 width=535 border=2>
+<TBODY>
+<TR>
+<TD width=60 height=30>
+<DIV align=center><FONT face=verdana size=2>데이터형</FONT></DIV></TD>
+<TD width=50 height=30>
+<DIV align=center><FONT face=verdana size=2>예약어</FONT></DIV></TD>
+<TD width=50 height=30>
+<DIV align=center><FONT face=verdana size=2>비트수</FONT></DIV></TD>
+<TD height=30>
+<DIV align=center><FONT face=verdana size=2>범위</FONT></DIV></TD></TR>
+<TR>
+<TD width=60 height=50>
+<DIV align=center><FONT face=verdana size=2>①논리형</FONT></DIV></TD>
+<TD width=50 height=50>
+<DIV align=center><FONT face=verdana size=2>boolean</FONT></DIV></TD>
+<TD width=50 height=50>
+<DIV align=center><FONT face=verdana size=1>8bit</FONT></DIV>
+<DIV align=center><FONT face=Verdana color=#ff0000 size=1>(1바이트)</FONT></DIV></TD>
+<TD height=50>
+<DIV align=left><FONT face=verdana size=1>true, false</FONT></DIV></TD></TR>
+<TR>
+<TD width=60 height=50>
+<DIV align=center><FONT face=verdana size=2>②문자형</FONT></DIV></TD>
+<TD width=50 height=50>
+<DIV align=center><FONT face=verdana size=2>char</FONT></DIV></TD>
+<TD width=50 height=50>
+<DIV align=center>
+<P><FONT face=verdana size=1>16bit<BR>유니코드<BR><FONT color=#ff0000>(2바이트)</FONT></FONT></P></DIV></TD>
+<TD height=50>
+<DIV align=left>
+<P><FONT face=verdana size=1>수치로는 0 ~ 65535('\u0000'~'\uFFFF')</FONT></P>
+<P><FONT face=Verdana color=#0000ff size=1>유니코드:영어,숫자-1바이트, 그외 다국어-2바이트</FONT></P></DIV></TD></TR>
+<TR>
+<TD width=60 height=50>
+<DIV align=center><FONT face=verdana size=2>③수치형<BR>(정수)</FONT></DIV></TD>
+<TD width=50 height=50>
+<DIV align=center><FONT face=verdana size=2>byte</FONT></DIV></TD>
+<TD width=50 height=50>
+<DIV align=center><FONT face=verdana size=1>8bit<BR><FONT color=#ff0000>(1바이트)</FONT></FONT></DIV></TD>
+<TD height=50>
+<DIV align=left><FONT face=verdana size=1>-128 ~ 127(-2의7제곱~2의7제곱-1)<BR><FONT color=#0000ff>개수:2의8제곱</FONT></FONT></DIV></TD></TR>
+<TR>
+<TD width=60 height=50>
+<DIV align=center><FONT face=verdana size=2>④수치형<BR>(정수)</FONT></DIV></TD>
+<TD width=50 height=50>
+<DIV align=center><FONT face=verdana size=2>short</FONT></DIV></TD>
+<TD width=50 height=50>
+<DIV align=center><FONT face=verdana size=1>16bit<BR><FONT color=#ff0000>(2바이트)</FONT></FONT></DIV></TD>
+<TD height=50>
+<DIV align=left><FONT face=verdana size=1>-32,768 ~ 32,767(-2의15제곱~2의15제곱-1)<BR><FONT color=#0000ff>개수:2의16제곱</FONT></FONT></DIV></TD></TR>
+<TR>
+<TD width=60 height=50>
+<DIV align=center><FONT face=verdana size=2>⑤수치형<BR>(정수)</FONT></DIV></TD>
+<TD width=50 height=50>
+<DIV align=center><FONT style="BACKGROUND-COLOR: #ff0000" face=verdana color=#ffffff size=2>int</FONT></DIV></TD>
+<TD width=50 height=50>
+<DIV align=center><FONT face=verdana size=1>32bit<BR><FONT color=#ff0000>(4바이트)</FONT></FONT></DIV></TD>
+<TD height=50>
+<DIV align=left><FONT face=verdana size=1>-2,147,483,648 ~ 2,147,483,647(-2의31제곱~2의31제곱-1)<BR><FONT color=#0000ff>개수:2의32제곱</FONT></FONT></DIV></TD></TR>
+<TR>
+<TD width=60 height=50>
+<DIV align=center><FONT face=verdana size=2>⑥수치형<BR>(정수)</FONT></DIV></TD>
+<TD width=50 height=50>
+<DIV align=center><FONT face=verdana size=2>long</FONT></DIV></TD>
+<TD width=50 height=50>
+<DIV align=center><FONT face=verdana size=1>64bit<BR><FONT color=#ff0000>(8바이트)</FONT></FONT></DIV></TD>
+<TD height=50>
+<DIV align=left><FONT face=verdana size=1>-9,223,372,036,854,775,808~9,223,372,036,854,775,807<BR>(-2의63제곱~2의63제곱-1)<BR><FONT color=#0000ff>개수:2의64제곱</FONT></FONT></DIV></TD></TR>
+<TR>
+<TD width=60 height=50>
+<DIV align=center><FONT face=verdana size=2>⑦수치형<BR>(실수형)</FONT></DIV></TD>
+<TD width=50 height=50>
+<DIV align=center><FONT face=verdana size=2>float</FONT></DIV></TD>
+<TD width=50 height=50>
+<DIV align=center><FONT face=verdana size=1>32bit<BR><FONT color=#ff0000>(4바이트)</FONT></FONT></DIV></TD>
+<TD height=50>
+<DIV align=left><FONT face=verdana size=1>±3.40282347E+38, ±1.40239846E-45,<BR>IEEE 754-1985표준</FONT></DIV></TD></TR>
+<TR>
+<TD width=60 height=50>
+<DIV align=center><FONT face=verdana size=2>⑧수치형<BR>(실수형)</FONT></DIV></TD>
+<TD width=50 height=50>
+<DIV align=center><FONT face=verdana size=2>double</FONT></DIV></TD>
+<TD width=50 height=50>
+<DIV align=center><FONT face=verdana size=1>64bit<BR><FONT color=#ff0000>(8바이트)</FONT></FONT></DIV></TD>
+<TD height=50>
+<DIV align=left><FONT face=verdana size=1>-1.79769313486231570E308~+1.79769313486231570E308</FONT></DIV></TD></TR></TBODY></TABLE>
+<P><FONT face=verdana></FONT>&nbsp;</P>
+<P><FONT face=verdana><FONT style="BACKGROUND-COLOR: #e4ff75">※ 자바의 데이터형</FONT> : 기본데이터형, 참조데이터형</FONT></P>
+<P><FONT face=Verdana>&nbsp;&nbsp;&nbsp;- 기본데이터형 - 종류 : boolean, character, byte, short, int, long, float, double(8개)</FONT></P>
+<P><FONT face=Verdana>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;특징 : 다른 프로그래밍 언어와 달리 플랫폼의 종류에 따라 변하지 않는다.</FONT></P>
+<P><FONT face=Verdana>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 그것이 나타내고자하는 기본 데이터형의 값을 가지고 있다.</FONT></P>
+<P><FONT face=Verdana>&nbsp;&nbsp; - 참조데이터형 - 종류 :</FONT><FONT face=Verdana> 배열, 클래스, 인터페이스 등</FONT></P>
+<P><FONT face=Verdana>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 특징 : 값이 아닌 그에 대한 참조 즉 주소를 가지고 있다.</FONT></P>
+<P><FONT face=Verdana></FONT>&nbsp;</P>
+<P><FONT style="BACKGROUND-COLOR: #e4ff75" face=Verdana>※ 유니코드(16비트)</FONT></P>
+<P><FONT face=Verdana>&nbsp;&nbsp; - 일본어, 중국어, 한국어 등의 비 영어권의 문자를 표시하기 위한 방식</FONT></P>
+<P><FONT face=Verdana>&nbsp;&nbsp; - 2002년 현재 34168개의 글자를 코드화하고 있으며 최대 65536개의 글자들을 코드화가능</FONT></P>
+<P><FONT face=Verdana>&nbsp;&nbsp; - 유니코드를 사용함으로써 국제적으로 사용될 수 있는 자바프로그램의 개발이 가능</FONT></P>
+<P><FONT face=Verdana>&nbsp;&nbsp; - 기존의 ASCII코드 문자집합을 포함(유니코드의 처음 256개의 문자집합을</FONT></P>
+<P><FONT face=Verdana>&nbsp;&nbsp;&nbsp;&nbsp; Latin-1 문자집합이라 하고 Latin-1문자집합의 처음 128개의 문자가 7비트 ASCII문자이다)</FONT></P>
+<P><FONT face=Verdana></FONT>&nbsp;</P>
+<P><FONT face=Verdana><FONT style="BACKGROUND-COLOR: #e4ff75">※ ASCII코드</FONT>(American Standard Code for Information Interchange. 아스키)</FONT></P>
+<P><FONT face=Verdana>&nbsp;&nbsp; - 컴퓨터나 인터넷상에서 텍스트파일을 위한 가장 일반적인 형태</FONT></P>
+<P><FONT face=Verdana>&nbsp;&nbsp; - 아스키파일에서는 각각의 알파벳이나 숫자 그리고 특수문자들이 7비트의 2진수</FONT></P>
+<P><FONT face=Verdana>&nbsp;&nbsp;&nbsp;&nbsp; (7개의 0또는 1의 조합으로 이루어짐)로 표현되며, 총 128개의 문자가 정의되어 있다.</FONT></P></font>
+      </div><div class="container_postbtn"><div class="postbtn_like"><div class="like_btn" data-uoc-svc="tistory" data-uoc-uid="208426_59" data-uoc-sc="" data-uoc-pcUrl="http://aventure.tistory.com/59" data-uoc-fetchurl="http://api.kakao.tistory.com/like/fetch?uid=208426_59"><label class="uoc-icon"><span class="ico_postbtn ico_like"></span> <span class="txt_like uoc-text">공감</span><span class="txt_like uoc-count"></span><input type="button" class="inp_btn uoc-button"></label></div><span class="ico_bar"></span><label data-thumbnail-url="https://t1.daumcdn.net/cssjs/icon/557567EA016E200001" data-title="자바의 기본데이터형과 크기" data-description="데이터형 예약어 비트수 범위 ①논리형 boolean 8bit (1바이트) true, false ②문자형 char 16bit 유니코드 (2바이트) 수치로는 0 ~ 65535('\u0000'~'\uFFFF') 유니코드:영어,숫자-1바이트, 그외 다국어-2바이트.." data-profile-image="http://cfile1.uf.tistory.com/image/224A4F3D58DB4F34217DF6" data-profile-name="일찐옵하" data-pc-url="http://aventure.tistory.com/59" data-blog-title="H.A.P.P.Y"><span class="ico_postbtn ico_sns">sns</span><input type="button" class="inp_btn"></label><span class="ico_bar"></span><label data-entry-id="59"><span class="ico_postbtn ico_report">신고</span><input type="button" class="inp_btn"></label></div></div>
+								</div>
+								<div class="author">
+									<span class="text">Posted by </span>일찐옵하 
+								</div>
+								
+								
+			
+								<div class="actionTrail">
+										<a href="#tb" onclick="toggleLayerForEntry(59, 'trackback'); return false"><span id="trackbackCount59">트랙백 <span class="cnt">0</span>개</span></a>, 
+										<a href="#rp" onclick="toggleLayerForEntry('59', 'comment'); return false"><span id="commentCount59">댓글 <span class="cnt">0</span>개가 달렸습니다.</span></a>
+								</div>
+								
+								<div id="entry59Trackback" style="display:none">
+									<div class="trackback">
+										<h3>트랙백 주소 : </h3>
+										
+									</div><!-- trackback close -->
+								</div>
+			
+								<div id="entry59Comment" style="display:none"></div>
+							</div><!-- entry close -->
+						
+			
+						
+							<div id="paging">
+								<a  href='/58' class="" id="prevPage">이전</a>
+								<span class="numbox">
+									
+									<a  href='/363' class="num"> <span>1</span></a>
+									
+									<a  class="num"> <span>&middot;&middot;&middot;</span></a>
+									
+									<a  href='/55' class="num"> <span>213</span></a>
+									
+									<a  href='/56' class="num"> <span>214</span></a>
+									
+									<a  href='/57' class="num"> <span>215</span></a>
+									
+									<a  href='/58' class="num"> <span>216</span></a>
+									
+									<a  class="num"> <span class="selected" >217</span></a>
+									
+									<a  href='/60' class="num"> <span>218</span></a>
+									
+									<a  href='/139' class="num"> <span>219</span></a>
+									
+									<a  href='/234' class="num"> <span>220</span></a>
+									
+								</span>
+								<a  href='/60' class="" id="nextPage">다음</a>
+							</div>
+						
+					</div><!-- content close -->
+					<hr />
+			
+					<div id="sidebar">
+						
+							<!-- 블로그 프로필 모듈 -->	
+								<table id="profile" cellpadding="0">
+									<colgroup>
+										<col width="11" /><col /><col width="11" />
+									</colgroup>
+									<tr>
+										<td class="topL"></td><td class="topC"></td><td class="topR"></td>
+									</tr>
+									<tr>
+										<td class="midL"></td>
+										<td>
+											<div id="blogImage"><img src="http://cfile1.uf.tistory.com/image/224A4F3D58DB4F34217DF6" alt="블로그 이미지" /></div>
+											<div id="blogDesc">
+												<p></p><p class="userID">by <strong>일찐옵하</strong></p>
+											</div>
+										</td>
+										<td class="midR"></td>
+									</tr>
+									<tr>
+										<td class="btmL"></td><td class="btmC"></td><td class="btmR"></td>
+									</tr>
+								</table>						
+							
+							<!-- 공지사항 모듈 -->
+								
+									<div id="notice">
+										<ul>
+											
+										</ul>
+									</div>
+								
+							
+							<!-- 관리자 모듈 -->
+								<div id="adminMenu">
+									<ul>
+										<li class="tab_admin">
+											<a href="/manage"><img src="https://tistory1.daumcdn.net/tistory/208426/skin/images/btn_admin.gif" alt="관리자" /></a></li>
+										<li class="tab_write">
+											<a href="/manage/entry/post"><img src="https://tistory1.daumcdn.net/tistory/208426/skin/images/btn_write.gif" alt="글쓰기" /></a></li>
+									</ul>
+								</div>
+							
+							<!-- 검색 모듈 -->
+								<div id="searchBox">
+									
+										<input type="text" name="search" value="" onkeypress="if (event.keyCode == 13) { try{window.location.href='/search/'+looseURIEncode(document.getElementsByName('search')[0].value);document.getElementsByName('search')[0].value='';return false;}catch(e){} }"/>
+										<input value="검색" type="button" onclick="try{window.location.href='/search/'+looseURIEncode(document.getElementsByName('search')[0].value);document.getElementsByName('search')[0].value='';return false;}catch(e){}" class="submit"/>
+									
+								</div>
+							
+							<!-- 카테고리 모듈 -->
+								<div id="category">
+                                    <h3>카테고리</h3>
+                                    
+<script type="text/javascript">
+	//<![CDATA[
+	var expanded = false;
+	function expandTree() {
+								expandFolder(128261, true);
+											expandFolder(128274, true);
+											expandFolder(210158, true);
+											expandFolder(239623, true);
+											expandFolder(240078, true);
+																										}
+
+	function expandFolder(category, expand) {
+		var oLevel1 = document.getElementById("category_" + category);
+		var oImg = oLevel1.getElementsByTagName("img")[0];
+		switch (expand) {
+			case true:
+				oImg.src = "https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_opened.gif";
+				showLayer("category_" + category + "_children");
+				return true;
+			case false:
+				oImg.src = "https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_closed.gif";
+				hideLayer("category_" + category + "_children");
+				return true;
+		}
+		return false;
+	}
+
+	function toggleFolder(category) {
+		var oLevel1 = document.getElementById("category_" + category);
+		var oImg = oLevel1.getElementsByTagName("img")[0];
+		switch (oImg.src.substr(oImg.src.length - 10, 6)) {
+			case "isleaf":
+				return true;
+			case "closed":
+				oImg.src = "https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_opened.gif";
+				tt_showLayer("category_" + category + "_children");
+				expanded = true;
+				return true;
+			case "opened":
+				oImg.src = "https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_closed.gif";
+				tt_hideLayer("category_" + category + "_children");
+				expanded = false;
+				return true;
+		}
+		return false;
+	}
+	var selectedNode = 0;
+	function selectNode(category) {
+
+		try {
+			var root = document.getElementById('treeComponent');
+			var prevSelectedNode= root.getAttribute('currentselectednode');
+			var oLevel = document.getElementById("category_" + selectedNode);
+			var oChild = oLevel.getElementsByTagName("table")[0];
+
+			oChild.style.color = "#666666";
+						oChild.style.backgroundColor = "#f8f8f8"
+			root.setAttribute('currentselectednode',category);
+			document.getElementById('text_'+selectedNode).style.color="#666666";
+
+			var oLevel = document.getElementById("category_" + category);
+			var oChild = oLevel.getElementsByTagName("table")[0];
+			oChild.style.color = "#666666";
+						oChild.style.backgroundColor = "#f8f8f8"
+			document.getElementById('text_'+category).style.color="#666666";
+
+			selectedNode = category;
+		} catch(e) {
+		}
+	}
+
+	function setTreeStyle(skin) {
+		try {
+			treeNodes = document.getElementsByName("treeNode");
+			for(var i=0; i<treeNodes.length; i++) {
+				if( ('category_'+selectedNode) == (treeNodes[i].getAttribute('id').value) ) {
+					var oLevel = document.getElementById('category_'+i);
+					var oChild = oLevel.getElementsByTagName("table")[0];
+					oChild.style.color ='#'+skin['activeItemColor'];
+					if (skin['activeItemBgColor'] != '' && skin['activeItemBgColor'] != undefined) {
+						oChild.style.backgroundColor ='#'+skin['activeItemBgColor'];
+					} else {
+						oChild.style.backgroundColor ="";
+					}
+				} else{
+					var oLevel = document.getElementById("category_" + i);
+					var oChild = oLevel.getElementsByTagName("table")[0];
+					oChild.style.color ='#'+skin['colorOnTree'];
+					oChild.style.backgroundColor ='#'+skin['bgColorOnTree'];
+					var oLevel = document.getElementById('text_'+i).style.color='#'+skin['colorOnTree'];
+				}
+			}
+		} catch(e) {
+		}
+	}
+	//]]>
+</script>
+
+
+<table id="treeComponent" cellpadding="0" cellspacing="0" style="width: 100%;"><tr>
+	<td>
+		<table id="category_0" cellpadding="0" cellspacing="0"><tr>
+			<td class="ib" style="font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_top.gif" width="16" onclick="expandTree()" alt="" style="display:block"/></td>
+			<td valign="top" style="font-size:9pt; padding-left:3px">
+				<table id="imp0" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3" onclick="window.location.href='/category'">
+						<div id="text_0" style=" color: #666666;">분류 전체보기						<span class="c_cnt">(220)</span>						</div>
+					</td>
+				</tr></table>
+			</td>
+		</tr></table>
+
+					<table id="category_128261" cellpadding="0" cellspacing="0"><tr>
+					<td class="ib" style="width:39px; font-size: 1px; background-image: url('https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_noactive.gif"><a class="click" onclick="toggleFolder('128261')"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_closed.gif" width="39" alt=""/></a></td>
+					<td>
+						<table cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+								<td class="branch3" onclick="window.location.href='/category/%E2%94%80%E2%94%80LANGUAGE'"><div id="text_128261" style="color: #666666;">──LANGUAGE <span class="c_cnt">(106)</span></div></td>
+							</tr></table>
+					</td>
+				</tr></table>
+			<div id="category_128261_children" style="display:none">
+									<table id="category_128286" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80LANGUAGE/JAVA'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_128286" style="color: #666666;">JAVA <span class="c_cnt">(42)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+										<table id="category_128268" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80LANGUAGE/Struts'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_128268" style="color: #666666;">Struts <span class="c_cnt">(1)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+										<table id="category_128288" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80LANGUAGE/UML'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_128288" style="color: #666666;">UML <span class="c_cnt">(14)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+										<table id="category_128289" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80LANGUAGE/IO'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_128289" style="color: #666666;">IO <span class="c_cnt">(13)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+										<table id="category_128272" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80LANGUAGE/Web%20Services'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_128272" style="color: #666666;">Web Services <span class="c_cnt">(1)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+										<table id="category_128270" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80LANGUAGE/JavaScript'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_128270" style="color: #666666;">JavaScript <span class="c_cnt">(6)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+										<table id="category_239425" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80LANGUAGE/XML'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_239425" style="color: #666666;">XML <span class="c_cnt">(0)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+										<table id="category_128269" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80LANGUAGE/HTML'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_128269" style="color: #666666;">HTML <span class="c_cnt">(4)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+										<table id="category_128267" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80LANGUAGE/JSP'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_128267" style="color: #666666;">JSP <span class="c_cnt">(2)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+										<table id="category_128271" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80LANGUAGE/Ajax'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_128271" style="color: #666666;">Ajax <span class="c_cnt">(1)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+										<table id="category_129175" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80LANGUAGE/iBatis'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_129175" style="color: #666666;">iBatis <span class="c_cnt">(1)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+										<table id="category_128273" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed_end.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80LANGUAGE/Flex'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_128273" style="color: #666666;">Flex <span class="c_cnt">(19)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+								</div>
+						<table id="category_128274" cellpadding="0" cellspacing="0"><tr>
+					<td class="ib" style="width:39px; font-size: 1px; background-image: url('https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_noactive.gif"><a class="click" onclick="toggleFolder('128274')"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_closed.gif" width="39" alt=""/></a></td>
+					<td>
+						<table cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+								<td class="branch3" onclick="window.location.href='/category/%E2%94%80%E2%94%80DATABASE'"><div id="text_128274" style="color: #666666;">──DATABASE <span class="c_cnt">(64)</span></div></td>
+							</tr></table>
+					</td>
+				</tr></table>
+			<div id="category_128274_children" style="display:none">
+									<table id="category_128276" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80DATABASE/fundamental%201'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_128276" style="color: #666666;">fundamental 1 <span class="c_cnt">(10)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+										<table id="category_128279" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80DATABASE/OCP%20SQL'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_128279" style="color: #666666;">OCP SQL <span class="c_cnt">(18)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+										<table id="category_128280" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80DATABASE/OCP%20%ED%8E%80%EB%93%9C%EB%A9%98%ED%83%881'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_128280" style="color: #666666;">OCP 펀드멘탈1 <span class="c_cnt">(25)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+										<table id="category_128275" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80DATABASE/ORACLE'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_128275" style="color: #666666;">ORACLE <span class="c_cnt">(10)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+										<table id="category_239660" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80DATABASE/MySQL'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_239660" style="color: #666666;">MySQL <span class="c_cnt">(0)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+										<table id="category_239661" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed_end.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80DATABASE/MS%20SQL'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_239661" style="color: #666666;">MS SQL <span class="c_cnt">(1)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+								</div>
+						<table id="category_210158" cellpadding="0" cellspacing="0"><tr>
+					<td class="ib" style="width:39px; font-size: 1px; background-image: url('https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_noactive.gif"><a class="click" onclick="toggleFolder('210158')"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_closed.gif" width="39" alt=""/></a></td>
+					<td>
+						<table cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+								<td class="branch3" onclick="window.location.href='/category/%E2%94%80%E2%94%80%E2%94%80%E2%94%80%20Server'"><div id="text_210158" style="color: #666666;">──── Server <span class="c_cnt">(5)</span></div></td>
+							</tr></table>
+					</td>
+				</tr></table>
+			<div id="category_210158_children" style="display:none">
+									<table id="category_210159" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80%E2%94%80%E2%94%80%20Server/Linux'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_210159" style="color: #666666;">Linux <span class="c_cnt">(0)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+										<table id="category_210160" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed_end.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80%E2%94%80%E2%94%80%20Server/Tomcat'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_210160" style="color: #666666;">Tomcat <span class="c_cnt">(5)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+								</div>
+						<table id="category_239623" cellpadding="0" cellspacing="0"><tr>
+					<td class="ib" style="width:39px; font-size: 1px; background-image: url('https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_noactive.gif"><a class="click" onclick="toggleFolder('239623')"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_closed.gif" width="39" alt=""/></a></td>
+					<td>
+						<table cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+								<td class="branch3" onclick="window.location.href='/category/%E2%94%80%E2%94%80%E2%94%80%20%ED%99%98%EA%B2%BD%EC%84%A4%EC%A0%95'"><div id="text_239623" style="color: #666666;">─── 환경설정 <span class="c_cnt">(21)</span></div></td>
+							</tr></table>
+					</td>
+				</tr></table>
+			<div id="category_239623_children" style="display:none">
+									<table id="category_128277" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80%E2%94%80%20%ED%99%98%EA%B2%BD%EC%84%A4%EC%A0%95/%EC%BB%B4%ED%93%A8%ED%84%B0'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_128277" style="color: #666666;">컴퓨터 <span class="c_cnt">(13)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+										<table id="category_239624" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed_end.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80%E2%94%80%20%ED%99%98%EA%B2%BD%EC%84%A4%EC%A0%95/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_239624" style="color: #666666;">프로젝트 <span class="c_cnt">(8)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+								</div>
+						<table id="category_240078" cellpadding="0" cellspacing="0"><tr>
+					<td class="ib" style="width:39px; font-size: 1px; background-image: url('https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_noactive.gif"><a class="click" onclick="toggleFolder('240078')"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_closed.gif" width="39" alt=""/></a></td>
+					<td>
+						<table cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+								<td class="branch3" onclick="window.location.href='/category/%E2%94%80%E2%94%80%E2%94%80%20%EB%A0%88%ED%8D%BC%EB%9F%B0%EC%8A%A4'"><div id="text_240078" style="color: #666666;">─── 레퍼런스 <span class="c_cnt">(2)</span></div></td>
+							</tr></table>
+					</td>
+				</tr></table>
+			<div id="category_240078_children" style="display:none">
+									<table id="category_240079" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80%E2%94%80%20%EB%A0%88%ED%8D%BC%EB%9F%B0%EC%8A%A4/%ED%86%B5%EA%B3%84%EA%B4%80%EB%A0%A8'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_240079" style="color: #666666;">통계관련 <span class="c_cnt">(0)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+										<table id="category_240187" cellpadding="0" cellspacing="0"><tr>
+							<td style="width:39px; font-size: 1px"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_active.gif" width="17" height="18" alt=""/><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_treed_end.gif" width="22" alt=""/></td>
+							<td>
+								<table onclick="window.location.href='/category/%E2%94%80%E2%94%80%E2%94%80%20%EB%A0%88%ED%8D%BC%EB%9F%B0%EC%8A%A4/JDBC'" cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+										<td class="branch3"><div id="text_240187" style="color: #666666;">JDBC <span class="c_cnt">(2)</span></div></td>
+									</tr></table>
+							</td>
+						</tr></table>
+								</div>
+						<table id="category_128266" cellpadding="0" cellspacing="0"><tr>
+					<td class="ib" style="width:39px; font-size: 1px; background-image: url('https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_noactive.gif"><a class="click" onclick="toggleFolder('128266')"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_isleaf.gif" width="39" alt=""/></a></td>
+					<td>
+						<table cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+								<td class="branch3" onclick="window.location.href='/category/Favorite%20Sites'"><div id="text_128266" style="color: #666666;">Favorite Sites <span class="c_cnt">(4)</span></div></td>
+							</tr></table>
+					</td>
+				</tr></table>
+			<div id="category_128266_children" style="display:none">
+							</div>
+						<table id="category_128282" cellpadding="0" cellspacing="0"><tr>
+					<td class="ib" style="width:39px; font-size: 1px; background-image: url('https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_noactive.gif"><a class="click" onclick="toggleFolder('128282')"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_isleaf.gif" width="39" alt=""/></a></td>
+					<td>
+						<table cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+								<td class="branch3" onclick="window.location.href='/category/%EB%A7%9B%EC%A7%91'"><div id="text_128282" style="color: #666666;">맛집 <span class="c_cnt">(2)</span></div></td>
+							</tr></table>
+					</td>
+				</tr></table>
+			<div id="category_128282_children" style="display:none">
+							</div>
+						<table id="category_128320" cellpadding="0" cellspacing="0"><tr>
+					<td class="ib" style="width:39px; font-size: 1px; background-image: url('https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_noactive.gif"><a class="click" onclick="toggleFolder('128320')"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_isleaf.gif" width="39" alt=""/></a></td>
+					<td>
+						<table cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+								<td class="branch3" onclick="window.location.href='/category/%EC%A2%8B%EC%95%84%ED%95%98%EB%8A%94%20%EB%85%B8%EB%9E%98%EB%93%A4'"><div id="text_128320" style="color: #666666;">좋아하는 노래들 <span class="c_cnt">(8)</span></div></td>
+							</tr></table>
+					</td>
+				</tr></table>
+			<div id="category_128320_children" style="display:none">
+							</div>
+						<table id="category_128281" cellpadding="0" cellspacing="0"><tr>
+					<td class="ib" style="width:39px; font-size: 1px; background-image: url('https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/navi_back_noactive_end.gif"><a class="click" onclick="toggleFolder('128281')"><img src="https://t1.daumcdn.net/tistory_admin/blogs/image/tree/dot_gray/tab_isleaf.gif" width="39" alt=""/></a></td>
+					<td>
+						<table cellpadding="0" cellspacing="0" style="background-color: #f8f8f8;"><tr>
+								<td class="branch3" onclick="window.location.href='/category/%EB%82%99%EC%84%9C%EC%9E%A5'"><div id="text_128281" style="color: #666666;">낙서장 <span class="c_cnt">(7)</span></div></td>
+							</tr></table>
+					</td>
+				</tr></table>
+			<div id="category_128281_children" style="display:none">
+							</div>
+				</td>
+</tr></table>
+								</div>
+							
+							<!-- 태그목록 모듈 -->
+								<div id="tagbox">
+									<h3>태그목록</h3>
+									<ul>
+										
+											<li><a href="/tag/%EC%98%A4%EB%9D%BC%ED%81%B4%ED%8C%A8%EC%8A%A4" class="cloud5"> 오라클패스</a></li>
+										
+											<li><a href="/tag/tomcat" class="cloud4"> tomcat</a></li>
+										
+											<li><a href="/tag/MUI" class="cloud5"> MUI</a></li>
+										
+											<li><a href="/tag/%ED%94%8C%EB%A0%89%EC%8A%A4%20%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8" class="cloud5"> 플렉스 자바스크립트</a></li>
+										
+											<li><a href="/tag/SQL" class="cloud4"> SQL</a></li>
+										
+											<li><a href="/tag/%EC%98%81%EC%88%AB%EC%9E%90" class="cloud5"> 영숫자</a></li>
+										
+											<li><a href="/tag/%ED%94%8C%EB%A0%89%EC%8A%A4%20%ED%99%98%EA%B2%BD" class="cloud5"> 플렉스 환경</a></li>
+										
+											<li><a href="/tag/%EA%B8%88%EC%A0%84%EA%B3%84%EC%82%B0" class="cloud5"> 금전계산</a></li>
+										
+											<li><a href="/tag/SVN" class="cloud4"> SVN</a></li>
+										
+											<li><a href="/tag/%ED%95%9C%EA%B8%80%ED%8C%8C%EC%9D%BC%EA%B9%A8%EC%A7%90" class="cloud5"> 한글파일깨짐</a></li>
+										
+											<li><a href="/tag/dxf" class="cloud5"> dxf</a></li>
+										
+											<li><a href="/tag/TextInput" class="cloud5"> TextInput</a></li>
+										
+											<li><a href="/tag/io" class="cloud2"> io</a></li>
+										
+											<li><a href="/tag/java.util" class="cloud4"> java.util</a></li>
+										
+											<li><a href="/tag/%EB%A9%94%EB%AA%A8%EB%A6%AC%EC%84%A4%EC%A0%95" class="cloud4"> 메모리설정</a></li>
+										
+											<li><a href="/tag/msn%EA%B4%91%EA%B3%A0%EC%B0%BD%EC%A0%9C%EA%B1%B0" class="cloud4"> msn광고창제거</a></li>
+										
+											<li><a href="/tag/fileupload" class="cloud5"> fileupload</a></li>
+										
+											<li><a href="/tag/BigDecimal" class="cloud4"> BigDecimal</a></li>
+										
+											<li><a href="/tag/%EB%AC%B8%EC%9E%90%EC%97%B4" class="cloud4"> 문자열</a></li>
+										
+											<li><a href="/tag/%EC%9E%90%EB%A3%8C%ED%98%95" class="cloud4"> 자료형</a></li>
+										
+											<li><a href="/tag/%ED%99%98%EA%B2%BD%EC%84%A4%EC%A0%95" class="cloud4"> 환경설정</a></li>
+										
+											<li><a href="/tag/query" class="cloud4"> query</a></li>
+										
+											<li><a href="/tag/XML" class="cloud4"> XML</a></li>
+										
+											<li><a href="/tag/%EC%BD%A4%EB%B3%B4%EB%B0%95%EC%8A%A4" class="cloud5"> 콤보박스</a></li>
+										
+											<li><a href="/tag/msn%EA%B2%80%EC%83%89%EC%B0%BD%EC%A0%9C%EA%B1%B0" class="cloud4"> msn검색창제거</a></li>
+										
+											<li><a href="/tag/UML" class="cloud1"> UML</a></li>
+										
+											<li><a href="/tag/Flex" class="cloud4"> Flex</a></li>
+										
+											<li><a href="/tag/%EC%99%B8%EB%B6%80%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8" class="cloud5"> 외부프로그램</a></li>
+										
+											<li><a href="/tag/soring" class="cloud5"> soring</a></li>
+										
+											<li><a href="/tag/JDBC%ED%85%8C%EC%8A%A4%ED%8A%B8" class="cloud4"> JDBC테스트</a></li>
+										
+									</ul>
+								</div>
+							
+							<!-- 최근 포스트 모듈 -->
+								<div id="recentPost">
+									<h3>최근에 올라온 글 </h3>
+									<ul>
+										
+											<li>
+												<a href="/363"> [Flex] flashPlayer...</a>
+												<span class="cnt"><span id="commentCountOnRecentEntries363"></span></span>
+											</li>
+										
+
+											<li>
+												<a href="/354"> Restricted Popup m...</a>
+												<span class="cnt"><span id="commentCountOnRecentEntries354"></span></span>
+											</li>
+										
+
+											<li>
+												<a href="/351"> AdvancedDataGrid d...</a>
+												<span class="cnt"><span id="commentCountOnRecentEntries351"></span></span>
+											</li>
+										
+
+											<li>
+												<a href="/343"> JAVA 에서 batch fi...</a>
+												<span class="cnt"><span id="commentCountOnRecentEntries343"></span></span>
+											</li>
+										
+
+											<li>
+												<a href="/342"> DataGrid 편집 모드...</a>
+												<span class="cnt"><span id="commentCountOnRecentEntries342">(2)</span></span>
+											</li>
+										
+									</ul>
+								</div>
+							
+							<!-- 최근 댓글 모듈 -->
+								<div id="recentComment">
+									<h3>최근에 달린 댓글</h3>
+									<ul id="recentComments">
+										
+											<li>
+												<a href="/311#comment10770399">좋은글 잘봤어요.</a>
+												<span class="info">
+													<span class="name">전재훈</span>
+													<span class="date">2014</span>
+												</span>	
+											</li>
+										
+
+											<li>
+												<a href="/311#comment2899238">잘 봤습니다.. 퍼가...</a>
+												<span class="info">
+													<span class="name">조아</span>
+													<span class="date">2009</span>
+												</span>	
+											</li>
+										
+
+											<li>
+												<a href="/342#comment2218096">욕하지 마요 ㅋㅋ.</a>
+												<span class="info">
+													<span class="name">일찐옵하</span>
+													<span class="date">2009</span>
+												</span>	
+											</li>
+										
+
+											<li>
+												<a href="/342#comment2215974">왓더....</a>
+												<span class="info">
+													<span class="name">누나</span>
+													<span class="date">2009</span>
+												</span>	
+											</li>
+										
+									</ul>
+								</div>
+							
+							<!-- 최근 트랙백 모듈 -->
+								<div id="recentTrackback">
+									<h3>최근에 받은 트랙백</h3>
+									<ul>
+										
+											<li>
+												<a href="/254#trackback928992">webzip으로 블로그...</a>
+												<span class="info">
+													<span class="name">비앤아이</span>
+													<span class="date">2008</span>
+												</span>	
+											</li>
+										
+									</ul>
+								</div>
+							
+							<!-- 최근 보관함 모듈 -->
+								<div id="archive">
+									<h3>글 보관함</h3>
+									<ul>
+										
+											<li>
+												<a href="/archive/201002">2010/02 </a>
+												<span class="cnt">(1)</span>
+											</li>
+										
+
+											<li>
+												<a href="/archive/200907">2009/07 </a>
+												<span class="cnt">(1)</span>
+											</li>
+										
+
+											<li>
+												<a href="/archive/200906">2009/06 </a>
+												<span class="cnt">(4)</span>
+											</li>
+										
+
+											<li>
+												<a href="/archive/200905">2009/05 </a>
+												<span class="cnt">(6)</span>
+											</li>
+										
+
+											<li>
+												<a href="/archive/200904">2009/04 </a>
+												<span class="cnt">(2)</span>
+											</li>
+										
+									</ul>
+								</div>
+							
+							<!-- 달력 모듈 -->
+								<div id="calendar">
+									<h3>달력</h3>
+											<table class="tt-calendar" cellpadding="0" cellspacing="1" style="width: 100%; table-layout: fixed">
+			<caption class="cal_month">
+				<a href="/archive/201804" title="1개월 앞의 달력을 보여줍니다.">&laquo;</a>
+				&nbsp;
+				<a href="/archive/201805"
+				   title="현재 달의 달력을 보여줍니다.">2018/05</a>
+				&nbsp;
+				<a href="/archive/201806" title="1개월 뒤의 달력을 보여줍니다.">&raquo;</a>
+			</caption>
+			<thead>
+			<tr>
+				<th class="cal_week2">일</th>
+				<th class="cal_week1">월</th>
+				<th class="cal_week1">화</th>
+				<th class="cal_week1">수</th>
+				<th class="cal_week1">목</th>
+				<th class="cal_week1">금</th>
+				<th class="cal_week1">토</th>
+			</tr>
+			</thead>
+			<tbody>
+					<tr class="cal_week">
+			<td class="cal_day1">&nbsp;</td>
+			<td class="cal_day1">&nbsp;</td>
+			<td class=" cal_day cal_day3">1</td>
+			<td class=" cal_day cal_day3">2</td>
+			<td class=" cal_day cal_day3">3</td>
+			<td class=" cal_day cal_day3">4</td>
+			<td class=" cal_day cal_day3">5</td>
+		</tr>
+		<tr class="cal_week cal_current_week">
+			<td class=" cal_day cal_day_sunday cal_day3">6</td>
+			<td class=" cal_day cal_day3">7</td>
+			<td class=" cal_day cal_day4">8</td>
+			<td class=" cal_day cal_day3">9</td>
+			<td class=" cal_day cal_day3">10</td>
+			<td class=" cal_day cal_day3">11</td>
+			<td class=" cal_day cal_day3">12</td>
+		</tr>
+		<tr class="cal_week">
+			<td class=" cal_day cal_day_sunday cal_day3">13</td>
+			<td class=" cal_day cal_day3">14</td>
+			<td class=" cal_day cal_day3">15</td>
+			<td class=" cal_day cal_day3">16</td>
+			<td class=" cal_day cal_day3">17</td>
+			<td class=" cal_day cal_day3">18</td>
+			<td class=" cal_day cal_day3">19</td>
+		</tr>
+		<tr class="cal_week">
+			<td class=" cal_day cal_day_sunday cal_day3">20</td>
+			<td class=" cal_day cal_day3">21</td>
+			<td class=" cal_day cal_day3">22</td>
+			<td class=" cal_day cal_day3">23</td>
+			<td class=" cal_day cal_day3">24</td>
+			<td class=" cal_day cal_day3">25</td>
+			<td class=" cal_day cal_day3">26</td>
+		</tr>
+		<tr class="cal_week">
+			<td class=" cal_day cal_day_sunday cal_day3">27</td>
+			<td class=" cal_day cal_day3">28</td>
+			<td class=" cal_day cal_day3">29</td>
+			<td class=" cal_day cal_day3">30</td>
+			<td class=" cal_day cal_day3">31</td>
+			<td class="cal_day2">&nbsp;</td>
+			<td class="cal_day2">&nbsp;</td>
+		</tr>
+			</tbody>
+		</table>
+		
+								</div>
+							
+							<!-- 링크 모듈 -->
+								<div id="link">
+									<h3>링크</h3>
+									<ul>
+										
+											<li>
+												<a href="" onclick="window.open(this.href); return false"> 지욱이형.</a>
+											</li>
+										
+
+											<li>
+												<a href="http://pandayou.tistory.com" onclick="window.open(this.href); return false"> 연상이형.</a>
+											</li>
+										
+
+											<li>
+												<a href="http://blog.sdnkorea.com/blog/367" onclick="window.open(this.href); return false"> Sun Developer 공식...</a>
+											</li>
+										
+									</ul>
+								</div>
+							
+							<!-- 카운터 모듈 -->
+								<div id="counter">
+									<dl>
+										<dt>Total</dt><dd class="total">160,231</dd>
+										<dt class="today">Today</dt><dd>152</dd>
+										<dt class="yesterday">Yesterday</dt><dd>67</dd>
+									</dl>
+								</div>
+							
+						
+						
+							<!-- 배너 모듈 - 티스토리 -->
+								<div id="adTistory">
+									<a href="http://www.tistory.com"><img src="http://t1.daumcdn.net/tistory_admin/blogs/image/tistory/tistoryBanner01.gif" alt="tistory" /></a>
+									<div class="tistoryJoin"><a href="http://www.tistory.com/join">티스토리 가입하기!</a></div>
+								</div>
+							
+							<!-- RSS 링크 -->
+								<div id="btnRSS">
+									<a href="http://aventure.tistory.com/rss" onclick="window.open(this.href); return false"><img src="https://tistory1.daumcdn.net/tistory/208426/skin/images/btn_rss.gif" alt="rss"/></a>
+								</div>
+							
+					</div><!-- sidebar close -->
+					<div class="clear"></div>
+					<hr />
+	      </div><!-- wrapContent close -->
+			</div><!-- container close -->
+		</div>		
+	</div>
+	<div id="wrapBtm">
+		<div class="bCenter"></div><div class="bRight"></div>
+	</div>
+	<div id="footer">
+		<div class="footMenu">
+			<a href="/location">지역로그</a> :
+			<a href="/tag">태그로그</a> :
+		    <a href="/media">미디어로그</a> : 
+			<a href="/guestbook">방명록</a> :
+			<a href="/manage">관리자</a> : 
+			<a href="/manage/entry/post">글쓰기</a>
+		</div>
+		<div class="copyright">
+			<a href="/"> 일찐옵하</a>'s Blog is powered by <a href="http://daum.net" onclick="window.open(this.href); return false">Daum</a>  / Designed by <a href="http://www.tistory.com">Tistory</a>
+		</div>
+	</div>
+
+
+<script>
+    (function($) {
+        $("body").bind('copy', function (e) {
+
+            var url = document.location.href,
+                decodedUrl = decodeURI(url),
+                selection = window.getSelection();
+
+
+            if (typeof window.getSelection == "undefined") {//IE8 or earlier...
+                event.preventDefault();
+
+                var pagelink = '\n\n 출처: ' + decodedUrl,
+                    copytext = selection + pagelink;
+
+                if (window.clipboardData) {
+                    window.clipboardData.setData('Text', copytext);
+                }
+                return;
+            }
+            var body_element = document.getElementsByTagName('body')[0];
+
+            //if the selection is short let's not annoy our users
+            if (("" + selection).length < 30) return;
+
+            //create a div outside of the visible area
+            var newdiv = document.createElement('div');
+            newdiv.style.position = 'absolute';
+            newdiv.style.left = '-99999px';
+            body_element.appendChild(newdiv);
+            newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+            //we need a <pre> tag workaround
+            //otherwise the text inside "pre" loses all the line breaks!
+            if (selection.getRangeAt(0).commonAncestorContainer.nodeName == "PRE") {
+                newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+            }
+
+            newdiv.innerHTML += '<br /><br />출처: <a href="' + url + '">' + decodedUrl + '</a> [H.A.P.P.Y]';
+
+            selection.selectAllChildren(newdiv);
+            window.setTimeout(function () {
+                body_element.removeChild(newdiv);
+            }, 200);
+
+        });
+    })(tjQuery);
+</script><script src="https://t1.daumcdn.net/tistory_admin/blogs/plugins/lightbox/assets/js/lightbox.min.js?_version_=412fa4c3095830140e107f0bef1b3882cf40049b"></script>
+	<script>
+	    lightbox.option({
+			"fadeDuration": 200,
+		    "resizeDuration": 200,
+		    "wrapAround": false,
+			"albumLabel": "%1 / %2",
+			"fitImagesInViewport":true ,
+			"stopEvent": false
+	    })
+	</script><script type="text/javascript">
+var _tiq = 'undefined' !== typeof _tiq ? _tiq : [];
+_tiq.push(['__setConfig', {enableScroll:true, enableClick:true, enableButton:true}]);
+_tiq.push(["__setParam", "svcdomain", "user.tistory.com"]);
+(function(d) {
+	var se = d.createElement('script'); se.type = 'text/javascript'; se.async = true;
+	se.src = location.protocol + '//m2.daumcdn.net/tiara/js/td.min.js';
+	var s = d.getElementsByTagName('head')[0]; s.appendChild(se);
+})(document);
+_tiq.push(['__setParam', 'param_ex', JSON.stringify({"userId":"207386","blogId":"208426","entryId":"59"})]);
+_tiq.push(['__trackPageview']);
+_tiq.push(['__content', 't_content', {
+'c_id':'208426_59', 
+'c_title':'자바의 기본데이터형과 크기', 
+'type':'article', 
+'author':'', 
+'author_id':'207386', 
+'cp':'H.A.P.P.Y', 
+'cp_id':'208426', 
+'regdata':'2007-05-11 08:11:00', 
+'plink':'http://aventure.tistory.com/59', 
+'media':'pcweb', 
+}]);
+var addEvent = function (evt, fn) { window.addEventListener ? window.addEventListener(evt, fn, false) : window.attachEvent('on' + evt, fn); };
+var removeEvent = function(evt, fn) { window.removeEventListener ? window.removeEventListener(evt, fn, false) : window.detachEvent('on' + evt, fn);};
+var ua = navigator.userAgent.toLowerCase(); var isIOS = /iP[ao]d|iPhone/i.test(ua);
+var contentExStat = function() {
+		_tiq.push(['__content', 't_content_ex', {
+			'data_type':'usage'
+, 'meta': {
+'c_id':'208426_59', 
+'c_title':'자바의 기본데이터형과 크기', 
+'type':'article', 
+'author':'', 
+'author_id':'207386', 
+'cp':'H.A.P.P.Y', 
+'cp_id':'208426', 
+'regdata':'2007-05-11 08:11:00', 
+'plink':'http://aventure.tistory.com/59', 
+'media':'pcweb', 
+}
+}]);
+		removeEvent(isIOS ? 'pagehide' : 'beforeunload', contentExStat);
+};
+addEvent(isIOS ? 'pagehide' : 'beforeunload', contentExStat);
+</script>
+
+<script type="text/javascript">window.roosevelt_params_queue = window.roosevelt_params_queue || []; window.roosevelt_params_queue.push({channel_id: "dk", channel_label: 'tistory'});</script>
+<script type="text/javascript" src="//t1.daumcdn.net/midas/rt/dk_bt/roosevelt_dk_bt.js" async></script><script type="text/javascript">if(window.console!=undefined){setTimeout(console.log.bind(console,"%cTISTORY","font:8em Arial;color:#EC6521;font-weight:bold"),0);setTimeout(console.log.bind(console,"%c  나를 표현하는 블로그","font:2em sans-serif;color:#333;"),0);}</script><iframe style="position:absolute;width:1px;height:1px;left:-100px;top:-100px" src="http://aventure.tistory.com/api" id="editEntry"></iframe>		<div id="tistorytoolbarid"
+			 style="position:absolute;height:25px; top:4px;right:4px;background-color:transparent;background-image:none;z-index:11;">
+			<div
+				class="tistorytoolbar tt_menubar_white tt_menubar_chrome_browser">
+				<div id="ttMenubarInnerWrap" class="tt_menubar_inner">
+					<div class="tt_menubar_bg_toolbar"></div>
+					<h2 style="display:none;">티스토리 툴바</h2>
+					<div class="tt_menubar_item tt_menubar_mainmenu"><a class="tt_menubar_link_tit tt_menubar_link_tit_eng"
+																		href="http://www.tistory.com">Tistory</a>
+					</div>
+					<div class="tt_menubar_item tt_menubar_bg_bar"></div>
+					<div class="tt_menubar_item tt_menubar_myblog">
+						<span
+							class="tt_menubar_expander tt_menubar_link_tit tt_menubar_link_tit_eng tt_menubar_ico_blogmenu">My<span
+								class="tt_menubar_ico_arrow">▼</span></span>
+						<div class="tt_menubar_box_list tt_menubar_box_list" style="left:50px;">
+							<ul class="tt_menubar_list_blogmenu">
+																	<li>
+										<a href="http://pasudo123.tistory.com"
+										   class="tt_menubar_link">pasudo123</a>
+										<span class="tt_menubar_box_btn">
+								<a href="http://pasudo123.tistory.com/admin/">관리</a>
+								<span class="tt_menubar_txt_bar">|</span>
+								<a href="http://pasudo123.tistory.com/admin/entry/post/">쓰기</a>
+							</span>
+									</li>
+																	<li>
+										<a href="http://oraedoa.tistory.com"
+										   class="tt_menubar_link">oraedoa</a>
+										<span class="tt_menubar_box_btn">
+								<a href="http://oraedoa.tistory.com/admin/">관리</a>
+								<span class="tt_menubar_txt_bar">|</span>
+								<a href="http://oraedoa.tistory.com/admin/entry/post/">쓰기</a>
+							</span>
+									</li>
+															</ul>
+						</div>
+					</div>
+					<div class="tt_menubar_item tt_menubar_bg_bar"></div>
+					<div class="tt_menubar_item tt_menubar_mylink">
+						<span class="tt_menubar_expander tt_menubar_link_tit tt_menubar_ico_blogmenu">바로가기<span class="tt_menubar_ico_arrow">▼</span></span>
+
+						<div class="tt_menubar_box_list tt_menubar_box_mylink" style="left:92px;">
+							<div class="tt_menubar_box_opt">
+								<select id="ttMenubarBlogSelectorForLink">
+																			<option value="2862718">pasudo123</option>
+																			<option value="2872792">oraedoa</option>
+																	</select>
+							</div>
+
+							<div class="tt_menubar_box_list">
+								<ul class="tt_menubar_list_mylink">
+									<li class='tt_menubar_fst tt_menubar_on'>
+										<div class="tt_menubar_cont">
+											<ul class="tt_menubar_list_link">
+																							</ul>
+										</div>
+									</li>
+								</ul>
+							</div>
+													</div>
+					</div>
+
+					<div class="tt_menubar_item tt_menubar_bg_bar"></div>
+					<div class="tt_menubar_item tt_menubar_thisblog">
+						<span
+							class="tt_menubar_expander tt_menubar_link_tit tt_menubar_ico_blogmenu">이 블로그를<span
+								class="tt_menubar_ico_arrow">▼</span></span>
+						<div class="tt_menubar_box_list tt_menubar_box_list" style="left:150px;">
+							<ul class="tt_menubar_list_blogmenu">
+								<li><a class="tt_add_link"
+									   href="/toolbar/popup/link/">내
+										링크에 추가</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="tt_menubar_item tt_menubar_bg_bar"></div>
+					<div class="tt_menubar_item tt_menubar_random">
+						<a href="/randomblog" class="tt_menubar_link_tit">랜덤</a>
+					</div>
+
+					<div class="tt_menubar_item tt_menubar_bg_bar"></div>
+					<div class="tt_menubar_item tt_menubar_logout">
+						<a href="https://www.tistory.com/member"
+						   class="tt_menubar_link_tit">계정관리</a>
+					</div>
+
+					<div class="tt_menubar_item tt_menubar_bg_bar"></div>
+					<div class="tt_menubar_item tt_menubar_logout">
+						<a href="https://www.tistory.com/auth/logout/?redirectUrl=http%3A%2F%2Faventure.tistory.com%2F59"
+						   class="tt_menubar_link_tit">로그아웃</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div style="margin:0px; padding:0px; border:none; background:none; float:none; clear:none; z-index:0"></div>
+		<script type="text/javascript" src="https://t1.daumcdn.net/tistory_admin/blogs/script/menubar.js?_version_=412fa4c3095830140e107f0bef1b3882cf40049b"></script>
+		<div id="layer_sns" class="layer_sns">
+        <div class="bg_layer"></div>
+        <ul class="list_sns">
+            <li><a class="ico_sns ico_fb" data-service="facebook">페이스북 공유하기</a></li>
+            <li><a class="ico_sns ico_kt" data-service="kakaotalk">카카오톡 공유하기</a></li>
+            <li><a class="ico_sns ico_ks" data-service="kakaostory">카카오스토리 공유하기</a></li>
+            <li><a class="ico_sns ico_tw" data-service="twitter">트위터 공유하기</a></li>
+        </ul>
+        <button type="button" class="btn_close"><span class="ico_sns ico_close">sns공유하기 레이어 닫기</span></button>
+    </div></body>
+</html>
