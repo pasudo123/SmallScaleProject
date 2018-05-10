@@ -68,7 +68,6 @@ public class TableBuilder {
 						for (int c = originCol; c <= colRange; c++) {
 							if (r == originRow && c == originCol)
 								continue;
-//							System.out.println(r + ", " + c);
 							map.put(r + "&" + c, new Dummy());
 						}
 					}
@@ -125,11 +124,10 @@ public class TableBuilder {
 				if(tableCell[row][col] != null && tableCell[row][col].colSpan() == 1){
 					
 					String name = tableCell[row][col].getName();
-					double cellSize = getCellSize(name);
-					cellSize = Math.ceil(cellSize);
+					int cellSize = getCellSize(name);
 					
 					if(headerSizes[col] < cellSize){
-						headerSizes[col] = (int)cellSize;
+						headerSizes[col] = cellSize;
 					}
 				}
 			}// for()
@@ -169,9 +167,18 @@ public class TableBuilder {
 			for(int c = col; c < tableCell[r].length; c++){
 				if(tableCell[r][c] != null && tableCell[r][c].colSpan() == 1 && tableCell[r][c].rowSpan() == 1){
 					
-					if(c == col)
+					if(c == col){
 						textBuilder.append(String.format("%s", "|"));
+						textBuilder.append(String.format("%1s", " "));
+					}
 					
+					String name = tableCell[r][c].getName();
+					textBuilder.append(String.format("%s", name));
+					
+					// 규격을 어떻게 맞출것인가
+					int cellSize = getCellSize(name);
+					int size = columnSize[c] - cellSize + 1 + 3;
+					textBuilder.append(String.format("%"+size+"s", ""));
 					
 				}
 			}
@@ -184,26 +191,26 @@ public class TableBuilder {
 //		System.exit(1);
 	}
 	
-	private double getCellSize(String name){
+	private int getCellSize(String name){
 		
 		Pattern pattern = Pattern.compile("^[가-힣]*$");
-		double cellSize = 0.0;
+		int cellSize = 0;
 		
 		for(int i = 0; i < name.length(); i++){
 			char ch = name.charAt(i);
 			Matcher matcher = pattern.matcher(String.valueOf(ch));
 			
 			if(matcher.find())
-				cellSize += 1.5;
+				cellSize += 2;
 			else
-				cellSize += 1.0;
+				cellSize += 1;
 		}
 		
 		return cellSize;
 	}
 	
-	@Test
-	public void test(){
+//	@Test
+	public void testA(){
 		String hangul1 = "월";
 		String hangul2 = "월화";
 		
@@ -253,6 +260,38 @@ public class TableBuilder {
 		System.out.println("test1의 바이트 : " + test1.getBytes().length);
 		System.out.println("test2의 바이트 : " + test2.getBytes().length);
 		System.out.println("test3의 바이트 : " + test3.getBytes().length);
+	}
+	
+//	@Test
+	public void TestB(){
+//		String str = "ab가ab";
+//		System.out.println(str.getBytes().length);
+//		
+//		String s1 = "+----------+";
+//		String s2 = "| Month    |";
+//		String s3 = "+----------+";
+//		String s4 = "| 1월달          |";
+//		
+//		System.out.println(s1 + ", " + s1.getBytes().length);
+//		System.out.println(s2 + ", " + s2.getBytes().length);
+//		System.out.println(s3 + ", " + s3.getBytes().length);
+//		System.out.println(s4 + ", " + s4.getBytes().length);
+//		
+//		System.out.println();
+//		
+		String s5 = "+----------+";
+		String s6 = "| Month               |";
+		String s7 = "+----------+";
+		String s8 = "| 1월달                  |";
+		System.out.println(s5 + ", " + s5.getBytes().length);
+		System.out.println(s6 + ", " + s6.getBytes().length);
+		System.out.println(s7 + ", " + s7.getBytes().length);
+		System.out.println(s8 + ", " + s8.getBytes().length);
+//		for(int i = 0; i < s8.length(); i++){
+//			System.out.println((s8.charAt(i)+"").getBytes().length);
+//		}
+		
+		
 	}
 }
 
