@@ -130,10 +130,13 @@ public class TableBuilder {
 				if(tableCell[row][col] != null && tableCell[row][col].getColSpan() == 1){
 					
 					String name = tableCell[row][col].getName();
+<<<<<<< HEAD
 					
 					if(name == null)
 						continue;
 					
+=======
+>>>>>>> f0eed1b809a53367d7365ab672860609e4fd117d
 					int cellSize = getCellSize(name);
 					
 					if(headerSizes[col] < cellSize){
@@ -201,8 +204,9 @@ public class TableBuilder {
 				
 				if(name != null && (colSpan != 1 || rowSpan != 1)){
 					
-					if(c == col)
+					if(c == col){
 						textBuilder.append(String.format("%s", "|"));
+<<<<<<< HEAD
 					textBuilder.append(String.format("%s%s", " ", name));
 					
 					// 가로 병합
@@ -221,6 +225,18 @@ public class TableBuilder {
 						textBuilder.append(String.format("%s", "|"));
 						
 					}// 가로 병합
+=======
+						textBuilder.append(String.format("%1s", " "));
+					}
+					
+					String name = tableCell[r][c].getName();
+					textBuilder.append(String.format("%s", name));
+					
+					// 규격을 어떻게 맞출것인가
+					int cellSize = getCellSize(name);
+					int size = columnSize[c] - cellSize + 1 + 3;
+					textBuilder.append(String.format("%"+size+"s", ""));
+>>>>>>> f0eed1b809a53367d7365ab672860609e4fd117d
 					
 					// 세로 병합
 					if(rowSpan != 1){
@@ -327,8 +343,40 @@ public class TableBuilder {
 		System.out.println("test3의 바이트 : " + test3.getBytes().length);
 	}
 	
+<<<<<<< HEAD
 	@Test
 	public void TestB(){
+=======
+//	@Test
+	public void TestB(){
+//		String str = "ab가ab";
+//		System.out.println(str.getBytes().length);
+//		
+//		String s1 = "+----------+";
+//		String s2 = "| Month    |";
+//		String s3 = "+----------+";
+//		String s4 = "| 1월달          |";
+//		
+//		System.out.println(s1 + ", " + s1.getBytes().length);
+//		System.out.println(s2 + ", " + s2.getBytes().length);
+//		System.out.println(s3 + ", " + s3.getBytes().length);
+//		System.out.println(s4 + ", " + s4.getBytes().length);
+//		
+//		System.out.println();
+//		
+		String s5 = "+----------+";
+		String s6 = "| Month               |";
+		String s7 = "+----------+";
+		String s8 = "| 1월달                  |";
+		System.out.println(s5 + ", " + s5.getBytes().length);
+		System.out.println(s6 + ", " + s6.getBytes().length);
+		System.out.println(s7 + ", " + s7.getBytes().length);
+		System.out.println(s8 + ", " + s8.getBytes().length);
+//		for(int i = 0; i < s8.length(); i++){
+//			System.out.println((s8.charAt(i)+"").getBytes().length);
+//		}
+		
+>>>>>>> f0eed1b809a53367d7365ab672860609e4fd117d
 		
 	}
 }
