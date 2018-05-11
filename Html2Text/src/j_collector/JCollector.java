@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,18 +18,18 @@ import org.junit.runners.MethodSorters;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class JCollector {
 	
+//	@Test
+//	public void TestAOnTable(){
+//		// 예제 table
+//		String path = "src/resource/table1.html";
+//		TestA(path);
+//	}
+	
 	@Test
-	public void TestAOnTable(){
-		// 예제 table
-		String path = "src/resource/table4.html";
+	public void TestOnInternet(){
+		String path = "http://aventure.tistory.com/59";
 		TestA(path);
 	}
-	
-//	@Test
-//	public void TestOnInternet(){
-//		String path = "http://aventure.tistory.com/59";
-//		TestB(path);
-//	}
 	
 	// HTML 을 String 으로 변환
 	private String htmlToString(String path){
@@ -52,9 +53,19 @@ public class JCollector {
 	
 	/** 내가 만든 html 문서 테스트 **/
 	private void TestA(String path){
-		String htmlString = htmlToString(path);
+		Document document = null;
 		
-		Document document = Jsoup.parse(htmlString);
+		if(path.contains("http"))
+			try {
+				document = Jsoup.connect(path).get();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		else{
+			String htmlString = htmlToString(path);
+			document = Jsoup.parse(htmlString);
+		}
+		
 		Element body = document.body();
 
 		// [table 태그 추출] 후 [table 태그 제거]
@@ -71,14 +82,15 @@ public class JCollector {
 		String content = preprocess(body);
 		ArrayList<StringBuilder> builderList = process(content);
 		
-		System.out.println("텍스트 출력 시도 (텍스트 없으면 안나옴)==");
+//		System.out.println("텍스트 출력 시도 (텍스트 없으면 안나옴)==");
 		for(int i = 0; i < builderList.size(); i++)
 			System.out.println(builderList.get(i));
-		System.out.println("텍스트 출력 완료 ==");
+//		System.out.println("텍스트 출력 완료 ==");
 		
 		ArrayList<TableCell[][]> tableList = new ArrayList<TableCell[][]>();
 		TableCell[][] tableCell = null;
 		TableBuilder tableBuilder = new TableBuilder();
+		TestTableBuilder testTableBuilder = new TestTableBuilder();
 		
 		// table 접근 및 TableCell 이차원 배열 형성
 		for(Element table : tables){
@@ -89,18 +101,25 @@ public class JCollector {
 			tableBuilder.setTableCellSize(rowSize, colSize);
 			tableBuilder.settingTableCell(table, tableCell);
 			
+//			테스트 : testTableBuilder
+//			testTableBuilder.setTableCellSize(rowSize, colSize);
+//			testTableBuilder.settingTableCell(table, tableCell);
 			tableList.add(tableCell);
 		}
 		
 		// 테이블을 텍스트 변환
-		StringBuilder textBuilder= null;
+		StringBuilder builder = null;
+		StringBuilder partBuilder[] = null;
 		
 		for(int i = 0; i < tableList.size(); i++){
 			TableCell[][] t = tableList.get(i);
-			textBuilder = tableBuilder.printTable(t);
-		}
+			builder = tableBuilder.printTable(t);
+			System.out.println(builder);
+
+//			new TestTableBuilder().printTable(partBuilder, t);
+		}	
 		
-		display(tableList);
+//		display(tableList);
 	}
 	
 	private String preprocess(Element body){

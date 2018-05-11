@@ -1,99 +1,148 @@
 <!DOCTYPE html>
 <html>
-<head>
-<style>
-table, th, td {
-	border: 1px solid black;
-	border-collapse: collapse;
-}
+  <head>
+  <style>
+  table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+  }
+  th, td {
+      padding: 5px;
+      text-align: left;
+  }
+  </style>
+  </head>
 
-th, td {
-	padding: 5px;
-	text-align: left;
-}
-</style>
-</head>
+  <body>
 
-<body>
-	<br>
-	<table>
-		<tr>
-			<th>Month</th>
-			<th>Savings</th>
-		</tr>
-		<tr>
-			<td>January</td>
-			<td>$100</td>
-		</tr>
-		<tr>
-			<td>February</td>
-			<td>$50</td>
-		</tr>
-	</table>
+    가나다라마바사 아자차카타파하 <BR>
+    호이호이호이호이호이호이호이
 
-	<br>
-	<table>
-		<tr>
-			<th>Month</th>
-			<th>Savings</th>
-		</tr>
-		<tr>
-			<td>January</td>
-			<td rowspan="2">$100</td>
-		</tr>
-		<tr>
-			<td>February</td>
-		</tr>
-		<tr>
-			<td>March</td>
-			<td>$50</td>
-		</tr>
-	</table>
+  <br>
+  <table>
+    <tr>
+      <th>Month</th>
+      <th>Savings</th>
+    </tr>
+    <tr>
+      <td>January</td>
+      <td>$100</td>
+    </tr>
+    <tr>
+      <td>February</td>
+      <td>$50</td>
+    </tr>
+  </table>
 
-	<br>
-	<table>
-		<tr>
-			<th>Month</th>
-			<th>Savings</th>
-		</tr>
-		<tr>
-			<td>January</td>
-			<td>$100</td>
-		</tr>
-		<tr>
-			<td>February</td>
-			<td>$80</td>
-		</tr>
-		<tr>
-			<td colspan="2">Sum: $180</td>
-		</tr>
-	</table>
+  <br>
+  <table>
+    <tr>
+      <th>Month</th>
+      <th>Savings</th>
+    </tr>
+    <tr>
+      <td>January</td>
+      <td rowspan="2">$100</td>
+    </tr>
+    <tr>
+      <td>February</td>
+    </tr>
+    <tr>
+      <td>March</td>
+      <td>$50</td>
+    </tr>
+  </table>
 
-	<br>
-	<table>
-		<tr>
-			<th>Month</th>
-			<th>Savings</th>
-			<th>ref</th>
-		</tr>
-		<tr>
-			<td>January</td>
-			<td>$100</td>
-			<td>ref1</td>
-		</tr>
-		<tr>
-			<td>February</td>
-			<td>$80</td>
-			<td>ref</td>
-		</tr>
-		<tr>
-			<td>hello</td>
-			<td colspan="2">Sum: $180</td>
-		</tr>
-	</table>
+  <br>
+  <table>
+    <tr>
+      <th>Month</th>
+      <th>Savings</th>
+    </tr>
+    <tr>
+      <td>January</td>
+      <td>$100</td>
+    </tr>
+    <tr>
+      <td>February</td>
+      <td>$80</td>
+    </tr>
+    <tr>
+      <td colspan="2">Sum: $180</td>
+    </tr>
+  </table>
+  
+  <br>
+  <table>
+    <tr>
+      <th>Month</th>
+      <th>Savings</th>
+      <th>ref</th>
+    </tr>
+    <tr>
+      <td colspan="3">January</td>
+    </tr>
+    <tr>
+      <td>February</td>
+      <td>$80</td>
+      <td>ref</td>
+    </tr>
+    <tr>
+      <td>hello</td>
+      <td colspan="2">Sum: $180</td>
+    </tr>
+  </table>
 
-	<br>
-	<table>
+  <br>
+  <table>
+    <tr>
+      <th>Month</th>
+      <th>Savings</th>
+      <th>ref</th>
+      <th>days</th>
+    </tr>
+    <tr>
+      <td colspan="4">January</td>
+    </tr>
+    <tr>
+      <td>February</td>
+      <td>$80</td>
+      <td>ref</td>
+      <td>monday</td>
+    </tr>
+    <tr>
+      <td>hello</td>
+      <td colspan="2">Sum: $180</td>
+      <td>monday</td>
+    </tr>
+  </table>
+
+  <br>
+  <table>
+    <tr>
+      <td>Month</td>
+      <td>Savings</td>
+      <td>ref</td>
+    </tr>
+
+    <tr>
+      <td rowspan="2">January</td>
+      <td>$100</td>
+      <td>ref1</td>
+    </tr>
+
+    <tr>
+      <td>$80</td>
+      <td>ref</td>
+    </tr>
+    <tr>
+      <td>hello</td>
+      <td colspan="2">Sum: $180</td>
+    </tr>
+  </table>
+
+  <br>
+  <table>
 		<tr>
 			<td>Month</td>
 			<td>Savings</td>
@@ -101,19 +150,18 @@ th, td {
 		</tr>
 
 		<tr>
-			<td rowspan="2">January</td>
-			<td>$100</td>
+			<td rowspan="2" colspan="2">January</td>
 			<td>ref1</td>
 		</tr>
 
 		<tr>
 			<td>$80</td>
-			<td>ref</td>
 		</tr>
 		<tr>
 			<td>hello</td>
 			<td colspan="2">Sum: $180</td>
 		</tr>
 	</table>
-</body>
+
+  </body>
 </html>

@@ -21,14 +21,14 @@ public class TableCell {
 		return name;
 	}
 	
-	public int colSpan(){
+	public int getColSpan(){
 		return colSpan;
 	}
 	
-	public int rowSpan(){
+	public int getRowSpan(){
 		return rowSpan;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "TableCell [name=" + name + ", colSpan=" + colSpan + ", rowSpan=" + rowSpan + "]";

@@ -16,6 +16,9 @@ public class TableBuilder {
 	private int col = 1;	// 0 인덱스 생략
 	private int row = 1;	// 0 인덱스 생략
 	
+	private static final int SPACE_ON_START = 1;
+	private static final int SPACE_ON_END = 3;
+	
 	private int[]columnSize = null;
 	
 	public void setTableCellSize(int rowSize, int colSize){
@@ -68,7 +71,6 @@ public class TableBuilder {
 						for (int c = originCol; c <= colRange; c++) {
 							if (r == originRow && c == originCol)
 								continue;
-//							System.out.println(r + ", " + c);
 							map.put(r + "&" + c, new Dummy());
 						}
 					}
@@ -90,6 +92,9 @@ public class TableBuilder {
 				if(!isExistMap(map, r, c)){
 					tableCell[r][c] = list.get(index++);
 				}
+				else{
+					tableCell[r][c] = new TableCell(null);
+				}
 			}
 		}
 	}
@@ -109,7 +114,7 @@ public class TableBuilder {
 		printHeaderDivide(textBuilder, "+-");
 		printHeaderData(textBuilder, tableCell);
 		
-		return null;
+		return textBuilder;
 	}
 	
 	private void calcColumnSize(TableCell[][]tableCell){
@@ -122,14 +127,17 @@ public class TableBuilder {
 		// 각각의 헤더 열들의 가장 긴 byte 획득
 		for(int col = 1; col < colSize; col++){
 			for(int row = 1; row < rowSize; row++){
-				if(tableCell[row][col] != null && tableCell[row][col].colSpan() == 1){
+				if(tableCell[row][col] != null && tableCell[row][col].getColSpan() == 1){
 					
 					String name = tableCell[row][col].getName();
-					double cellSize = getCellSize(name);
-					cellSize = Math.ceil(cellSize);
+					
+					if(name == null)
+						continue;
+					
+					int cellSize = getCellSize(name);
 					
 					if(headerSizes[col] < cellSize){
-						headerSizes[col] = (int)cellSize;
+						headerSizes[col] = cellSize;
 					}
 				}
 			}// for()
@@ -146,11 +154,12 @@ public class TableBuilder {
 			// 시작 공백 '-' (1개)
 			textBuilder.append(format.charAt(1));
 			
-			for(int s = 1; s < columnSize[column]; s++)
+			// 글자 하이픈 '-'
+			for(int s = 1; s <= columnSize[column]; s++)
 				textBuilder.append(format.charAt(1));
 			
 			// 끝 공백을 위한 '-' (3개)
-			for(int i = 0; i <= 3; i++)
+			for(int i = 0; i < SPACE_ON_END; i++)
 				textBuilder.append(format.charAt(1));
 			
 			textBuilder.append(format.charAt(0));
@@ -163,47 +172,110 @@ public class TableBuilder {
 		row = 1;
 		col = 1;
 		
-		System.out.println(Arrays.toString(columnSize));
+//		System.out.println(Arrays.toString(columnSize));
 		
 		for(int r = row; r < tableCell.length; r++){
+			
 			for(int c = col; c < tableCell[r].length; c++){
-				if(tableCell[r][c] != null && tableCell[r][c].colSpan() == 1 && tableCell[r][c].rowSpan() == 1){
+				
+				String name = tableCell[r][c].getName();
+				int colSpan = tableCell[r][c].getColSpan();
+				int rowSpan = tableCell[r][c].getRowSpan();
+				
+				if(name != null && colSpan == 1 && rowSpan == 1){
+					
+					if(c == col){
+						textBuilder.append(String.format("%s", "|"));
+					}
+					
+					textBuilder.append(String.format("%s%s", " ", name));
+					
+					// 규격을 어떻게 맞출것인가
+					int cellSize = getCellSize(name);
+					int size = columnSize[c] - cellSize + SPACE_ON_END;
+					
+					for(int i = 1; i <= size; i++)
+						textBuilder.append(String.format("%s", " "));
+					textBuilder.append(String.format("%s", "|"));
+				}// if ( 셀 한 칸  )
+				
+				if(name != null && (colSpan != 1 || rowSpan != 1)){
 					
 					if(c == col)
 						textBuilder.append(String.format("%s", "|"));
+					textBuilder.append(String.format("%s%s", " ", name));
 					
+					// 가로 병합
+					if(colSpan != 1){
+						int sc = c;
+						int colRange = c + colSpan - 1;
+						
+						int cellSize = getCellSize(name);
+						int colSize = 0;
+						for(; sc <= colRange; sc++)
+							colSize += (columnSize[sc] + SPACE_ON_END);
+						
+						colSize = colSize - cellSize + (2*(colSpan-1));
+						for(int i = 1; i <= colSize; i++)
+							textBuilder.append(String.format("%s", " "));
+						textBuilder.append(String.format("%s", "|"));
+						
+					}// 가로 병합
 					
-				}
-			}
+					// 세로 병합
+					if(rowSpan != 1){
+						int sr = r;
+						int rowRange = r + (rowSpan - 1);
+						int cellSize = getCellSize(name);
+						int colSize = 0;
+						
+						
+					}// 행 병합
+				}// if ( 셀 병합  )
+				
+				if(tableCell[r][c] == null){
+					// 해당 열의 가장 큰 사이즈를 삽입
+					int nameSize = columnSize[c];
+					
+					if(c == col){
+						textBuilder.append(String.format("%s", "|"));
+					}
+					
+//					textBuilder.append
+					
+				}// if ( 병합셀 null )
+				
+			}// for (행)
+			
 			textBuilder.append("\n");
-			printHeaderDivide(textBuilder, "+-");
+			
+//			if(!isMerge)
+				printHeaderDivide(textBuilder, "+-");
+//			else 
+//				System.out.println("Merge 되어있음");
 		}
-		
-		System.out.println(textBuilder);
-		System.out.println();
-//		System.exit(1);
 	}
 	
-	private double getCellSize(String name){
+	private int getCellSize(String name){
 		
 		Pattern pattern = Pattern.compile("^[가-힣]*$");
-		double cellSize = 0.0;
+		int cellSize = 0;
 		
 		for(int i = 0; i < name.length(); i++){
 			char ch = name.charAt(i);
 			Matcher matcher = pattern.matcher(String.valueOf(ch));
 			
 			if(matcher.find())
-				cellSize += 1.5;
+				cellSize += 2;
 			else
-				cellSize += 1.0;
+				cellSize += 1;
 		}
 		
 		return cellSize;
 	}
 	
-	@Test
-	public void test(){
+//	@Test
+	public void testA(){
 		String hangul1 = "월";
 		String hangul2 = "월화";
 		
@@ -253,6 +325,11 @@ public class TableBuilder {
 		System.out.println("test1의 바이트 : " + test1.getBytes().length);
 		System.out.println("test2의 바이트 : " + test2.getBytes().length);
 		System.out.println("test3의 바이트 : " + test3.getBytes().length);
+	}
+	
+	@Test
+	public void TestB(){
+		
 	}
 }
 
