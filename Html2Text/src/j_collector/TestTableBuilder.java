@@ -32,8 +32,6 @@ public class TestTableBuilder {
 	
 	/** 테이블 Element 를 이차원 배열로 변환 **/
 	public void settingTableCell(Element element, TableCell[][] tableCell){
-		
-		
 		// 일차원 컬렉션리스트, 요소 하나씩 저장하기 위함
 		ArrayList<TableCell> list = new ArrayList<TableCell>();
 		HashMap<String, Dummy> map = new HashMap<String, Dummy>();
@@ -62,8 +60,8 @@ public class TestTableBuilder {
 				if(!rowSpan.equals(""))
 					attrRowSpan = Integer.parseInt(rowSpan);
 				
-				String name = SPACE_ON_START + cellElement.text() + SPACE_ON_END; 
-				
+				String name = cellElement.text();
+				name = SPACE_ON_START + cellElement.text() + SPACE_ON_END;
 				TableCell cell = new TableCell(name);
 				cell.setColSpan(attrColSpan);
 				cell.setRowSpan(attrRowSpan);
@@ -189,6 +187,7 @@ public class TestTableBuilder {
 					// 글자 추가
 					if(c == initCol)
 						textBuilder[dataRow].append(String.format("%s", "|"));
+					
 					textBuilder[dataRow].append(name);
 					
 					int size = columnSize[c] - getCellSize(name);
@@ -207,8 +206,9 @@ public class TestTableBuilder {
 			System.out.println(textBuilder[1]);
 			System.out.println(textBuilder[dataRow]);
 		}
-		System.out.println(textBuilder[1]);
 		
+		System.out.println(textBuilder[1]);
+		System.out.println();
 		System.out.println();
 	}
 	

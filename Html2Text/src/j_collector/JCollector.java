@@ -20,6 +20,7 @@ public class JCollector {
 	
 //	@Test
 //	public void TestAOnTable(){
+//		initFile();
 //		// 예제 table
 //		String path = "src/resource/table1.html";
 //		TestA(path);
@@ -27,8 +28,16 @@ public class JCollector {
 	
 	@Test
 	public void TestOnInternet(){
+		initFile();
 		String path = "http://aventure.tistory.com/59";
 		TestA(path);
+	}
+	
+	private void initFile(){
+		String path = "C:\\TextTable\\text_table.txt";
+		File file = new File(path);
+		if(file.exists())
+			file.delete();
 	}
 	
 	// HTML 을 String 으로 변환
@@ -82,10 +91,12 @@ public class JCollector {
 		String content = preprocess(body);
 		ArrayList<StringBuilder> builderList = process(content);
 		
-//		System.out.println("텍스트 출력 시도 (텍스트 없으면 안나옴)==");
+		System.out.println("텍스트 출력 시도 (텍스트 없으면 안나옴)==");
 		for(int i = 0; i < builderList.size(); i++)
 			System.out.println(builderList.get(i));
-//		System.out.println("텍스트 출력 완료 ==");
+		
+		/** <BR> 태그를 처음에 다 뽑아내기 때문에 개행이 많음 >> 수정해야함 **/
+		System.out.println("텍스트 출력 완료 ==");
 		
 		ArrayList<TableCell[][]> tableList = new ArrayList<TableCell[][]>();
 		TableCell[][] tableCell = null;
@@ -98,12 +109,12 @@ public class JCollector {
 			int colSize = table.select("tr").first().children().size();
 			
 			tableCell = new TableCell[rowSize+1][colSize+1];
-			tableBuilder.setTableCellSize(rowSize, colSize);
-			tableBuilder.settingTableCell(table, tableCell);
+//			tableBuilder.setTableCellSize(rowSize, colSize);
+//			tableBuilder.settingTableCell(table, tableCell);
 			
 //			테스트 : testTableBuilder
-//			testTableBuilder.setTableCellSize(rowSize, colSize);
-//			testTableBuilder.settingTableCell(table, tableCell);
+			testTableBuilder.setTableCellSize(rowSize, colSize);
+			testTableBuilder.settingTableCell(table, tableCell);
 			tableList.add(tableCell);
 		}
 		
@@ -113,10 +124,10 @@ public class JCollector {
 		
 		for(int i = 0; i < tableList.size(); i++){
 			TableCell[][] t = tableList.get(i);
-			builder = tableBuilder.printTable(t);
-			System.out.println(builder);
+//			builder = tableBuilder.printTable(t);
+//			System.out.println(builder);
 
-//			new TestTableBuilder().printTable(partBuilder, t);
+			testTableBuilder.printTable(partBuilder, t);
 		}	
 		
 //		display(tableList);
